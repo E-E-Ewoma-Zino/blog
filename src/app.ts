@@ -21,14 +21,19 @@ app.use('/uploads', Express.static(path.join(__dirname + '/uploads')));
 // set up db
 (async ():Promise<void> => await db())();
 
-// @desc	for all home route "/"
-// @route	home
-app.use("/", routes.baseRoute);
+// My routes
+
+// @desc	for all client post "/client"
+// @route	/
+app.use("/", routes.client);
 // @desc	for user authentication "/auth"
 // @route	/auth
 app.use("/auth", routes.auth);
+// @desc	for all admin post "/admin"
+// @route	/admin
+app.use("/admin", routes.admin);
 // @desc	for all blog post "/blog"
-// @route	/comment
+// @route	/blog
 app.use("/blog", routes.blog);
 // @desc	for all comment api "/comment"
 // @route	/comment

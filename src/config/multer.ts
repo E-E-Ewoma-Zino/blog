@@ -1,34 +1,32 @@
-// import multer from "multer";
-// import path from "path";
+import multer, { diskStorage } from "multer";
+import path from "path";
+import ALERTS from "../constants/alerts";
+import messageBird from "../utils/messageBird";
 
-// // @desc	configure multer
-// const storage = multer.diskStorage({
-// 	destination: "uploads",
-// 	filename: (req, file, callback) => {
-// 		callback(null, file.fieldname + "-" + file.originalname + "-" + Date.now() + path.extname(file.originalname));
-// 	}
-// });
+// @desc	configure multer
+const storage = diskStorage({
+	destination: "uploads",
+	filename: (req, file, callback) => {
+		callback(null, file.fieldname + "-" + file.originalname + "-" + Date.now() + path.extname(file.originalname));
+	}
+});
 
-// module.exports = multer({
-// 	storage: storage,
-// 	fileFilter: (req, file, cb) => {
-// 		if(file.fieldname === "image"){
-// 			if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
-// 				cb(null, true);
-// 			} else {
-// 				cb(null, false);
-// 				_bird.message("danger", "You can only upload .png, .jpg, .gif and .jpeg files!");
-// 				_bird.message("danger", "Please re-upload the file");
-// 			}
-// 		}
-// 		if(file.fieldname === "book"){
-// 			if (file.mimetype == "application/pdf" || file.mimetype == "application/msword" || file.mimetype == "application/vnd.ms-excel" || file.mimetype == "application/vnd.ms-powerpoint" || file.mimetype == "text/plain") {
-// 				cb(null, true);
-// 			} else {
-// 				cb(null, false);
-// 				_bird.message("danger", "You can only upload .pdf, text/plain, .msword, .vnd.ms-excel and .vnd.ms-powerpoint files!");
-// 				_bird.message("danger", "Please re-upload the file");
-// 			}
-// 		}
-// 	}
-// });
+export default multer({
+	storage: storage,
+	fileFilter: (req, file, cb) => {
+		if (file.fieldname === "image") {
+			if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+				cb(null, true);
+			} else {
+				cb(null, false);
+				messageBird.message(ALERTS.DANGER, "You can only upload .png, .jpg, .gif and .jpeg files!");
+				messageBird.message(ALERTS.DANGER, "Please re-upload the file");
+			}
+		}
+		else {
+			cb(null, false);
+			messageBird.message(ALERTS.DANGER, "name field must contain image");
+			console.warn(ALERTS.DANGER, "name field must contain image");
+		}
+	}
+});

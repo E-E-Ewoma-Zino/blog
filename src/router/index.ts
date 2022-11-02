@@ -1,11 +1,13 @@
-import baseRoute from "./base";
 import auth from "./auth";
 import blog from "./blog";
+import admin from "./admin";
+import client from "./client";
 import comment from "./comment";
 
 const routes = {
-	baseRoute,
 	comment,
+	client,
+	admin,
 	blog,
 	auth
 }

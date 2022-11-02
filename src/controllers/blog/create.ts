@@ -3,26 +3,30 @@ import blog from "../../libs/blog";
 import { Request, Response } from "express";
 import ALERTS from "../../constants/alerts";
 import STATUS from "../../constants/httpStatus";
+import messageBird from "../../utils/messageBird";
 import { SERVER_RES } from "../../constants/serverResponse";
 
 export default async function createBlog(req: Request, res: Response): Promise<void> {
 	console.log("body", req.body);
+	console.log("file", req.file);
 
-	const { topic, subTopic, content, keywords, description } = req.body;
+	const { title, markdown, keywords, description } = req.body;
 
 	try {
-		const newBlog = await blog.create({
-			topic,
-			subTopic,
-			content,
+		await blog.create({
+			title,
+			markdown,
 			keywords,
 			description
 		});
 		
-		res.send(newBlog);
+		messageBird.message(ALERTS.SUCCESS, "New Blog Created");
+		res.redirect("back");
 	}catch(err) {
 		const _err = err as Error;
 		console.log("Error:", _err);
-		res.status(STATUS.SERVER_ERR_500).json(SERVER_RES({ message: "Failed Login", err: _err.message, status: STATUS.SERVER_ERR_500, alert: ALERTS.DANGER }));
+		messageBird.message(ALERTS.DANGER, "Internal Server Error");
+		res.redirect("back");
+		// res.status(STATUS.SERVER_ERR_500).json(SERVER_RES({ message: "Failed Login", err: _err.message, status: STATUS.SERVER_ERR_500, alert: ALERTS.DANGER }));
 	}
 }

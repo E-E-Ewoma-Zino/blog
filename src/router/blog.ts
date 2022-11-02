@@ -1,5 +1,6 @@
 import { IRouter, Request, Response, Router } from "express";
 import blog from "../controllers/blog";
+import multer from "../config/multer";
 
 const router: IRouter = Router();
 
@@ -11,7 +12,7 @@ router.get("/", (req: Request, res: Response): void => {
 
 // @desc	Create a blog api
 // @route	POST /blog/
-router.post("/", (req: Request, res: Response): Promise<void> => blog.create(req, res));
+router.post("/",  multer.single("image"), (req: Request, res: Response): Promise<void> => blog.create(req, res));
 
 // @desc	Display a blog post
 // @route	GET /blog/post/:topic

@@ -20,16 +20,28 @@ export interface IComment {
 	updatedAt: Date
 }
 
+interface IImage {
+	fieldname: String,
+	originalname: String,
+	encoding: String,
+	mimetype: String,
+	destination: String,
+	filename: String,
+	path: String,
+	size: Number
+}
+
 export interface IBlog {
 	_id: Types.ObjectId,
-	topic: String,
-	subTopic: String,
+	title: String,
 	content: String,
 	keywords: String,
 	description: String,
 	comments: Array<IComment>,
-	mainImage: String,
-	media: Object,
+	slug: String,
+	markdown: String,
+	convertedMD: String,
+	mainImage: IImage, // convert to interface
 	createdAt: Date,
 	updatedAt: Date
 }
