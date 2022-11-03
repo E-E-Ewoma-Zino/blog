@@ -7,8 +7,16 @@ const router: IRouter = Router();
 // @route	GET /
 router.get("/", (req: Request, res: Response): Promise<void> => admin.dashboard(req, res));
 
+// @desc	Admin blog page
+// @route	GET /blog
+router.get("/blog", (req: Request, res: Response): Promise<void> => admin.blogs(req, res));
+
 // @desc	Admin create blog page
-// @route	GET /create
-router.get("/create", (req: Request, res: Response): Promise<void> => admin.createBlog(req, res));
+// @route	GET /blog/create
+router.get("/blog/create", (req: Request, res: Response): Promise<void> => admin.createBlog(req, res));
+
+// @desc	Admin edit blog page
+// @route	GET /blog/edit/:slug
+router.get("/blog/edit/:slug", (req: Request, res: Response): Promise<void> => admin.editBlog(req, res));
 
 export default router;

@@ -1,0 +1,110 @@
+<!-- partial:partials/_head -->
+<%- include("partials/_head") %>
+	<!-- moment script -->
+	<script src="/client/js/moment.js"></script>
+
+	<!-- partial -->
+	<div class="container-scroller">
+		<!-- partial:partials/_navbar -->
+		<%- include("partials/_navbar") %>
+			<!-- partial -->
+			<div class="container-fluid page-body-wrapper">
+				<!-- partial:partials/_sidebar -->
+				<%- include("partials/_sidebar") %>
+					<!-- partial -->
+					<div class="main-panel">
+						<div class="content-wrapper">
+							<div class="row">
+								<div class="col-md-12 grid-margin">
+									<div class="d-flex justify-content-between align-items-center">
+										<div>
+											<h4 class="font-weight-bold mb-0">Blogs</h4>
+										</div>
+										<div>
+											<a href="/admin/blog/create"
+												class="btn btn-primary btn-icon-text btn-rounded">
+												<i class="ti-plus btn-icon-prepend"></i>New
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											<h4 class="card-title">All blogs</h4>
+											<p class="card-description">
+												Edit or delete blogs here
+											</p>
+
+											<div class="">
+												<div class="row">
+													<% blogs.forEach(blog=> { %>
+														<div class="col-6 col-md-4">
+															<div class="card">
+																<div class="card-image blogImg position-relative">
+																	<img class="img-fluid"
+																		src="/<% blog.mainImage?.path %>"
+																		alt="<%= blog.title %>">
+																	<div class="edit-options position-absolute">
+																		<button type="button"
+																			class="btn btn-primary btn-rounded btn-icon"
+																			data-edit="/admin/blog/edit/<%= blog.slug %>?id=<%= blog._id %>">
+																			<i class="ti-pencil"></i>
+																		</button>
+																		<button type="button"
+																			data-delete="<%= blog._id %>"
+																			class="btn btn-danger btn-rounded btn-icon">
+																			<i class="ti-trash"></i>
+																		</button>
+																	</div>
+																</div>
+																<div class="card-body">
+																	<div class="card-description">
+																		<h4 class="card-title">
+																			<%= blog.title %>
+																		</h4>
+																		<p>
+																			<%= blog.description.length> 91?
+																				blog.description.substring(0, 91) +
+																				"...": blog.description %>
+																		</p>
+																		<small class="date">
+																			<script>
+																				document.write(moment("<%= blog.createdAt %>").format('l'));
+																			</script>
+																		</small>
+																		<small class="text-muted">&blacksquare;</small>
+																		<small class="author text-muted"><%= blog.author %></small>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<% }); %>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- content-wrapper ends -->
+						<!-- partial:partials/_footer -->
+						<%- include("partials/_footer") %>
+							<!-- partial -->
+					</div>
+					<!-- main-panel ends -->
+			</div>
+			<!-- page-body-wrapper ends -->
+	</div>
+	<!-- container-scroller -->
+
+	<!-- partial:partials/_scripts -->
+	<%- include("partials/_scripts") %>
+		<!-- partial -->
+
+		</body>
+
+		</html>

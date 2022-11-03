@@ -15,7 +15,7 @@
 								<div class="col-md-12 grid-margin">
 									<div class="d-flex justify-content-between align-items-center">
 										<div>
-											<h4 class="font-weight-bold mb-0">Create Blog</h4>
+											<h4 class="font-weight-bold mb-0">Edit Blog</h4>
 										</div>
 										<div>
 											<button type="button" class="btn btn-primary btn-icon-text btn-rounded" onclick="history.back()">
@@ -31,39 +31,39 @@
 								<div class="col-12 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">
-											<h4 class="card-title">New Blog</h4>
+											<h4 class="card-title">Edit Blog</h4>
 											<p class="card-description">
-												Use the form below to create a new blog
+												Use the form below to edit your blog
 											</p>
-											<form class="forms-sample" action="/blog/" method="post"
+											<form class="forms-sample" action="/blog/update?_method=PUT&id=<%= blog._id %>" method="post"
 												enctype="multipart/form-data">
 												<div class="form-group">
 													<label for="title">Title</label>
 													<input type="text" class="form-control" id="title" name="title"
-														placeholder="Title" required>
+														placeholder="<%= blog.title %>" value="<%= blog.title %>" required>
 												</div>
 												<div class="form-group">
 													<label for="author">Author</label>
 													<input type="text" class="form-control" id="author" name="author"
-														placeholder="Author" required>
+														placeholder="<%= blog.author %>" value="<%= blog.author %>" required>
 												</div>
 												<div class="form-group">
 													<label for="description">Description</label>
 													<input type="text" class="form-control" id="description"
-														name="description" placeholder="Description" required>
+														name="description" placeholder="<%= blog.description%>" value="<%= blog.description%>" required>
 												</div>
 												<div class="form-group">
 													<label for="keywords">Keywords</label>
 													<input type="text" class="form-control" id="keywords"
-														name="keywords" placeholder="Keywords" required>
+														name="keywords" placeholder="<%= blog.keywords %>" value="<%= blog.keywords %>" required>
 												</div>
 												<div class="form-group">
 													<label>File upload</label>
 													<input type="file" name="image" accept="image/*"
-														class="file-upload-default" required>
+														class="file-upload-default">
 													<div class="input-group col-xs-12">
 														<input type="text" class="form-control file-upload-info"
-															placeholder="Upload Image" required>
+															placeholder="Upload Image">
 														<span class="input-group-append">
 															<button class="file-upload-browse btn btn-primary"
 																type="button">Upload</button>
@@ -73,11 +73,52 @@
 												<div class="form-group">
 													<label for="markdown">Content</label>
 													<textarea rows="4" class="form-control" id="markdown"
-														name="markdown" placeholder="Content"
-														style="resize: auto" required></textarea>
+														name="markdown" placeholder="<%= blog.markdown %>"
+														style="resize: auto" required><%= blog.markdown %></textarea>
 												</div>
 												<button type="submit" class="btn btn-primary mr-2">Submit</button>
 											</form>
+											<div class="row">
+												<div class="col-6 col-md-4">
+													<div class="card">
+														<div class="card-image blogImg position-relative">
+															<img class="img-fluid"
+																src="/<% blog.mainImage?.path %>"
+																alt="<%= blog.title %>">
+															<div class="edit-options position-absolute">
+																<button type="button"
+																	class="btn btn-primary btn-rounded btn-icon"
+																	data-edit="/admin/blog/edit/<%= blog.slug %>?id=<%= blog._id %>">
+																	<i class="ti-pencil"></i>
+																</button>
+																<button type="button"
+																	data-delete="<%= blog._id %>"
+																	class="btn btn-danger btn-rounded btn-icon">
+																	<i class="ti-trash"></i>
+																</button>
+															</div>
+														</div>
+														<div class="card-body">
+															<div class="card-description">
+																<h4 class="card-title">
+																	<%= blog.title %>
+																</h4>
+																<p>
+																	<%= blog.description.length> 91?
+																		blog.description.substring(0, 91) +
+																		"...": blog.description %>
+																</p>
+																<small class="date">
+																	<script>
+																		document.write(moment("<%= blog.createdAt %>").format('l'));
+																	</script>
+																</small>
+																<small class="text-muted">&blacksquare;</small>
+																<small class="author text-muted"><%= blog.author %></small>
+															</div>
+														</div>
+													</div>
+											</div>
 										</div>
 									</div>
 								</div>

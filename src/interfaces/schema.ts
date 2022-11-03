@@ -34,6 +34,7 @@ interface IImage {
 export interface IBlog {
 	_id: Types.ObjectId,
 	title: String,
+	author: String,
 	content: String,
 	keywords: String,
 	description: String,
@@ -41,6 +42,10 @@ export interface IBlog {
 	slug: String,
 	markdown: String,
 	convertedMD: String,
+	isImageUpdated: {
+		type: Boolean,
+		default: Boolean
+	},
 	mainImage: IImage, // convert to interface
 	createdAt: Date,
 	updatedAt: Date

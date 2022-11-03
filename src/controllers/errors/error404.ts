@@ -1,20 +1,15 @@
 // controlls the home page
-
-import blog from "../../libs/blog";
 import { Request, Response } from "express";
 import ALERTS from "../../constants/alerts";
 import STATUS from "../../constants/httpStatus";
 import { SERVER_RES } from "../../constants/serverResponse";
+import messageBird from "../../utils/messageBird";
 
 
-export async function clientHome(req: Request, res: Response): Promise<void> {
-	console.log("display all blog");
-
+export async function error404(req: Request, res: Response): Promise<void> {
 	try{
-		const theBlog = await blog.findAll({});
-		
-		res.render("client/index", {
-			blogs: theBlog.data
+		res.render("errors/error404", {
+			bird: messageBird.fly
 		});
 	}catch(err){
 		const _err = err as Error;

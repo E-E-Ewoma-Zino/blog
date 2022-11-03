@@ -5,25 +5,22 @@ import ALERTS from "../../constants/alerts";
 import STATUS from "../../constants/httpStatus";
 import messageBird from "../../utils/messageBird";
 import { SERVER_RES } from "../../constants/serverResponse";
+import Blogs from "../../schema/Blogs";
 
-export default async function createBlog(req: Request, res: Response): Promise<void> {
+export default async function deleteBolg(req: Request, res: Response): Promise<void> {
 	console.log("body", req.body);
 	console.log("file", req.file);
 
-	const { title, markdown, author, keywords, description } = req.body;
+	const { blogId } = req.body;
 
 	try {
-		await blog.create({
-			title,
-			author,
-			markdown,
-			keywords,
-			description,
-			mainImage: req.file
-		});
 		
-		messageBird.message(ALERTS.SUCCESS, "New Blog Created");
-		res.redirect("back");
+		messageBird.message(ALERTS.SUCCESS, "Deleted Blog");
+		return res.redirect("back");
+
+		const deletedBolg = await blog.remove(blogId);
+		console.log("deleted", deletedBolg);
+		
 	}catch(err) {
 		const _err = err as Error;
 		console.log("Error:", _err);

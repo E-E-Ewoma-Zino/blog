@@ -13,6 +13,7 @@ const dompurify = createDomPurify(window);
 
 const blogSchema = new Schema<IBlog>({
 	title: String,
+	author: String,
 	slug: {
 		type: String,
 		unique: true
@@ -27,6 +28,10 @@ const blogSchema = new Schema<IBlog>({
 		ref: "Comment"
 	}],
 	mainImage: Object,
+	isImageUpdated: {
+		type: Boolean,
+		default: false
+	}
 }, { timestamps: true });
 
 blogSchema.pre("validate", function (next): void {
@@ -41,6 +46,12 @@ blogSchema.pre("validate", function (next): void {
 	if (this.markdown) {
 		// convert md to html and remove malitious code
 		this.convertedMD = dompurify.sanitize(marked(this.markdown as string));
+	}
+
+	console.log("img", this.mainImage)
+	if (this.isImageUpdated) {
+		console.log("img is updated");
+		this.isImageUpdated.default = false;
 	}
 
 	next();

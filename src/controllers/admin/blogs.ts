@@ -1,5 +1,4 @@
-// controlls the home page
-
+// controlls the dashboard
 import blog from "../../libs/blog";
 import { Request, Response } from "express";
 import ALERTS from "../../constants/alerts";
@@ -7,13 +6,11 @@ import STATUS from "../../constants/httpStatus";
 import { SERVER_RES } from "../../constants/serverResponse";
 
 
-export async function clientHome(req: Request, res: Response): Promise<void> {
-	console.log("display all blog");
-
+export async function adminBlogs(req: Request, res: Response): Promise<void> {
 	try{
 		const theBlog = await blog.findAll({});
-		
-		res.render("client/index", {
+
+		res.render("admin/blogs", {
 			blogs: theBlog.data
 		});
 	}catch(err){
