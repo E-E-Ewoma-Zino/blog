@@ -18,7 +18,7 @@ app.use(json());
 app.use(Express.static("public"));
 app.set("view engine", "ejs");
 app.use(urlencoded({ extended: true }));
-app.use('/uploads', Express.static(path.join(__dirname + '/uploads')));
+app.use('/uploads', Express.static( "uploads"));
 app.use(methodOverride("_method"));
 
 // set up db

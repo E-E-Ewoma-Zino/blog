@@ -2,50 +2,22 @@
 	<div class="looping-text">
 		<div class="w-dyn-list">
 			<div role="list" class="collection-list w-dyn-items">
-				<div role="listitem" class="w-dyn-item">
-					<a href="/post/manual-informative-place" class="scrolling-link">Manual Informative Place</a>
-				</div>
-				<div role="listitem" class="w-dyn-item">
-					<a href="/post/exploring-culinary-corridor" class="scrolling-link">Exploring Culinary Corridor</a>
-				</div>
-				<div role="listitem" class="w-dyn-item">
-					<a href="/post/the-first-time-to-be-me" class="scrolling-link">The First Time To Be Me</a>
-				</div>
-				<div role="listitem" class="w-dyn-item">
-					<a href="/post/green-transition-is-happening-fast" class="scrolling-link">Green
-						Transition Is Happening Fast</a>
-				</div>
-				<div role="listitem" class="w-dyn-item">
-					<a href="/post/believing-their-own-hype" class="scrolling-link">Believing Their Own Hype</a>
-				</div>
-				<div role="listitem" class="w-dyn-item">
-					<a href="/post/online-travel-planning" class="scrolling-link">Online Travel Planning</a>
-				</div>
+				<% blogs.forEach(blog => { %>
+					<div role="listitem" class="w-dyn-item">
+						<a href="/blogs/<%= blog.slug %>" class="scrolling-link"><%= blog.title %></a>
+					</div>
+				<% }); %>
 			</div>
 		</div>
 	</div>
 	<div class="looping-text">
 		<div class="w-dyn-list">
 			<div role="list" class="collection-list w-dyn-items">
-				<div role="listitem" class="w-dyn-item">
-					<a href="/post/manual-informative-place" class="scrolling-link">Manual Informative Place</a>
-				</div>
-				<div role="listitem" class="w-dyn-item">
-					<a href="/post/exploring-culinary-corridor" class="scrolling-link">Exploring Culinary Corridor</a>
-				</div>
-				<div role="listitem" class="w-dyn-item">
-					<a href="/post/the-first-time-to-be-me" class="scrolling-link">The First Time To Be Me</a>
-				</div>
-				<div role="listitem" class="w-dyn-item">
-					<a href="/post/green-transition-is-happening-fast" class="scrolling-link">Green
-						Transition Is Happening Fast</a>
-				</div>
-				<div role="listitem" class="w-dyn-item">
-					<a href="/post/believing-their-own-hype" class="scrolling-link">Believing Their Own Hype</a>
-				</div>
-				<div role="listitem" class="w-dyn-item">
-					<a href="/post/online-travel-planning" class="scrolling-link">Online Travel Planning</a>
-				</div>
+				<% blogs.forEach(blog => { %>
+					<div role="listitem" class="w-dyn-item">
+						<a href="/blogs/<%= blog.slug %>" class="scrolling-link"><%= blog.title %></a>
+					</div>
+				<% }); %>
 			</div>
 		</div>
 	</div>

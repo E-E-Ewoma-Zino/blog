@@ -5783,6 +5783,7 @@ blockquote {
 /* my code */
 
 .siteTitle {
+	margin-top: 1rem;
 	font-size: 4em;
 	font-weight: bolder;
 	color: black;
@@ -5790,5 +5791,58 @@ blockquote {
 	font-family: Eczar, sans-serif;
 }
 
+#my-article h1,
+#my-article h2,
+#my-article h3 {
+	font-family: 'Eczar', sans-serif;
+}
+
+#my-article h4,
+#my-article h5,
+#my-article h6,
+#my-article p {
+	font-family: 'Work Sans', sans-serif;
+}
+
+#my-article img {
+	height: 600px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+#my-article a {
+	color: #ff7d27;
+	font-weight: 500;
+}
+
+#my-article ul {
+	font-size: 18px;
+	line-height: 30px;
+}
+
+#my-article li {
+	margin-bottom: 16px;
+}
+
+#my-article p {
+	margin-bottom: 16px;
+	font-size: 18px;
+	line-height: 30px;
+	font-weight: 400;
+}
+
+#my-article blockquote {
+	margin-top: 10px;
+	border-left-color: rgba(0, 0, 0, 0.7);
+	font-weight: 500;
+}
+
+#my-article blockquote p {
+	margin-top: 10px;
+	font-weight: 500;
+	margin-bottom: 10px;
+	font-size: 18px;
+	line-height: 22px;
+}
 
 /* end */

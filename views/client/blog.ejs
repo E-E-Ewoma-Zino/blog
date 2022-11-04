@@ -12,14 +12,29 @@
 			<div class="section wf-section">
 				<div class="container _1280 w-container">
 					<div class="w-layout-grid blog-grid">
-						<div id="w-node-_25f492b4-abe7-57b4-0ea3-83bba35c0c39-219c2610" class="blog-post-title-div">
-							<div class="date blog">
-								<script>
-									document.write(moment("<%= blog.updatedAt %>").format('LL'))
-								</script>
-							</div>
-							<%- blog.convertedMD  %>
-						</div>
+						<main id="w-node-_25f492b4-abe7-57b4-0ea3-83bba35c0c39-219c2610" class="blog-post-title-div">
+							<article id="my-article">
+								<div class="date blog">
+									<script>
+										document.write(moment("<%= new Date(blog?.updatedAt) %>").format('LL'))
+									</script>
+								</div>
+								<div class="blog-title-div">
+									<h1 class="h1"><%= blog.title %></h1>
+								</div>
+								<div class="post-summary-blog-div">
+									<div class="post-summary-blog"><%= blog?.subTite %></div>
+								</div>
+								<div class="author-flex-div left">
+									<div class="_5-px-right-margin">
+										<div class="blog-text">By</div>
+									</div><a href="#" class="author _24-px"><%= blog.author %></a>
+								</div>
+								<div style="background-image:url('/<%= blog.mainImage.path.replace(/\\/, /\//) %>')"class="post-image-blog-div"></div>
+								<!-- content goes here -->
+								<%- blog?.convertedMD %>
+							</article>
+						</main>
 						<div id="w-node-_25f492b4-abe7-57b4-0ea3-83bba35c0c6a-219c2610" class="related-div">
 							<div class="sticky-sidebar">
 								<div>
@@ -27,62 +42,48 @@
 										<h6 class="h6-side-bar-title">Share</h6>
 										<div class="share-post-div">
 											<div class="w-embed"><a class="w-inline-block social-share-btn tw"
-													href="https://twitter.com/intent/tweet?" target="_blank"
+													href="https://twitter.com/" target="_blank"
 													title="Tweet"
-													onclick="window.open('https://twitter.com/intent/tweet?text=%20Check%20up%20this%20awesome%20content' + encodeURIComponent(document.title) + ':%20 ' + encodeURIComponent(document.URL)); return false;"></a>
+													onclick="window.open('https://twitter.com/'); return false;"></a>
 											</div>
 											<div class="w-embed"><a class="w-inline-block social-share-btn fb"
-													href="https://www.facebook.com/sharer/sharer.php?u=&t="
+													href="https://www.facebook.com/"
 													title="Share on Facebook" target="_blank"
-													onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;">
+													onclick="window.open('https://www.facebook.com'); return false;">
 												</a></div>
 											<div class="w-embed"><a class="w-inline-block social-share-btn lnk"
-													href="http://www.linkedin.com/shareArticle?mini=true&url=&title=&summary=&source="
+													href="http://www.linkedin.com/"
 													target="_blank" title="Share on LinkedIn"
-													onclick="window.open('http://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(document.URL) + '&title=' + encodeURIComponent(document.title)); return false;"></a>
+													onclick="window.open('http://www.linkedin.com/'); return false;"></a>
 											</div>
 										</div>
 									</div>
 								</div>
 								<div>
 									<div class="_30-px-margin-div">
-										<h6 class="h6-side-bar-title">Related</h6>
+										<h6 class="h6-side-bar-title">More</h6>
 									</div>
 									<div class="w-dyn-list">
 										<div role="list" class="w-dyn-items">
-											<div role="listitem" class="w-dyn-item">
-												<div class="_20-px-bottom-margin">
-													<div class="flex-div no-padding">
-														<div class="div-post flex vertical">
-															<div><a href="/post/manual-informative-place"
-																	class="post-title">Manual Informative Place</a>
+											<% for (let index = 0; index < blogs.length; index++) { %>
+												<% if(index > 5) break %>
+												<% const blog = blogs[index]; %>
+
+												<div role="listitem" class="w-dyn-item">
+													<div class="_20-px-bottom-margin">
+														<div class="flex-div no-padding">
+															<div class="div-post flex vertical">
+																<div>
+																	<a href="/blogs/<%= blog.slug %>"
+																		class="post-title">
+																		<%= blog.title %>
+																	</a>
+																</div>
 															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-											<div role="listitem" class="w-dyn-item">
-												<div class="_20-px-bottom-margin">
-													<div class="flex-div no-padding">
-														<div class="div-post flex vertical">
-															<div><a href="/post/no-fear-of-perfection"
-																	class="post-title">No
-																	Fear Of Perfection</a></div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div role="listitem" class="w-dyn-item">
-												<div class="_20-px-bottom-margin">
-													<div class="flex-div no-padding">
-														<div class="div-post flex vertical">
-															<div><a href="/post/the-light-goes-out" aria-current="page"
-																	class="post-title w--current">The Light Goes Out</a>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
+											<% } %>
 										</div>
 									</div>
 								</div>
@@ -101,71 +102,35 @@
 					</div>
 					<div id="w-node-_92891f88-c15b-d2da-0161-d9528ffe698c-219c2610" class="w-dyn-list">
 						<div role="list" class="bottom-blog-grid w-dyn-items">
-							<div role="listitem" class="w-dyn-item">
-								<div class="flex-div">
-									<div class="div-post flex"><a href="/post/manual-informative-place"
-											class="_120-px-height-div w-inline-block"><img
-												src="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/63035dbdc5a73eb524987f64_sharan-pagadala-bWQPgLMJ7sg-unsplash-1.jpg"
-												loading="lazy" alt="" sizes="150px"
-												srcset="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/63035dbdc5a73eb524987f64_sharan-pagadala-bWQPgLMJ7sg-unsplash-1-p-500.jpg 500w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/63035dbdc5a73eb524987f64_sharan-pagadala-bWQPgLMJ7sg-unsplash-1-p-800.jpg 800w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/63035dbdc5a73eb524987f64_sharan-pagadala-bWQPgLMJ7sg-unsplash-1-p-1080.jpg 1080w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/63035dbdc5a73eb524987f64_sharan-pagadala-bWQPgLMJ7sg-unsplash-1.jpg 1300w"
-												class="post-image" /></a>
-										<div class="title-date-div">
-											<div class="author-flex-div left blog">
-												<div class="_5-px-right-margin">
-													<div class="text-block">By</div>
-												</div><a href="/author/enzo-romano" class="author _16-px orange">Enzo
-													Romano</a>
+							<% blogs.forEach(blog=> { %>
+								<div role="listitem" class="w-dyn-item">
+									<div class="flex-div">
+										<div class="div-post flex">
+											<a href="/blogs/<%= blog.slug %>" class="_120-px-height-div w-inline-block">
+												<img src="/<%= blog.mainImage.path %>" loading="lazy"
+													alt="<%= blog.title %>" loading="lazy" alt="" sizes="150px"
+													srcset="/<%= blog.mainImage.path %> 500w, /<%= blog.mainImage.path %> 800w, /<%= blog.mainImage.path %> 1300w"
+													class="post-image" />
+											</a>
+											<div class="title-date-div">
+												<div class="author-flex-div left blog">
+													<div class="_5-px-right-margin">
+														<div class="text-block">By</div>
+													</div>
+													<a href="/blogs/<%= blog.slug %>" class="author _16-px orange">
+														<%= blog.author %>
+													</a>
+												</div>
+												<div class="_130-px-div">
+													<a href="/blogs/<%= blog.slug %>" class="post-title _16-px">
+														<%= blog.title %>
+													</a>
+												</div>
 											</div>
-											<div class="_130-px-div"><a href="/post/manual-informative-place"
-													class="post-title _16-px">Manual Informative Place</a></div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div role="listitem" class="w-dyn-item">
-								<div class="flex-div">
-									<div class="div-post flex"><a href="/post/exploring-culinary-corridor"
-											class="_120-px-height-div w-inline-block"><img
-												src="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfda96a34b9f830e0f7f7e_emy-XoByiBymX20-unsplash-1.jpg"
-												loading="lazy" alt="" sizes="150px"
-												srcset="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfda96a34b9f830e0f7f7e_emy-XoByiBymX20-unsplash-1-p-500.jpg 500w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfda96a34b9f830e0f7f7e_emy-XoByiBymX20-unsplash-1-p-800.jpg 800w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfda96a34b9f830e0f7f7e_emy-XoByiBymX20-unsplash-1-p-1080.jpg 1080w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfda96a34b9f830e0f7f7e_emy-XoByiBymX20-unsplash-1-p-1600.jpg 1600w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfda96a34b9f830e0f7f7e_emy-XoByiBymX20-unsplash-1.jpg 2000w"
-												class="post-image" /></a>
-										<div class="title-date-div">
-											<div class="author-flex-div left blog">
-												<div class="_5-px-right-margin">
-													<div class="text-block">By</div>
-												</div><a href="/author/martha-collins"
-													class="author _16-px orange">Martha
-													Collins</a>
-											</div>
-											<div class="_130-px-div"><a href="/post/exploring-culinary-corridor"
-													class="post-title _16-px">Exploring Culinary Corridor</a></div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div role="listitem" class="w-dyn-item">
-								<div class="flex-div">
-									<div class="div-post flex"><a href="/post/the-first-time-to-be-me"
-											class="_120-px-height-div w-inline-block"><img
-												src="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62fb8939225141bf84029385_jukan-tateisi-bJhT_8nbUA0-unsplash-1.jpg"
-												loading="lazy" alt="" sizes="150px"
-												srcset="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62fb8939225141bf84029385_jukan-tateisi-bJhT_8nbUA0-unsplash-1-p-500.jpg 500w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62fb8939225141bf84029385_jukan-tateisi-bJhT_8nbUA0-unsplash-1-p-800.jpg 800w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62fb8939225141bf84029385_jukan-tateisi-bJhT_8nbUA0-unsplash-1-p-1080.jpg 1080w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62fb8939225141bf84029385_jukan-tateisi-bJhT_8nbUA0-unsplash-1.jpg 1500w"
-												class="post-image" /></a>
-										<div class="title-date-div">
-											<div class="author-flex-div left blog">
-												<div class="_5-px-right-margin">
-													<div class="text-block">By</div>
-												</div><a href="/author/martha-collins"
-													class="author _16-px orange">Martha
-													Collins</a>
-											</div>
-											<div class="_130-px-div"><a href="/post/the-first-time-to-be-me"
-													class="post-title _16-px">The First Time To Be Me</a></div>
-										</div>
-									</div>
-								</div>
-							</div>
+								<% }); %>
 						</div>
 					</div>
 				</div>
@@ -178,6 +143,19 @@
 				<!-- partials: partials/_scripts -->
 				<%- include("partials/_scripts") %>
 					<!-- partials -->
+
+					<script>
+						$("#my-article").children("h1").next().css({
+							fontSize: "20px",
+							lineHeight: "24px",
+							fontWeight: 300
+						}).next().css({
+							color: "#000",
+							fontSize: "24px",
+							lineHeight: "26px",
+							fontWeight: 500,
+						});
+					</script>
 					</body>
 
 					</html>

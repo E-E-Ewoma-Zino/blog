@@ -5,15 +5,34 @@ import { Request, Response } from "express";
 import ALERTS from "../../constants/alerts";
 import STATUS from "../../constants/httpStatus";
 import { SERVER_RES } from "../../constants/serverResponse";
+import { IBlog } from "../../interfaces/schema";
 
 export async function clientBlog(req: Request, res: Response): Promise<void> {
 	console.log("display all blog");
-
+	
 	try{
 		const theBlog = await blog.findAll({ slug: req.params.slug });
-		// res.send(theBlog.data[0]);
+		const allBlog = await blog.findAll({});
+		
+		const data = theBlog.data[0] as IBlog;
+		const siteUrl = "https://www.global-finance-online.com/";
+
+		const head = {
+			themeColor: "#ffffff",
+			title: data.title,
+			keywords: data.keywords,
+			ogImageType: data.mainImage.mimetype,
+			ogUrl: siteUrl + "blogs/" + data.slug,
+			ogTitle: data.title,
+			description: data.description,
+			ogImage: siteUrl + data.mainImage.path,
+			siteUrl
+		}
+
 		res.render("client/blog", {
-			blog: theBlog.data[0]
+			blog: data,
+			blogs: allBlog.data,
+			head
 		});
 	}catch(err){
 		const _err = err as Error;

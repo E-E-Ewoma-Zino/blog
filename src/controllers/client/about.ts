@@ -1,4 +1,4 @@
-// controlls the home page
+// controlls the about page
 
 import blog from "../../libs/blog";
 import { Request, Response } from "express";
@@ -8,9 +8,7 @@ import { SERVER_RES } from "../../constants/serverResponse";
 import { IBlog } from "../../interfaces/schema";
 
 
-export async function clientHome(req: Request, res: Response): Promise<void> {
-	console.log("display all blog");
-
+export async function clientAbout(req: Request, res: Response): Promise<void> {
 	try{
 		const theBlog = await blog.findAll({});
 		
@@ -24,13 +22,13 @@ export async function clientHome(req: Request, res: Response): Promise<void> {
 			keywords: "Xpress Coaching, " + data.keywords,
 			ogImageType: data.mainImage.mimetype,
 			ogUrl: siteUrl + "blogs/" + data.slug,
-			ogTitle: "Xpress Coaching",
+			ogTitle: data.title,
 			ogImage: siteUrl + data.mainImage.path,
 			description,
 			siteUrl
 		}
 
-		res.render("client/index", {
+		res.render("client/about", {
 			blogs: theBlog.data,
 			head
 		});

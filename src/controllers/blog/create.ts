@@ -5,24 +5,31 @@ import ALERTS from "../../constants/alerts";
 import STATUS from "../../constants/httpStatus";
 import messageBird from "../../utils/messageBird";
 import { SERVER_RES } from "../../constants/serverResponse";
+import preBlog from "../../module/preBlog";
 
 export default async function createBlog(req: Request, res: Response): Promise<void> {
 	console.log("body", req.body);
 	console.log("file", req.file);
 
-	const { title, markdown, author, keywords, description } = req.body;
+	const { title, markdown, subTitle, author, keywords, description } = req.body;
 
 	try {
-		await blog.create({
+		const newBlog = await blog.create({
 			title,
 			author,
+			subTitle,
 			markdown,
 			keywords,
 			description,
 			mainImage: req.file
 		});
 		
-		messageBird.message(ALERTS.SUCCESS, "New Blog Created");
+		if(newBlog.err) messageBird.message(ALERTS.DANGER, newBlog.err as string);
+		else messageBird.message(ALERTS.SUCCESS, "New Blog Created");
+
+		// pre validate blog
+		preBlog(newBlog.data!._id);
+
 		res.redirect("back");
 	}catch(err) {
 		const _err = err as Error;

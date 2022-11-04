@@ -2,6 +2,9 @@
 <%- include("partials/_head") %>
 	<!-- partials -->
 
+	<!-- moment script -->
+	<script src="/client/js/moment.js"></script>
+
 	<!-- partials: partials/_header -->
 	<%- include("partials/_header") %>
 		<!-- partials -->
@@ -9,74 +12,88 @@
 		<!-- partials: partials/_nav -->
 		<%- include("partials/_nav") %>
 			<!-- partials -->
-			<div data-w-id="fd175021-60e7-61f8-9b40-906e625cdfef" class="hero-section wf-section">
+			<main data-w-id="fd175021-60e7-61f8-9b40-906e625cdfef" class="hero-section wf-section">
 				<div class="container w-container">
-					<div class="hero">
+					<div class="hero w-layout-grid _2-column-grid hero">
+						<div id="w-node-_3710a2c4-d6f0-7904-ee2e-f68878087636-5e4a43b3">
+							<h3 class="h3 orange">Trending Stories</h3>
+							<div class="w-dyn-list">
+								<div role="list" class="hero-left-divbox w-dyn-items">
+									<% blogs.forEach((blog, index) => { %>
+										<% if(index > 5) return %> 
+										<div data-w-id="120b8056-58a9-f0d3-ad8d-238e680a2483"
+											style="opacity: 1; transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"
+											role="listitem" class="w-dyn-item">
+											<div>
+												<div class="div-category">
+													<div class="category" style="text-transform: capitalize;"><%= blog.keywords.split(",")[0] %></div>
+												</div>
+												<div class="flex-div add-bottom-border">
+													<div class="circle">
+														<div class="nr"><%= index + 1 %></div>
+													</div>
+													<div class="div-post no-border-in-mobile">
+														<div class="_180-px-div"><a href="/blogs/<%= blog.slug %>"
+																class="post-title"><%= blog.title %></a></div>
+														<div class="date-author-flex">
+															<div class="date"><script>
+																document.write(moment("<%= new Date(blog?.updatedAt) %>").format('l'))
+															</script></div>
+															<div class="sep-circle"></div><a href="/blogs/<%= blog.slug %>"
+																class="author"><%= blog.author %></a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									<% }); %>
+								</div>
+							</div>
+						</div>
 						<div id="w-node-c86439ca-e9ef-cb5e-815f-73012aa70858-5e4a43b3" class="w-dyn-list">
 							<div role="link" class="home-featured-list w-dyn-items">
-								<div role="listitem" class="main-item w-dyn-item">
-									<a data-w-id="0e86534f-1e4e-d2a4-9f37-058c64f8b2b1" style="opacity:0"
-										href="/post/manual-informative-place"
-										class="main-hero-div-image w-inline-block">
-										<img src="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/63035dbdc5a73eb524987f64_sharan-pagadala-bWQPgLMJ7sg-unsplash-1.jpg"
-											loading="lazy" alt=""
-											sizes="(max-width: 479px) 100vw, (max-width: 767px) 92vw, (max-width: 991px) 80vw, 44vw"
-											srcset="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/63035dbdc5a73eb524987f64_sharan-pagadala-bWQPgLMJ7sg-unsplash-1-p-500.jpg 500w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/63035dbdc5a73eb524987f64_sharan-pagadala-bWQPgLMJ7sg-unsplash-1-p-800.jpg 800w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/63035dbdc5a73eb524987f64_sharan-pagadala-bWQPgLMJ7sg-unsplash-1-p-1080.jpg 1080w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/63035dbdc5a73eb524987f64_sharan-pagadala-bWQPgLMJ7sg-unsplash-1.jpg 1300w"
-											class="hero-image" /></a>
-									<div data-w-id="aad04659-c321-6f7d-a3f8-cb14e0df4462" style="opacity:0"
-										class="hero-divbox">
-										<a href="/post/manual-informative-place" class="title-link">
-											Manual Informative Place
-										</a>
-										<div class="_20-px-top-margin-div">
-											<div class="hero-text">Temporibus modi voluptate </div>
+								<% blogs.reverse().forEach((blog, index)=> { %>
+									<% if (index> 2) return %>
+										<div role="listitem" class="main-item w-dyn-item">
+											<a data-w-id="0e86534f-1e4e-d2a4-9f37-058c64f8b2b1" style="opacity:0"
+												href="/blogs/<%= blog.slug %>"
+												class="main-hero-div-image w-inline-block">
+												<img src="/<%= blog.mainImage.path %>" loading="lazy"
+													alt="<%= blog.title %>"
+													sizes="(max-width: 479px) 100vw, (max-width: 767px) 92vw, (max-width: 991px) 80vw, 44vw"
+													srcset="/<%= blog.mainImage.path %> 500w, /<%= blog.mainImage.path %> 800w, /<%= blog.mainImage.path %> 1300w"
+													class="hero-image" />
+											</a>
+											<div data-w-id="aad04659-c321-6f7d-a3f8-cb14e0df4462" style="opacity:0"
+												class="hero-divbox">
+												<a href="<%= blog.slug %>" class="title-link">
+													<%= blog.title %>
+												</a>
+												<% if(blog?.subTite !=='' ) { %>
+													<div class="_20-px-top-margin-div">
+														<div class="hero-text">
+															<%= blog?.subTite %>
+														</div>
+													</div>
+													<% } %>
+														<div class="post-summary-div">
+															<p>
+																<%= blog.description.length> 500?
+																	blog.description.substring(0, 500) + "...":
+																	blog.description %>
+															</p>
+														</div>
+														<a href="/blogs/<%= blog.slug %>" class="button w-button">
+															READ MORE
+														</a>
+											</div>
 										</div>
-										<div class="post-summary-div">
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-												varius
-												enim
-												in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros
-												dolor
-												interdum nulla.</p>
-										</div>
-										<a href="/post/manual-informative-place" class="button w-button">READ MORE</a>
-									</div>
-								</div>
-								<div role="listitem" class="main-item w-dyn-item">
-									<a data-w-id="0e86534f-1e4e-d2a4-9f37-058c64f8b2b1" style="opacity:0"
-										href="/post/find-out-why-this-is-the-right-thing"
-										class="main-hero-div-image w-inline-block">
-										<img src="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/630386b3d2d07a01c197af1d_raamin-ka-0qJBEzudn5E-unsplash-1.jpg"
-											loading="lazy" alt=""
-											sizes="(max-width: 479px) 100vw, (max-width: 767px) 92vw, (max-width: 991px) 80vw, 44vw"
-											srcset="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/630386b3d2d07a01c197af1d_raamin-ka-0qJBEzudn5E-unsplash-1-p-500.jpg 500w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/630386b3d2d07a01c197af1d_raamin-ka-0qJBEzudn5E-unsplash-1-p-800.jpg 800w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/630386b3d2d07a01c197af1d_raamin-ka-0qJBEzudn5E-unsplash-1-p-1080.jpg 1080w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/630386b3d2d07a01c197af1d_raamin-ka-0qJBEzudn5E-unsplash-1.jpg 1500w"
-											class="hero-image" />
-									</a>
-									<div data-w-id="aad04659-c321-6f7d-a3f8-cb14e0df4462" style="opacity:0"
-										class="hero-divbox">
-										<a href="/post/find-out-why-this-is-the-right-thing" class="title-link">Find Out
-											Why
-											This Is The Right Thing</a>
-										<div class="_20-px-top-margin-div">
-											<div class="hero-text">Temporibus modi voluptate</div>
-										</div>
-										<div class="post-summary-div">
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-												varius
-												enim
-												in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros
-												dolor
-												interdum nulla.</p>
-										</div><a href="/post/find-out-why-this-is-the-right-thing"
-											class="button w-button">READ
-											MORE</a>
-									</div>
-								</div>
+										<% }); %>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</main>
 
 			<!-- components: components/encouragement -->
 			<%- include("components/encouragement") %>
@@ -86,130 +103,51 @@
 					<div class="container w-container">
 						<div>
 							<div class="_15-px-bottom-margin center">
-								<div class="category title">Food</div>
+								<div class="category title">Other Article</div>
 							</div>
 						</div>
 						<div class="w-dyn-list">
 							<div role="list" class="_4-column-grid w-dyn-items">
-								<div role="listitem" class="w-dyn-item">
-									<div id="w-node-c438a415-9175-dd16-339e-75acdf2fa5bd-b6c5b91f"><a
-											href="/post/exploring-culinary-corridor"
-											class="_220-px-height-div w-inline-block"><img
-												src="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfda96a34b9f830e0f7f7e_emy-XoByiBymX20-unsplash-1.jpg"
-												loading="lazy" alt=""
-												sizes="(max-width: 479px) 100vw, (max-width: 767px) 92vw, (max-width: 991px) 45vw, 23vw"
-												srcset="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfda96a34b9f830e0f7f7e_emy-XoByiBymX20-unsplash-1-p-500.jpg 500w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfda96a34b9f830e0f7f7e_emy-XoByiBymX20-unsplash-1-p-800.jpg 800w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfda96a34b9f830e0f7f7e_emy-XoByiBymX20-unsplash-1-p-1080.jpg 1080w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfda96a34b9f830e0f7f7e_emy-XoByiBymX20-unsplash-1-p-1600.jpg 1600w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfda96a34b9f830e0f7f7e_emy-XoByiBymX20-unsplash-1.jpg 2000w"
-												class="post-image" /></a>
-										<div class="flex-div">
-											<div class="div-post flex vertical">
-												<div><a href="/post/exploring-culinary-corridor"
-														class="post-title">Exploring
-														Culinary Corridor</a></div>
-												<div class="sub-div">
-													<div class="post-summary-text">Lorem ipsum dolor sit amet,
-														consectetur
-														adipiscing elit. Suspendisse varius enim in eros elementum
-														tristique. Duis
-														cursus, mi quis viverra ornare, eros dolor interdum nulla.</div>
-												</div>
-												<div class="date-author-flex">
-													<div class="date">10/7/2022</div>
-													<div class="sep-circle"></div><a href="/author/martha-collins"
-														class="author">Martha Collins</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div role="listitem" class="w-dyn-item">
-									<div id="w-node-c438a415-9175-dd16-339e-75acdf2fa5bd-b6c5b91f"><a
-											href="/post/amazed-with-tastes"
-											class="_220-px-height-div w-inline-block"><img
-												src="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dea6da1d266f322559d6ae_jonathan-pielmayer-ecbZ5gEE-60-unsplash-1.jpg"
-												loading="lazy" alt=""
-												sizes="(max-width: 479px) 100vw, (max-width: 767px) 92vw, (max-width: 991px) 45vw, 23vw"
-												srcset="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dea6da1d266f322559d6ae_jonathan-pielmayer-ecbZ5gEE-60-unsplash-1-p-500.jpg 500w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dea6da1d266f322559d6ae_jonathan-pielmayer-ecbZ5gEE-60-unsplash-1-p-800.jpg 800w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dea6da1d266f322559d6ae_jonathan-pielmayer-ecbZ5gEE-60-unsplash-1-p-1080.jpg 1080w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dea6da1d266f322559d6ae_jonathan-pielmayer-ecbZ5gEE-60-unsplash-1.jpg 1500w"
-												class="post-image" /></a>
-										<div class="flex-div">
-											<div class="div-post flex vertical">
-												<div><a href="/post/amazed-with-tastes" class="post-title">Amazed With
-														Tastes</a>
-												</div>
-												<div class="sub-div">
-													<div class="post-summary-text">Lorem ipsum dolor sit amet,
-														consectetur
-														adipiscing elit. Suspendisse varius enim in eros elementum
-														tristique. Duis
-														cursus, mi quis viverra ornare, eros dolor interdum nulla.</div>
-												</div>
-												<div class="date-author-flex">
-													<div class="date">7/6/2022</div>
-													<div class="sep-circle"></div><a href="/author/thomas-newman"
-														class="author">Thomas Newman</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div role="listitem" class="w-dyn-item">
-									<div id="w-node-c438a415-9175-dd16-339e-75acdf2fa5bd-b6c5b91f"><a
-											href="/post/the-compassionate-road"
-											class="_220-px-height-div w-inline-block"><img
-												src="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dea721487e20438d8e9d75_sahand-babali-q1SQqb9zEF8-unsplash-1.jpg"
-												loading="lazy" alt=""
-												sizes="(max-width: 479px) 100vw, (max-width: 767px) 92vw, (max-width: 991px) 45vw, 23vw"
-												srcset="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dea721487e20438d8e9d75_sahand-babali-q1SQqb9zEF8-unsplash-1-p-500.jpg 500w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dea721487e20438d8e9d75_sahand-babali-q1SQqb9zEF8-unsplash-1-p-800.jpg 800w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dea721487e20438d8e9d75_sahand-babali-q1SQqb9zEF8-unsplash-1-p-1080.jpg 1080w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dea721487e20438d8e9d75_sahand-babali-q1SQqb9zEF8-unsplash-1-p-1600.jpg 1600w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dea721487e20438d8e9d75_sahand-babali-q1SQqb9zEF8-unsplash-1.jpg 2000w"
-												class="post-image" /></a>
-										<div class="flex-div">
-											<div class="div-post flex vertical">
-												<div><a href="/post/the-compassionate-road" class="post-title">The
-														Compassionate
-														Road</a></div>
-												<div class="sub-div">
-													<div class="post-summary-text">Lorem ipsum dolor sit amet,
-														consectetur
-														adipiscing elit. Suspendisse varius enim in eros elementum
-														tristique. Duis
-														cursus, mi quis viverra ornare, eros dolor interdum nulla.</div>
-												</div>
-												<div class="date-author-flex">
-													<div class="date">9/22/2021</div>
-													<div class="sep-circle"></div><a href="/author/thomas-newman"
-														class="author">Thomas Newman</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div role="listitem" class="w-dyn-item">
-									<div id="w-node-c438a415-9175-dd16-339e-75acdf2fa5bd-b6c5b91f"><a
-											href="/post/eating-my-empire" class="_220-px-height-div w-inline-block"><img
-												src="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfcda256b8041b7ceab72d_vita-marija-murenaite-eSeo6IzOV00-unsplash-1.jpg"
-												loading="lazy" alt=""
-												sizes="(max-width: 479px) 100vw, (max-width: 767px) 92vw, (max-width: 991px) 45vw, 23vw"
-												srcset="https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfcda256b8041b7ceab72d_vita-marija-murenaite-eSeo6IzOV00-unsplash-1-p-500.jpg 500w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfcda256b8041b7ceab72d_vita-marija-murenaite-eSeo6IzOV00-unsplash-1-p-800.jpg 800w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfcda256b8041b7ceab72d_vita-marija-murenaite-eSeo6IzOV00-unsplash-1-p-1080.jpg 1080w, https://assets.website-files.com/62c6c96b82f7ca8b04b15040/62dfcda256b8041b7ceab72d_vita-marija-murenaite-eSeo6IzOV00-unsplash-1.jpg 1500w"
-												class="post-image" /></a>
-										<div class="flex-div">
-											<div class="div-post flex vertical">
-												<div><a href="/post/eating-my-empire" class="post-title">Eating My
-														Empire</a></div>
-												<div class="sub-div">
-													<div class="post-summary-text">Lorem ipsum dolor sit amet,
-														consectetur
-														adipiscing elit. Suspendisse varius enim in eros elementum
-														tristique. Duis
-														cursus, mi quis viverra ornare, eros dolor interdum nulla..
+								<% blogs.forEach(blog=> { %>
+									<div role="listitem" class="w-dyn-item">
+										<div id="w-node-c438a415-9175-dd16-339e-75acdf2fa5bd-b6c5b91f">
+											<a href="/blogs/<%= blog.slug %>" class="_220-px-height-div w-inline-block">
+												<img src="/<%= blog.mainImage.path %>" loading="lazy"
+													alt="<%= blog.title %>"
+													sizes="(max-width: 479px) 100vw, (max-width: 767px) 92vw, (max-width: 991px) 80vw, 44vw"
+													srcset="/<%= blog.mainImage.path %> 500w, /<%= blog.mainImage.path %> 800w, /<%= blog.mainImage.path %> 1300w"
+													class="post-image" />
+											</a>
+											<div class="flex-div">
+												<div class="div-post flex vertical">
+													<div>
+														<a href="/blogs/<%= blog.slug %>" class="post-title">
+															<%= blog.title %>
+														</a>
+													</div>
+													<div class="sub-div">
+														<div class="post-summary-text">
+															<%= blog.description.length> 500?
+																blog.description.substring(0, 500) + "...":
+																blog.description %>
+														</div>
+													</div>
+													<div class="date-author-flex">
+														<div class="date">
+															<script>
+																document.write(moment("<%= new Date(blog?.updatedAt) %>").format('l'))
+															</script>
+														</div>
+														<div class="sep-circle"></div>
+														<a href="/blogs/<%= blog.slug %>" class="author">
+															<%= blog.author %>
+														</a>
 													</div>
 												</div>
-												<div class="date-author-flex">
-													<div class="date">3/3/2021</div>
-													<div class="sep-circle"></div><a href="/author/thomas-newman"
-														class="author">Thomas Newman</a>
-												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+									<% }); %>
 							</div>
 						</div>
 					</div>
@@ -219,16 +157,16 @@
 				<%- include("components/text-strip") %>
 					<!-- components -->
 
-				<!-- partials: partials/_footer -->
-				<%- include("partials/_footer") %>
-					<!-- partials -->
-
-					<!-- partials: partials/_scripts -->
-					<%- include("partials/_scripts") %>
+					<!-- partials: partials/_footer -->
+					<%- include("partials/_footer") %>
 						<!-- partials -->
 
-						</body>
+						<!-- partials: partials/_scripts -->
+						<%- include("partials/_scripts") %>
+							<!-- partials -->
 
-						</html>
+							</body>
 
-						<!-- https://the-daily-work-template.webflow.io/ -->
+							</html>
+
+							<!-- https://the-daily-work-template.webflow.io/ -->

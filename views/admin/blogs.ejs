@@ -46,7 +46,7 @@
 															<div class="card">
 																<div class="card-image blogImg position-relative">
 																	<img class="img-fluid"
-																		src="/<% blog.mainImage?.path %>"
+																		src="/<%= blog.mainImage?.path %>"
 																		alt="<%= blog.title %>">
 																	<div class="edit-options position-absolute">
 																		<button type="button"
@@ -56,6 +56,7 @@
 																		</button>
 																		<button type="button"
 																			data-delete="<%= blog._id %>"
+																			data-delete-path="/blog/delete"
 																			class="btn btn-danger btn-rounded btn-icon">
 																			<i class="ti-trash"></i>
 																		</button>
@@ -73,7 +74,7 @@
 																		</p>
 																		<small class="date">
 																			<script>
-																				document.write(moment("<%= blog.createdAt %>").format('l'));
+																				document.write(moment(new Date("<%= blog.createdAt %>")).format('l'));
 																			</script>
 																		</small>
 																		<small class="text-muted">&blacksquare;</small>

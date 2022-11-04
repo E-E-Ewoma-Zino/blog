@@ -1,0 +1,120 @@
+<!-- partial:partials/_head -->
+<%- include("partials/_head") %>
+	<!-- partial -->
+	<div class="container-scroller">
+		<!-- partial:partials/_navbar -->
+		<%- include("partials/_navbar") %>
+			<!-- partial -->
+			<div class="container-fluid page-body-wrapper">
+				<!-- partial:partials/_sidebar -->
+				<%- include("partials/_sidebar") %>
+					<!-- partial -->
+					<div class="main-panel">
+						<div class="content-wrapper">
+							<div class="row">
+								<div class="col-md-12 grid-margin">
+									<div class="d-flex justify-content-between align-items-center">
+										<div>
+											<h4 class="font-weight-bold mb-0">Storage</h4>
+										</div>
+										<div>
+											<button type="button" class="btn btn-primary btn-icon-text btn-rounded" onclick="history.back()">
+												<i class="ti-arrow-left btn-icon-prepend"></i>Back
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						<!-- main -->
+							<div class="row">
+								<div class="col-12">
+									<div class="card card-stats card-round">
+										<div class="card-header">
+											<div class="card-title">Upload</div>
+										</div>
+										<div class="card-body">
+											<div class="row align-items-center">
+												<div class="col-12">
+													<form class=" forms-sample" action="/admin/storage" method="post"
+														enctype="multipart/form-data">
+														<div class="col-12 form-group">
+															<label>Image upload</label>
+															<input type="file" id="imgUpload" name="image"
+															class="file-upload-default" accept="image/*" required>
+															<div class="input-group col-xs-12">
+																<input type="text" class="form-control file-upload-info"
+																	placeholder="Upload Image" required>
+																<span class="input-group-append">
+																	<button class="file-upload-browse btn btn-primary"
+																		type="button">Browse</button>
+																</span>
+															</div>
+														</div>
+														<div class="col-12"><button type="submit"
+																class="btn btn-primary">Upload</button></div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-12 d-flex justify-content-center align-items-center mb-3">
+									<a href="/admin/storage?start=0&stop=20" class="btn btn-primary prev-btn mx-1">Prev</a>
+									<a href="/admin/storage?start=0&stop=20" class="btn btn-primary next-btn mx-1"
+										data-maxLength="<%= mediaLength %>">Next</a>
+									<span><%= start %> - <%= stop %> of <%= mediaLength %></span>
+								</div>
+								<% images.forEach(media => { %>
+									<!-- NOTE: Add filter for tags eg all, storage, custom -->
+								<%# if(media?.cloud?.tags // contains stroage) %>
+								<div class="col-md-3">
+									<div class="card card-post card-round cursor-pointer">
+										<div class="blogImg position-relative">
+											<img class="card-img-top" src="/<%= media?.path %>" alt="image stored in this site">
+											<div class="edit-options position-absolute">
+												<button type="button"
+													data-delete="<%= media._id %>" data-delete-path="/admin/storage"
+													class="btn btn-danger btn-rounded btn-icon">
+													<i class="ti-trash"></i>
+												</button>
+											</div>
+										</div>
+										
+										<div class="card-body">
+											<i class="ti-clipboard fa-copy" data-url="/<%= media?.path.replace("\\", "/") %>"></i>
+										</div>
+									</div>
+								</div>
+								<% }); %>
+								<div class="col-12 d-flex justify-content-center align-items-center">
+									<a href="/admin/storage?start=0&stop=20" class="btn btn-primary prev-btn mx-1">Prev</a>
+									<a href="/admin/storage?start=0&stop=20" class="btn btn-primary next-btn mx-1"
+										data-maxLength="<%= mediaLength %>">Next</a>
+										<span><%= start %> - <%= stop %> of <%= mediaLength %></span>
+								</div>
+							</div>
+						</div>
+						<!-- content-wrapper ends -->
+						<!-- partial:partials/_footer -->
+						<%- include("utils/messageBird") %>
+							<!-- partial -->
+						<!-- partial:partials/_footer -->
+						<%- include("partials/_footer") %>
+							<!-- partial -->
+					</div>
+					<!-- main-panel ends -->
+			</div>
+			<!-- page-body-wrapper ends -->
+	</div>
+	<!-- container-scroller -->
+
+	<!-- partial:partials/_scripts -->
+	<%- include("partials/_scripts") %>
+		<!-- partial -->
+		</body>
+
+		</html>
