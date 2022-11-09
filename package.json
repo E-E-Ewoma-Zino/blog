@@ -15,6 +15,7 @@
 	"description": "A blog website",
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
+		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",
 		"dompurify": "^2.4.0",
 		"dotenv": "^16.0.1",
@@ -31,6 +32,7 @@
 	},
 	"devDependencies": {
 		"@types/bcryptjs": "^2.4.2",
+		"@types/cookie-parser": "^1.4.3",
 		"@types/dompurify": "^2.3.4",
 		"@types/dotenv": "^8.2.0",
 		"@types/express": "^4.17.13",

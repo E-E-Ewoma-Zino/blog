@@ -16,7 +16,7 @@ export default async function RegisterUser(req: Request, res: Response): Promise
 		console.log("body", req.body);
 
 		// Get user input
-		const { email, password } = req.body;
+		const { email, password, ...body } = req.body;
 
 		// Validate user input
 		if (!(email && password)) return res.status(STATUS.BAD_REQUEST_400).json(SERVER_RES({message: "All input is required", err: "Failed to register user", status: STATUS.BAD_REQUEST_400, alert: ALERTS.DANGER}));
@@ -36,6 +36,7 @@ export default async function RegisterUser(req: Request, res: Response): Promise
 		const newUser: IServerResponse<DB_TYPES> = await user.create({
 			email: email.toLowerCase(), // sanitize: convert email to lowercase
 			password: encryptedPassword,
+			...body
 		});
 		if (newUser.status !== STATUS.OK_200) return res.status(newUser.status).json(newUser);
 		const newUserData = newUser.data as IUser;
@@ -62,7 +63,7 @@ export default async function RegisterUser(req: Request, res: Response): Promise
 
 		// return new user
 		console.log("Done");
-		return res.status(STATUS.CREATED_201).json(SERVER_RES({message: "Successfully Registered", err: null, status: STATUS.CREATED_201, alert: ALERTS.SUCCESS}));
+		return res.status(STATUS.CREATED_201).json(SERVER_RES({data: newUserData, message: "Successfully Registered", err: null, status: STATUS.CREATED_201, alert: ALERTS.SUCCESS}));
 	} catch (err) {
 		const _err = err as Error;
 		console.log("Error:", _err);

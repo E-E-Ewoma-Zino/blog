@@ -6,7 +6,7 @@ export interface IUpdateParameters {
 	itemToUpdate: DB_TYPES,
 	propertyToUpdate: String,
 	optionsToUse: String,
-	updateValue: String
+	updateValue: String | Object
 }
 
 export interface IEdit {

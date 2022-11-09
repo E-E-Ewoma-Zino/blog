@@ -4,21 +4,28 @@ import ALERTS from "../../constants/alerts";
 import { Request, Response } from "express";
 import STATUS from "../../constants/httpStatus";
 import { SERVER_RES } from "../../constants/serverResponse";
+import blog from "../../libs/blog";
+import { IBlog } from "../../interfaces/schema";
 
 export default async function createComment(req: Request, res: Response): Promise<void> {
 	console.log("body", req.body);
 
-	const { userComment, blogId, commentId } = req.body;
+	const { comment, blogId, user } = req.body;
 
 	try {
-		const newComment = await comment.create({
-			comment: userComment,
-			userId: res.locals.user.user_id,
-			reply: commentId,
-			blogId
+		const newComment = await blog.update({
+			itemToUpdate: { _id: blogId } as IBlog,
+			optionsToUse: "$push",
+			propertyToUpdate: "comments",
+			updateValue: {
+				user,
+				comment: comment.toString(),
+				isVerified: false
+			}
 		});
 		
-		res.status(STATUS.CREATED_201).json(SERVER_RES({ message: "Ceated new comment", err: null, status: STATUS.CREATED_201, alert: ALERTS.SUCCESS }));
+		// res.status(STATUS.CREATED_201).json(SERVER_RES({ message: "Ceated new comment", err: null, status: STATUS.CREATED_201, alert: ALERTS.SUCCESS }));
+		res.redirect("back");
 	}catch(err) {
 		const _err = err as Error;
 		console.log("Error:", _err);

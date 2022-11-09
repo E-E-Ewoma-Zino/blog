@@ -22,4 +22,8 @@ router.put("/update", multer.single("image"), (req: Request, res: Response): Pro
 // @route	POST /blog/delete
 router.delete("/delete", (req: Request, res: Response): Promise<void> => blog.delete(req, res));
 
+// @desc	Comment a blog api
+// @route	POST /blog/comment
+router.patch("/comment", (req: Request, res: Response): Promise<void> => blog.comment(req, res));
+
 export default router;

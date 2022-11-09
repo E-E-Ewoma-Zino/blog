@@ -2,6 +2,7 @@ import { Types } from "mongoose"
 
 export interface IUser {
 	_id: Types.ObjectId,
+	username: String,
 	email: String,
 	password: String,
 	token: String,
@@ -41,7 +42,11 @@ export interface IBlog {
 	subTitle: String,
 	keywords: String,
 	description: String,
-	comments: Array<IComment>,
+	comments: Array <{
+		comment: String,
+		user: String,
+		isVerified: Boolean
+	}>,
 	slug: String,
 	markdown: String,
 	convertedMD: String,

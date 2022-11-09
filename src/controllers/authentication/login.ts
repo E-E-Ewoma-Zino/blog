@@ -47,13 +47,8 @@ export default async function LoginUser(req: Request, res: Response): Promise<Re
 		if (updateUserWithToken.status !== STATUS.OK_200) return res.status(updateUserWithToken.status).json(updateUserWithToken);
 
 		// user
-		console.log("Done");
 		// add token to header
-		console.log(">", req.headers["authorization"]);
-		req.headers["authorization"] = "Bearer " + token;
-		console.log(">d", req.headers["authorization"]);
-
-		return res.status(STATUS.CREATED_201).json(SERVER_RES({ data, message: "Successfully Registered", err: null, status: STATUS.CREATED_201, alert: ALERTS.SUCCESS }));
+		return res.status(STATUS.CREATED_201).json(SERVER_RES({ data, message: "Loged In", err: null, status: STATUS.CREATED_201, alert: ALERTS.SUCCESS }));
 	} catch (err) {
 		const _err = err as Error;
 		console.log("Error:", _err);

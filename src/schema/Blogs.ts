@@ -16,8 +16,13 @@ const blogSchema = new Schema<IBlog>({
 	markdown: String,
 	convertedMD: String,
 	comments: [{
-		type: Schema.Types.ObjectId,
-		ref: "Comment"
+		user: String,
+		comment: String,
+		isVerified: Boolean,
+		createdAt: {
+			type: Date,
+			default: new Date()
+		}
 	}],
 	mainImage: Object
 }, { timestamps: true });

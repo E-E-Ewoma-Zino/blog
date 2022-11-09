@@ -7,10 +7,7 @@ import STATUS from "../../constants/httpStatus";
 import { SERVER_RES } from "../../constants/serverResponse";
 import { IBlog } from "../../interfaces/schema";
 
-
 export async function clientHome(req: Request, res: Response): Promise<void> {
-	console.log("display all blog");
-
 	try{
 		const theBlog = await blog.findAll({});
 		

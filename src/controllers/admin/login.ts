@@ -7,7 +7,6 @@ import { SERVER_RES } from "../../constants/serverResponse";
 
 export async function adminLogin(req: Request, res: Response): Promise<void> {
 	try{
-		res.render("admin/login");
 	}catch(err){
 		const _err = err as Error;
 		console.log("Error:", _err);

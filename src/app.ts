@@ -6,6 +6,7 @@ import STATUS from "./constants/httpStatus";
 import { error404 } from "./controllers/errors/error404";
 import routes from "./router";
 import methodOverride from "method-override";
+import cookieParser from "cookie-parser";
 
 // config .env
 config();
@@ -20,6 +21,7 @@ app.set("view engine", "ejs");
 app.use(urlencoded({ extended: true }));
 app.use('/uploads', Express.static( "uploads"));
 app.use(methodOverride("_method"));
+app.use(cookieParser());
 
 // set up db
 (async ():Promise<void> => await db())();
