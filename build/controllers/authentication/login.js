@@ -54,12 +54,8 @@ function LoginUser(req, res) {
             if (updateUserWithToken.status !== httpStatus_1.default.OK_200)
                 return res.status(updateUserWithToken.status).json(updateUserWithToken);
             // user
-            console.log("Done");
             // add token to header
-            console.log(">", req.headers["authorization"]);
-            req.headers["authorization"] = "Bearer " + token;
-            console.log(">d", req.headers["authorization"]);
-            return res.status(httpStatus_1.default.CREATED_201).json((0, serverResponse_1.SERVER_RES)({ data, message: "Successfully Registered", err: null, status: httpStatus_1.default.CREATED_201, alert: alerts_1.default.SUCCESS }));
+            return res.status(httpStatus_1.default.CREATED_201).json((0, serverResponse_1.SERVER_RES)({ data, message: "Loged In", err: null, status: httpStatus_1.default.CREATED_201, alert: alerts_1.default.SUCCESS }));
         }
         catch (err) {
             const _err = err;

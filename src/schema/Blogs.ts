@@ -19,10 +19,7 @@ const blogSchema = new Schema<IBlog>({
 		user: String,
 		comment: String,
 		isVerified: Boolean,
-		createdAt: {
-			type: Date,
-			default: new Date()
-		}
+		createdAt: Date
 	}],
 	mainImage: Object
 }, { timestamps: true });

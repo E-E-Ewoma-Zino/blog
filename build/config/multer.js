@@ -1,33 +1,59 @@
 "use strict";
-// import multer from "multer";
-// import path from "path";
-// // @desc	configure multer
-// const storage = multer.diskStorage({
-// 	destination: "uploads",
-// 	filename: (req, file, callback) => {
-// 		callback(null, file.fieldname + "-" + file.originalname + "-" + Date.now() + path.extname(file.originalname));
-// 	}
-// });
-// module.exports = multer({
-// 	storage: storage,
-// 	fileFilter: (req, file, cb) => {
-// 		if(file.fieldname === "image"){
-// 			if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
-// 				cb(null, true);
-// 			} else {
-// 				cb(null, false);
-// 				_bird.message("danger", "You can only upload .png, .jpg, .gif and .jpeg files!");
-// 				_bird.message("danger", "Please re-upload the file");
-// 			}
-// 		}
-// 		if(file.fieldname === "book"){
-// 			if (file.mimetype == "application/pdf" || file.mimetype == "application/msword" || file.mimetype == "application/vnd.ms-excel" || file.mimetype == "application/vnd.ms-powerpoint" || file.mimetype == "text/plain") {
-// 				cb(null, true);
-// 			} else {
-// 				cb(null, false);
-// 				_bird.message("danger", "You can only upload .pdf, text/plain, .msword, .vnd.ms-excel and .vnd.ms-powerpoint files!");
-// 				_bird.message("danger", "Please re-upload the file");
-// 			}
-// 		}
-// 	}
-// });
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const multer_1 = __importStar(require("multer"));
+const path_1 = __importDefault(require("path"));
+const alerts_1 = __importDefault(require("../constants/alerts"));
+const messageBird_1 = __importDefault(require("../utils/messageBird"));
+// @desc	configure multer
+const storage = (0, multer_1.diskStorage)({
+    destination: "uploads",
+    filename: (req, file, callback) => {
+        callback(null, file.fieldname + "-" + file.originalname + "-" + Date.now() + path_1.default.extname(file.originalname));
+    }
+});
+exports.default = (0, multer_1.default)({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.fieldname === "image") {
+            if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+                cb(null, true);
+            }
+            else {
+                cb(null, false);
+                messageBird_1.default.message(alerts_1.default.DANGER, "You can only upload .png, .jpg, .gif and .jpeg files!");
+                messageBird_1.default.message(alerts_1.default.DANGER, "Please re-upload the file");
+            }
+        }
+        else {
+            cb(null, false);
+            messageBird_1.default.message(alerts_1.default.DANGER, "name field must contain image");
+            console.warn(alerts_1.default.DANGER, "name field must contain image");
+        }
+    }
+});

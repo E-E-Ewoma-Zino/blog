@@ -15,24 +15,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // this middleware checks if the users token is valid or if it has expire
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const alerts_1 = __importDefault(require("../constants/alerts"));
-const httpStatus_1 = __importDefault(require("../constants/httpStatus"));
-const serverResponse_1 = require("../constants/serverResponse");
+const messageBird_1 = __importDefault(require("../utils/messageBird"));
 function auth(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const token = req.body.token || req.query.token || req.headers["x-access-token"];
-        console.log("the token<<<", token);
-        console.log("header", req.headers["authorization"]);
-        if (!token)
-            return res.status(httpStatus_1.default.FORBIDDEN_403).json((0, serverResponse_1.SERVER_RES)({ message: "A token is required for authentication", err: "Authentication Failed", status: httpStatus_1.default.FORBIDDEN_403, alert: alerts_1.default.DANGER }));
+        let token = req.cookies.cookme;
+        if (!token) {
+            messageBird_1.default.message(alerts_1.default.DANGER, "You need authorisation to continue");
+            return res.render("admin/login", {
+                bird: messageBird_1.default.fly
+            });
+        }
+        // return res.status(STATUS.FORBIDDEN_403).json(SERVER_RES({ message: "A token is required for authentication", err: "Authentication Failed", status: STATUS.FORBIDDEN_403, alert: ALERTS.DANGER }));
+        // remove Bearer form the token if it is there
+        // token = token.replace("Bearer ", '');
         try {
             const secretString = process.env.TOKEN_KEY || "backupsecret";
             const decoded = jsonwebtoken_1.default.verify(token, secretString);
-            console.log("decoded", decoded);
             res.locals.user = decoded;
         }
         catch (err) {
-            console.log("Error in middleware auth", err);
-            return res.status(httpStatus_1.default.FORBIDDEN_403).json((0, serverResponse_1.SERVER_RES)({ message: "A token is required for authentication", err: "Authentication Failed", status: httpStatus_1.default.FORBIDDEN_403, alert: alerts_1.default.DANGER }));
+            const _err = err;
+            console.log("Error in middleware auth", _err);
+            console.log("Error in middleware auth", _err.message);
+            messageBird_1.default.message(alerts_1.default.DANGER, _err.message);
+            return res.render("admin/login", {
+                bird: messageBird_1.default.fly
+            });
+            // return res.status(STATUS.FORBIDDEN_403).json(SERVER_RES({ message: "A token is required for authentication", err: _err.message, status: STATUS.FORBIDDEN_403, alert: ALERTS.DANGER }));
         }
         return next();
     });

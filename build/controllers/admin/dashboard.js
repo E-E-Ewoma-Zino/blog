@@ -8,21 +8,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
-//  Configure mongodb for online and local DB
-function default_1() {
+exports.adminDashboard = void 0;
+const alerts_1 = __importDefault(require("../../constants/alerts"));
+const httpStatus_1 = __importDefault(require("../../constants/httpStatus"));
+const serverResponse_1 = require("../../constants/serverResponse");
+function adminDashboard(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const uri = "mongodb+srv://Blog:Blog@blog.2mkerym.mongodb.net/Blog?retryWrites=true&w=majority";
         try {
-            // const connected:Mongoose = await connect("mongodb://localhost:27017/electionDay");
-            const connected = yield (0, mongoose_1.connect)(process.env.MONGO_URL || uri);
-            console.log(`Connected Successfully at ${connected.connection.host}`);
+            res.render("admin/index");
         }
         catch (err) {
-            console.error(":::::::::::::>" + err);
-            process.exit(1);
+            const _err = err;
+            console.log("Error:", _err);
+            res.status(httpStatus_1.default.SERVER_ERR_500).json((0, serverResponse_1.SERVER_RES)({ message: "Failed Login", err: _err.message, status: httpStatus_1.default.SERVER_ERR_500, alert: alerts_1.default.DANGER }));
         }
     });
 }
-exports.default = default_1;
+exports.adminDashboard = adminDashboard;

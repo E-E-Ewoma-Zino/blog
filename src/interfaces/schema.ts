@@ -45,7 +45,8 @@ export interface IBlog {
 	comments: Array <{
 		comment: String,
 		user: String,
-		isVerified: Boolean
+		isVerified: Boolean,
+		createdAt: Date
 	}>,
 	slug: String,
 	markdown: String,

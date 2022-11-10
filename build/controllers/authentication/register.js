@@ -8,6 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -24,7 +35,7 @@ function RegisterUser(req, res) {
         try {
             console.log("body", req.body);
             // Get user input
-            const { email, password } = req.body;
+            const _a = req.body, { email, password } = _a, body = __rest(_a, ["email", "password"]);
             // Validate user input
             if (!(email && password))
                 return res.status(httpStatus_1.default.BAD_REQUEST_400).json((0, serverResponse_1.SERVER_RES)({ message: "All input is required", err: "Failed to register user", status: httpStatus_1.default.BAD_REQUEST_400, alert: alerts_1.default.DANGER }));
@@ -40,10 +51,7 @@ function RegisterUser(req, res) {
             const encryptedPassword = yield bcryptjs_1.default.hash(password, 10);
             console.log("encryptedPassword", encryptedPassword);
             // Create user in our database
-            const newUser = yield user_1.default.create({
-                email: email.toLowerCase(),
-                password: encryptedPassword,
-            });
+            const newUser = yield user_1.default.create(Object.assign({ email: email.toLowerCase(), password: encryptedPassword }, body));
             if (newUser.status !== httpStatus_1.default.OK_200)
                 return res.status(newUser.status).json(newUser);
             const newUserData = newUser.data;
@@ -67,7 +75,7 @@ function RegisterUser(req, res) {
                 return res.status(updateUserWithToken.status).json(updateUserWithToken);
             // return new user
             console.log("Done");
-            return res.status(httpStatus_1.default.CREATED_201).json((0, serverResponse_1.SERVER_RES)({ message: "Successfully Registered", err: null, status: httpStatus_1.default.CREATED_201, alert: alerts_1.default.SUCCESS }));
+            return res.status(httpStatus_1.default.CREATED_201).json((0, serverResponse_1.SERVER_RES)({ data: newUserData, message: "Successfully Registered", err: null, status: httpStatus_1.default.CREATED_201, alert: alerts_1.default.SUCCESS }));
         }
         catch (err) {
             const _err = err;

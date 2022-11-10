@@ -1,5 +1,4 @@
 // controlls all the post requests
-import comment from "../../libs/comment";
 import ALERTS from "../../constants/alerts";
 import { Request, Response } from "express";
 import STATUS from "../../constants/httpStatus";
@@ -20,7 +19,8 @@ export default async function createComment(req: Request, res: Response): Promis
 			updateValue: {
 				user,
 				comment: comment.toString(),
-				isVerified: false
+				isVerified: false,
+				createdAt: new Date()
 			}
 		});
 		

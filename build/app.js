@@ -37,27 +37,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = require("dotenv");
 const express_1 = __importStar(require("express"));
-const path_1 = __importDefault(require("path"));
 const db_1 = __importDefault(require("./config/db"));
+const error404_1 = require("./controllers/errors/error404");
 const router_1 = __importDefault(require("./router"));
+const method_override_1 = __importDefault(require("method-override"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 // config .env
 (0, dotenv_1.config)();
 // create app
 const app = (0, express_1.default)();
 // configs
 app.use((0, express_1.json)());
+app.use(express_1.default.static("public"));
+app.set("view engine", "ejs");
 app.use((0, express_1.urlencoded)({ extended: true }));
-app.use('/uploads', express_1.default.static(path_1.default.join(__dirname + '/uploads')));
+app.use('/uploads', express_1.default.static("uploads"));
+app.use((0, method_override_1.default)("_method"));
+app.use((0, cookie_parser_1.default)());
 // set up db
 (() => __awaiter(void 0, void 0, void 0, function* () { return yield (0, db_1.default)(); }))();
-// @desc	for all home route "/"
-// @route	home
-app.use("/", router_1.default.baseRoute);
-// @desc	for all admin route "/"
-// @route	/admin
+// My routes
+// @desc	for all client post "/client"
+// @route	/
+app.use("/", router_1.default.client);
+// @desc	for user authentication "/auth"
+// @route	/auth
 app.use("/auth", router_1.default.auth);
+// @desc	for all admin post "/admin"
+// @route	/admin
+app.use("/admin", router_1.default.admin);
+// @desc	for all blog post "/blog"
+// @route	/blog
+app.use("/blog", router_1.default.blog);
+// @desc	for all comment api "/comment"
+// @route	/comment
+app.use("/comment", router_1.default.comment);
 // @desc	404 Page
-app.use((req, res) => res.status(404).send("404 Not Found!"));
+app.use((req, res) => (0, error404_1.error404)(req, res));
 const port = Number(process.env.PORT) || 5001;
 app.listen(port, () => console.log(process.env.NODE_ENV, "app at port", port));
 /* cross-env NODE_ENV=Production */ 
