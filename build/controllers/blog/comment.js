@@ -30,7 +30,7 @@ function createComment(req, res) {
                     user,
                     comment: comment.toString(),
                     isVerified: false,
-                    createdAt: new Date()
+                    createdAt: Date.now()
                 }
             });
             // res.status(STATUS.CREATED_201).json(SERVER_RES({ message: "Ceated new comment", err: null, status: STATUS.CREATED_201, alert: ALERTS.SUCCESS }));

@@ -27,40 +27,28 @@ function deleteBolg(req, res) {
             const theBlog = yield blog_1.default.findById(itemId);
             const data = theBlog.data;
             // delete img
-            if (data)
-                fs_1.default.stat(__dirname + "../../../../" + data.mainImage.path, (fsStats_err, stats) => {
-                    if (fsStats_err) {
-                        console.error("fsStats_err:", fsStats_err);
-                        try {
-                            throw { message: "Check to see if the file stil exist", err: "Could not delete this media!", status: 400, alert: "danger" };
-                        }
-                        catch (err) {
-                            messageBird_1.default.message(alerts_1.default.DANGER, "Failed!");
-                            console.log("The Error:", err);
-                        }
+            // Using fs to also delete the book file
+            if (data) {
+                fs_1.default.unlink(__dirname + "../../../../" + data.mainImage.path, (err) => __awaiter(this, void 0, void 0, function* () {
+                    if (err) {
+                        messageBird_1.default.message(alerts_1.default.SUCCESS, "Issues deleting blog image");
+                        // res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: err.message, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
                     }
-                    // Using fs to also delete the book file
-                    else
-                        fs_1.default.unlink(__dirname + "../../../../" + data.mainImage.path, (unlink_err) => __awaiter(this, void 0, void 0, function* () {
-                            if (unlink_err) {
-                                console.error("unlink_err:", unlink_err);
-                                try {
-                                    throw { message: "Check to see if the file stil exist", err: "Could not delete this media!", status: 400, alert: "danger" };
-                                }
-                                catch (err) {
-                                    messageBird_1.default.message(alerts_1.default.DANGER, "Failed!");
-                                    console.log("The Error:", err);
-                                }
-                            }
-                            else {
-                                console.log("=================SAVE===============");
-                                console.log("file deleted successfully");
-                                yield blog_1.default.remove(itemId);
-                                messageBird_1.default.message(alerts_1.default.SUCCESS, "Deleted Blog");
-                            }
-                        }));
-                });
-            res.status(httpStatus_1.default.NO_CONTENT_204).json((0, serverResponse_1.SERVER_RES)({ message: "Deleted Blog", err: null, status: httpStatus_1.default.NO_CONTENT_204, alert: alerts_1.default.SUCCESS }));
+                }));
+                const deleteBlog = yield blog_1.default.remove(itemId);
+                if (!deleteBlog.data) {
+                    messageBird_1.default.message(alerts_1.default.SUCCESS, "Issues deleting blog");
+                    res.status(httpStatus_1.default.NOT_FOUND_404).json((0, serverResponse_1.SERVER_RES)({ message: "Could not find image", err: deleteBlog.err, status: httpStatus_1.default.NOT_FOUND_404, alert: alerts_1.default.DANGER }));
+                }
+                else {
+                    messageBird_1.default.message(alerts_1.default.SUCCESS, "Deleted Blog");
+                    res.status(httpStatus_1.default.NO_CONTENT_204).json((0, serverResponse_1.SERVER_RES)({ message: "Deleted Blog", err: null, status: httpStatus_1.default.NO_CONTENT_204, alert: alerts_1.default.SUCCESS }));
+                }
+            }
+            else {
+                messageBird_1.default.message(alerts_1.default.SUCCESS, "Failed to delete blog");
+                res.status(httpStatus_1.default.BAD_REQUEST_400).json((0, serverResponse_1.SERVER_RES)({ message: "Failed to delete", err: itemId + " is not found in the db", status: httpStatus_1.default.BAD_REQUEST_400, alert: alerts_1.default.SUCCESS }));
+            }
         }
         catch (err) {
             const _err = err;

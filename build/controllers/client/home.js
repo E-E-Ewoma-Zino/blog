@@ -19,20 +19,21 @@ const alerts_1 = __importDefault(require("../../constants/alerts"));
 const httpStatus_1 = __importDefault(require("../../constants/httpStatus"));
 const serverResponse_1 = require("../../constants/serverResponse");
 function clientHome(req, res) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const theBlog = yield blog_1.default.findAll({});
             const data = theBlog.data[0];
-            const siteUrl = "https://www.global-finance-online.com/";
+            const siteUrl = "https://www.global-finance-news.com/";
             const description = `Global finance news is a blog devoted to providing in-depth information on the financial world globally in areas that are crucial to everything finance you can rely on us to provide that information here it's what we are known for we continue to deliver in this regard. Detailed and easy-to-use information is what we offer at the very core of our structure.`;
             const head = {
                 themeColor: "#ffffff",
                 title: "Xpress Coaching",
-                keywords: "Xpress Coaching, " + data.keywords,
-                ogImageType: data.mainImage.mimetype,
-                ogUrl: siteUrl + "blogs/" + data.slug,
+                keywords: "Xpress Coaching, " + (data === null || data === void 0 ? void 0 : data.keywords),
+                ogImageType: data === null || data === void 0 ? void 0 : data.mainImage.mimetype,
+                ogUrl: siteUrl + "blogs/" + (data === null || data === void 0 ? void 0 : data.slug),
                 ogTitle: "Xpress Coaching",
-                ogImage: siteUrl + data.mainImage.path,
+                ogImage: siteUrl + ((_a = data === null || data === void 0 ? void 0 : data.mainImage) === null || _a === void 0 ? void 0 : _a.path),
                 description,
                 siteUrl
             };

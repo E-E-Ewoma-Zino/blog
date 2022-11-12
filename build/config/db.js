@@ -13,10 +13,11 @@ const mongoose_1 = require("mongoose");
 //  Configure mongodb for online and local DB
 function default_1() {
     return __awaiter(this, void 0, void 0, function* () {
-        const uri = "mongodb+srv://Blog:Blog@blog.2mkerym.mongodb.net/Blog?retryWrites=true&w=majority";
         try {
-            // const connected:Mongoose = await connect("mongodb://localhost:27017/electionDay");
-            const connected = yield (0, mongoose_1.connect)(process.env.MONGO_URL || uri);
+            const devUrl = process.env.MONGO_DEVELOPMENT_URL;
+            const proUrl = process.env.MONGO_PRODUCTION_URL;
+            const connected = yield (0, mongoose_1.connect)(process.env.NODE_ENV === "PRODUCTION" ? proUrl : devUrl);
+            // 
             console.log(`Connected Successfully at ${connected.connection.host}`);
         }
         catch (err) {
