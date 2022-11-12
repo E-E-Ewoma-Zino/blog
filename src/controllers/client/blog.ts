@@ -15,17 +15,17 @@ export async function clientBlog(req: Request, res: Response): Promise<void> {
 		const allBlog = await blog.findAll({});
 		
 		const data = theBlog.data[0] as IBlog;
-		const siteUrl = "https://www.global-finance-online.com/";
+		const siteUrl = "https://www.global-finance-news.com/";
 
 		const head = {
 			themeColor: "#ffffff",
-			title: data.title,
-			keywords: data.keywords,
-			ogImageType: data.mainImage.mimetype,
-			ogUrl: siteUrl + "blogs/" + data.slug,
-			ogTitle: data.title,
-			description: data.description,
-			ogImage: siteUrl + data.mainImage.path,
+			title: data?.title,
+			keywords: data?.keywords,
+			ogImageType: data?.mainImage.mimetype,
+			ogUrl: siteUrl + "blogs/" + data?.slug,
+			ogTitle: data?.title,
+			description: data?.description,
+			ogImage: siteUrl + data?.mainImage.path,
 			siteUrl
 		}
 

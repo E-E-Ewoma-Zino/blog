@@ -17,40 +17,31 @@ export default async function deleteBolg(req: Request, res: Response): Promise<v
 	try {
 		const theBlog = await blog.findById(itemId);
 		const data = theBlog.data as IBlog;
-		
+
 		// delete img
-		if (data) fs.stat(__dirname + "../../../../" + data.mainImage.path, (fsStats_err, stats) => {
-			if (fsStats_err) {
-				console.error("fsStats_err:", fsStats_err);
-				try {
-					throw { message: "Check to see if the file stil exist", err: "Could not delete this media!", status: 400, alert: "danger" };
-				} catch (err) {
-					messageBird.message(ALERTS.DANGER, "Failed!");
-					console.log("The Error:", err);
-				}
-			}
-			// Using fs to also delete the book file
-			else fs.unlink(__dirname + "../../../../" + data.mainImage.path, async (unlink_err) => {
-				if (unlink_err) {
-					console.error("unlink_err:", unlink_err);
-					try {
-						throw { message: "Check to see if the file stil exist", err: "Could not delete this media!", status: 400, alert: "danger" };
-					} catch (err) {
-						messageBird.message(ALERTS.DANGER, "Failed!");
-						console.log("The Error:", err);
-					}
-				}
-				else {
-					console.log("=================SAVE===============");
-					console.log("file deleted successfully");
-					
-					await blog.remove(itemId);
-					messageBird.message(ALERTS.SUCCESS, "Deleted Blog");
+		// Using fs to also delete the book file
+		if (data) {
+			fs.unlink(__dirname + "../../../../" + data.mainImage.path, async (err) => {
+				if (err) {
+					messageBird.message(ALERTS.SUCCESS, "Issues deleting blog image");
+					// res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: err.message, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
 				}
 			});
-		});
 
-		res.status(STATUS.NO_CONTENT_204).json(SERVER_RES({ message: "Deleted Blog", err: null, status: STATUS.NO_CONTENT_204, alert: ALERTS.SUCCESS }));
+			const deleteBlog = await blog.remove(itemId);
+
+			if (!deleteBlog.data) {
+				messageBird.message(ALERTS.SUCCESS, "Issues deleting blog");
+				res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: deleteBlog.err, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
+			} else {
+				messageBird.message(ALERTS.SUCCESS, "Deleted Blog");
+				res.status(STATUS.NO_CONTENT_204).json(SERVER_RES({ message: "Deleted Blog", err: null, status: STATUS.NO_CONTENT_204, alert: ALERTS.SUCCESS }));
+			}
+		} else {
+			messageBird.message(ALERTS.SUCCESS, "Failed to delete blog");
+			res.status(STATUS.BAD_REQUEST_400).json(SERVER_RES({ message: "Failed to delete", err: itemId + " is not found in the db", status: STATUS.BAD_REQUEST_400, alert: ALERTS.SUCCESS }));
+		}
+
 	} catch (err) {
 		const _err = err as Error;
 		console.log("Error:", _err);

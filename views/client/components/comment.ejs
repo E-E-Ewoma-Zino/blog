@@ -113,10 +113,7 @@
 												</span>
 												<!-- <small class="c-badge">Top Comment</small> -->
 											</div>
-											<small>
-												<script>
-													document.write(moment("<%= new Date(c.createdAt) %>").startOf('day').fromNow())
-												</script>
+											<small data-date="<%= new Date(c.createdAt) %>">
 											</small>
 										</div>
 
@@ -144,4 +141,12 @@
 
 		</div>
 	</section>
+	<script>
+		const dateT = document.querySelectorAll("[data-date]");
+		dateT.forEach(dT => {
+			console.log("qwertyu", dT.dataset.date);
+			dT.innerHTML = moment(dT.dataset.date).startOf('seconds').fromNow();
+
+		});
+	</script>
 </frameset>

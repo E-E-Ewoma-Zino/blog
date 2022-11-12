@@ -20,7 +20,7 @@ export default async function createComment(req: Request, res: Response): Promis
 				user,
 				comment: comment.toString(),
 				isVerified: false,
-				createdAt: new Date()
+				createdAt: Date.now()
 			}
 		});
 		
