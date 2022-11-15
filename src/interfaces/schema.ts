@@ -5,7 +5,6 @@ export interface IUser {
 	username: String,
 	email: String,
 	password: String,
-	token: String,
 	authLevel: Number,
 	createdAt: Date,
 	updatedAt: Date
@@ -44,7 +43,7 @@ export interface IBlog {
 	description: String,
 	comments: Array <{
 		comment: String,
-		user: String,
+		user: Object,
 		isVerified: Boolean,
 		createdAt: Date
 	}>,

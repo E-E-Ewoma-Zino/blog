@@ -23,7 +23,7 @@ const swalWithBootstrapButtons = Swal.mixin({
 		$("[data-delete]").each(function (index, element) {
 			$(this).click(function (e) {
 				e.preventDefault();
-				
+
 				swalWithBootstrapButtons.fire({
 					title: "Delete Blog",
 					showDenyButton: true,
@@ -75,12 +75,12 @@ const swalWithBootstrapButtons = Swal.mixin({
 				pre.href = `/admin/storage?start=${start - 20}&stop=${stop - 20}`;
 			}
 
-			const clipboard = document.querySelectorAll(".fa-copy");
-
-			clipboard.forEach(clip => {
+			// copy link 
+			const clipboardLink = document.querySelectorAll(".fa-copy");
+			clipboardLink.forEach(clip => {
 				clip.addEventListener("click", e => {
 					/* Copy the text inside the text field */
-					navigator.clipboard.writeText(e.currentTarget.dataset.url);
+					navigator.clipboard.writeText(e.currentTarget.dataset.url.replace(/ /g, "%20"));
 
 					/* Alert the copied text */
 					messager({
@@ -89,6 +89,22 @@ const swalWithBootstrapButtons = Swal.mixin({
 					});
 				});
 			});
+
 		}
+
+		// copy md
+		const clipboardMD = document.querySelectorAll(".md-copy");
+		clipboardMD.forEach(clip => {
+			clip.addEventListener("click", e => {
+				/* Copy the text inside the text field */
+				navigator.clipboard.writeText(e.currentTarget.dataset.md);
+
+				/* Alert the copied text */
+				messager({
+					alert: "success",
+					message: "Copyed"
+				});
+			});
+		});
 	});
 })(jQuery);

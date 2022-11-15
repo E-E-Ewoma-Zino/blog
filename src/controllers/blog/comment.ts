@@ -4,20 +4,23 @@ import { Request, Response } from "express";
 import STATUS from "../../constants/httpStatus";
 import { SERVER_RES } from "../../constants/serverResponse";
 import blog from "../../libs/blog";
-import { IBlog } from "../../interfaces/schema";
+import { IBlog, IUser } from "../../interfaces/schema";
 
 export default async function createComment(req: Request, res: Response): Promise<void> {
-	console.log("body", req.body);
-
-	const { comment, blogId, user } = req.body;
+	const { comment, blogId } = req.body;
 
 	try {
-		const newComment = await blog.update({
+		const user = req.user as IUser;
+
+		await blog.update({
 			itemToUpdate: { _id: blogId } as IBlog,
 			optionsToUse: "$push",
 			propertyToUpdate: "comments",
 			updateValue: {
-				user,
+				user: {
+					email: user.email,
+					username: user.username
+				},
 				comment: comment.toString(),
 				isVerified: false,
 				createdAt: Date.now()

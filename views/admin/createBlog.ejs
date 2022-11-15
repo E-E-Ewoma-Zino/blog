@@ -18,7 +18,8 @@
 											<h4 class="font-weight-bold mb-0">Create Blog</h4>
 										</div>
 										<div>
-											<button type="button" class="btn btn-primary btn-icon-text btn-rounded" onclick="history.back()">
+											<button type="button" class="btn btn-primary btn-icon-text btn-rounded"
+												onclick="history.back()">
 												<i class="ti-arrow-left btn-icon-prepend"></i>Back
 											</button>
 										</div>
@@ -44,8 +45,8 @@
 												</div>
 												<div class="form-group">
 													<label for="subTitle">Sub Title</label>
-													<input type="text" class="form-control" id="subTitle" name="subTitle"
-														placeholder="Can Bitcoin rise back up" required>
+													<input type="text" class="form-control" id="subTitle"
+														name="subTitle" placeholder="Can Bitcoin rise back up" required>
 												</div>
 												<div class="form-group">
 													<label for="author">Author</label>
@@ -55,12 +56,16 @@
 												<div class="form-group">
 													<label for="description">Description</label>
 													<input type="text" class="form-control" id="description"
-														name="description" placeholder="This is a detailed description on how Bitcoin went down the chart and how it will rise again" required>
+														name="description"
+														placeholder="This is a detailed description on how Bitcoin went down the chart and how it will rise again"
+														required>
 												</div>
 												<div class="form-group">
 													<label for="keywords">Keywords</label>
 													<input type="text" class="form-control" id="keywords"
-														name="keywords" placeholder="bitcoin, financial issues with bitcoin, bitcoin drop, crypto currency" required>
+														name="keywords"
+														placeholder="bitcoin, financial issues with bitcoin, bitcoin drop, crypto currency"
+														required>
 												</div>
 												<div class="form-group">
 													<label>Image upload</label>
@@ -78,8 +83,8 @@
 												<div class="form-group">
 													<label for="markdown">Content</label>
 													<textarea rows="4" class="form-control" id="markdown"
-														name="markdown" placeholder="Content"
-														style="resize: auto" required></textarea>
+														name="markdown" placeholder="Content" style="resize: auto"
+														required></textarea>
 												</div>
 												<button type="submit" class="btn btn-primary mr-2">Submit</button>
 											</form>
@@ -87,24 +92,110 @@
 									</div>
 								</div>
 							</div>
+							<!-- Example of md -->
+							<div class="row">
+								<div class="col-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											<h4 class="card-title">Easy copy</h4>
+											<p class="card-description">
+												Click on the format you want to copy
+											</p>
+
+											<div class="row">
+												<div class="col-4">
+													<div class="card">
+														<div class="card-body">
+															<!-- <div class="card-title">Add Heading</div> -->
+															<div class="card-description">
+																<h2 data-md="## "
+																	class="md-copy hover-darken cursor-hover" 2>Heading
+																	1</h2>
+																<h3 data-md="### "
+																	class="md-copy hover-darken cursor-hover" 3>Heading
+																	2</h3>
+																<h4 data-md="#### "
+																	class="md-copy hover-darken cursor-hover" 4>Heading
+																	3</h4>
+																<h5 data-md="##### "
+																	class="md-copy hover-darken cursor-hover" 5>Heading
+																	4</h5>
+																<h6 data-md="###### "
+																	class="md-copy hover-darken cursor-hover" 6>Heading
+																	5</h6>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-4">
+													<div class="card">
+														<div class="card-body">
+															<!-- <div class="card-title">Add Image</div> -->
+															<div class="card-description">
+																<img data-md="![Enter image description](enter image link)"
+																	class="md-copy hover-darken cursor-hover img-fluid mb-3"
+																	src="https://source.unsplash.com/random/300x300"
+																	width="70px" alt="random image">
+																<blockquote data-md="> "
+																	class="md-copy hover-darken cursor-hover mb-2"
+																	style="border-left: 4px solid #333; padding-left: 10px;">
+																	Add a blockquote to your blog
+																</blockquote>
+																<a href="#x" data-md="[Enter text](enter link)"
+																	class="md-copy hover-darken cursor-hover"
+																	style="text-decoration: none; color: #ff7d27;">Add a
+																	link to your blog</a>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-4">
+													<div class="card">
+														<div class="card-body">
+															<!-- <div class="card-title">Add Heading</div> -->
+															<div class="card-description">
+																<ul data-md="* item 1
+* item 2
+* item 3"
+																	class="md-copy hover-darken cursor-hover">
+																	<li>item 1</li>
+																	<li>item 2</li>
+																	<li>item 3</li>
+																</ul>
+																<ol data-md="1 item 1
+1 item 2
+1 item 3" 
+																	class="md-copy hover-darken cursor-hover">
+																	<li>item 1</li>
+																	<li>item 2</li>
+																	<li>item 3</li>
+																</ol>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- content-wrapper ends -->
+							<!-- components:components/messangeBird -->
+							<%- include("utils/messageBird") %>
+								<!-- components -->
+								<!-- partial:partials/_footer -->
+								<%- include("partials/_footer") %>
+									<!-- partial -->
 						</div>
-						<!-- content-wrapper ends -->
-						<!-- components:components/messangeBird -->
-						<%- include("utils/messageBird") %>
-							<!-- components -->
-						<!-- partial:partials/_footer -->
-						<%- include("partials/_footer") %>
-							<!-- partial -->
+						<!-- main-panel ends -->
 					</div>
-					<!-- main-panel ends -->
+					<!-- page-body-wrapper ends -->
 			</div>
-			<!-- page-body-wrapper ends -->
-	</div>
-	<!-- container-scroller -->
+			<!-- container-scroller -->
 
-	<!-- partial:partials/_scripts -->
-	<%- include("partials/_scripts") %>
-		<!-- partial -->
-		</body>
+			<!-- partial:partials/_scripts -->
+			<%- include("partials/_scripts") %>
+				<!-- partial -->
+				</body>
 
-		</html>
+				</html>

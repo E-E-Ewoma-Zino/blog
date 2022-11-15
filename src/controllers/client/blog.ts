@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 import ALERTS from "../../constants/alerts";
 import STATUS from "../../constants/httpStatus";
 import { SERVER_RES } from "../../constants/serverResponse";
-import { IBlog } from "../../interfaces/schema";
+import { IBlog, IUser } from "../../interfaces/schema";
 
 export async function clientBlog(req: Request, res: Response): Promise<void> {
 	console.log("display all blog");
@@ -26,13 +26,17 @@ export async function clientBlog(req: Request, res: Response): Promise<void> {
 			ogTitle: data?.title,
 			description: data?.description,
 			ogImage: siteUrl + data?.mainImage.path,
-			siteUrl
+			siteUrl,
+			siteName: "Xpress Coaching"
 		}
 
+		const user = req.user as IUser;
+
 		res.render("client/blog", {
+			head,
 			blog: data,
 			blogs: allBlog.data,
-			head
+			user: req.isAuthenticated()? user.username: false
 		});
 	}catch(err){
 		const _err = err as Error;

@@ -25,7 +25,8 @@ export async function clientAbout(req: Request, res: Response): Promise<void> {
 			ogTitle: data?.title,
 			ogImage: siteUrl + data?.mainImage.path,
 			description,
-			siteUrl
+			siteUrl,
+			siteName: "Xpress Coaching"
 		}
 
 		res.render("client/about", {

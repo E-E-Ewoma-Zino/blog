@@ -1,13 +1,12 @@
-import { config } from "dotenv";
-import Express, {json, Request, Response, urlencoded } from "express";
-import path from "path";
 import db from "./config/db";
-import STATUS from "./constants/httpStatus";
-import { error404 } from "./controllers/errors/error404";
 import routes from "./router";
+import { config } from "dotenv";
+import passport from "./config/passport";
+import espressSession from "express-session";
 import methodOverride from "method-override";
-import cookieParser from "cookie-parser";
-
+import { error404 } from "./controllers/errors/error404";
+// import { initialize, Passport, session } from "passport";
+import Express, {json, Request, Response, urlencoded } from "express";
 // config .env
 config();
 
@@ -21,7 +20,23 @@ app.set("view engine", "ejs");
 app.use(urlencoded({ extended: true }));
 app.use('/uploads', Express.static( "uploads"));
 app.use(methodOverride("_method"));
-app.use(cookieParser());
+
+// session setup
+// tell app to use express session
+app.use(espressSession({
+	secret: process.env.SECRET as string,
+	resave: false,
+	saveUninitialized: false,
+	cookie: {
+		maxAge: 3 * 24 * 60 * 1000
+	}
+}));
+
+// passport config
+app.use(passport.initialize());
+app.use(passport.session());
+// app.use(initialize());
+// app.use(session());
 
 // set up db
 (async ():Promise<void> => await db())();

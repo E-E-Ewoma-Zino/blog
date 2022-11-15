@@ -10,7 +10,7 @@ import messageBird from "../../utils/messageBird";
 export async function adminEditBlog(req: Request, res: Response): Promise<void> {
 	try{
 		const theBlog = await blog.findAll({ slug: req.params.slug });
-
+		
 		res.render("admin/editBlog", {
 			bird: messageBird.fly,
 			blog: theBlog.data[0]

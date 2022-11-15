@@ -166,27 +166,22 @@
 							
 							const data = {}
 
-							for (let index = 0; index < this.length - 1; index++) {
+							for (let index = 0; index < this.length; index++) {
 								const input = this[index];
 
-								if (input.tagName !== "INPUT") continue;
+								if(input.tagName === "BUTTON") input.innerHTML = "Loading...";
 
+								if (input.tagName !== "INPUT") continue;
+								
 								data[input.name] = input.value;
 							}
 
 							axios.post(this.action, data).then(res => {
-								console.log("res", res.data);
-
 								messager({
 									message: res.data.message,
 									alert: res.data.alert,
-									method: () => {
-										Cookies.set("cookme", res.data.data.token, { expires: 1 });
-										location.reload();
-									}
+									method: () => location.reload()
 								});
-
-
 							}).catch(err => {
 								console.error("error", err);
 								console.error("error", err.response);

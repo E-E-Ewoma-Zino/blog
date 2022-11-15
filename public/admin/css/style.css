@@ -23307,4 +23307,12 @@ dl li {
 	opacity: 1;
 }
 
+.cursor-hover {
+	cursor: pointer;
+}
+
+.hover-darken:hover {
+	filter: brightness(.5);
+}
+
 /* end */
