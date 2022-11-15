@@ -22,7 +22,9 @@ function adminBlogs(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const theBlog = yield blog_1.default.findAll({});
+            const user = req.user;
             res.render("admin/blogs", {
+                user: user.username,
                 blogs: theBlog.data
             });
         }

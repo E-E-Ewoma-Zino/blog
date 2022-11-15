@@ -12,27 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// The module for the users
+// compare password before authencating
+const user_1 = __importDefault(require("../libs/user"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const mongoose_1 = require("mongoose");
-const userSchema = new mongoose_1.Schema({
-    // Things needed for all user Schema
-    email: String,
-    username: String,
-    password: String,
-    authLevel: {
-        type: Number,
-        default: 0,
-        min: 0,
-        max: 1
-    }
-}, { timestamps: true });
-userSchema.pre("save", function (next) {
+function comparePassword(theEmail, thePassword) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (!this.isModified("password"))
-            next();
-        const salt = yield bcrypt_1.default.genSalt(10);
-        this.password = yield bcrypt_1.default.hash(this.password, salt);
+        const theUser = yield user_1.default.findAll({ email: theEmail });
+        const data = theUser.data[0];
+        return yield bcrypt_1.default.compare(thePassword, data.password);
     });
-});
-exports.default = (0, mongoose_1.model)("User", userSchema);
+}
+exports.default = comparePassword;

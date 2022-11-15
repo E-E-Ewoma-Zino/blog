@@ -6,22 +6,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const blog_1 = __importDefault(require("../controllers/blog"));
 const multer_1 = __importDefault(require("../config/multer"));
+const adminAuth_1 = __importDefault(require("../middleware/adminAuth"));
 const router = (0, express_1.Router)();
 // @desc	Blog Router
 // @route	GET /blog/
 router.get("/", (req, res) => {
-    res.send("BLOG POST GOES HERE");
+    res.redirect("/");
 });
 // @desc	Create a blog api
 // @route	POST /blog/
-router.post("/", multer_1.default.single("image"), (req, res) => blog_1.default.create(req, res));
+router.post("/", adminAuth_1.default, multer_1.default.single("image"), (req, res) => blog_1.default.create(req, res));
 // @desc	Update a blog api
 // @route	POST /blog/update
-router.put("/update", multer_1.default.single("image"), (req, res) => blog_1.default.update(req, res));
+router.put("/update", adminAuth_1.default, multer_1.default.single("image"), (req, res) => blog_1.default.update(req, res));
 // @desc	Delete a blog api
 // @route	POST /blog/delete
-router.delete("/delete", (req, res) => blog_1.default.delete(req, res));
+router.delete("/delete", adminAuth_1.default, (req, res) => blog_1.default.delete(req, res));
 // @desc	Comment a blog api
 // @route	POST /blog/comment
-router.patch("/comment", (req, res) => blog_1.default.comment(req, res));
+// router.patch("/comment", auth, (req: Request, res: Response): Promise<void> => blog.comment(req, res));
 exports.default = router;

@@ -54,7 +54,7 @@ function deleteBolg(req, res) {
             const _err = err;
             console.log("Error:", _err);
             messageBird_1.default.message(alerts_1.default.DANGER, "Internal Server Error");
-            res.status(httpStatus_1.default.SERVER_ERR_500).json((0, serverResponse_1.SERVER_RES)({ message: "Failed Login", err: _err.message, status: httpStatus_1.default.SERVER_ERR_500, alert: alerts_1.default.DANGER }));
+            res.status(httpStatus_1.default.SERVER_ERR_500).json((0, serverResponse_1.SERVER_RES)({ message: "Failed To Delete", err: _err.message, status: httpStatus_1.default.SERVER_ERR_500, alert: alerts_1.default.DANGER }));
         }
     });
 }

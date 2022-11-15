@@ -34,7 +34,8 @@ function clientAbout(req, res) {
                 ogTitle: data === null || data === void 0 ? void 0 : data.title,
                 ogImage: siteUrl + (data === null || data === void 0 ? void 0 : data.mainImage.path),
                 description,
-                siteUrl
+                siteUrl,
+                siteName: "Xpress Coaching"
             };
             res.render("client/about", {
                 blogs: theBlog.data,

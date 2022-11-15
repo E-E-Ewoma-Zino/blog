@@ -16,7 +16,7 @@ function default_1() {
         try {
             const devUrl = process.env.MONGO_DEVELOPMENT_URL;
             const proUrl = process.env.MONGO_PRODUCTION_URL;
-            const connected = yield (0, mongoose_1.connect)(process.env.NODE_ENV === "PRODUCTION" ? proUrl : devUrl);
+            const connected = yield (0, mongoose_1.connect)(process.env.NODE_ENV === "production" ? proUrl : devUrl);
             // 
             console.log(`Connected Successfully at ${connected.connection.host}`);
         }

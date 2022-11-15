@@ -22,8 +22,10 @@ function adminEditBlog(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const theBlog = yield blog_1.default.findAll({ slug: req.params.slug });
+            const user = req.user;
             res.render("admin/editBlog", {
                 bird: messageBird_1.default.fly,
+                user: user.username,
                 blog: theBlog.data[0]
             });
         }

@@ -20,8 +20,10 @@ const messageBird_1 = __importDefault(require("../../utils/messageBird"));
 function adminCreateBlog(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const user = req.user;
             res.render("admin/createBlog", {
-                bird: messageBird_1.default.fly
+                bird: messageBird_1.default.fly,
+                user: user.username
             });
         }
         catch (err) {

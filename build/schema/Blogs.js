@@ -15,9 +15,15 @@ const blogSchema = new mongoose_1.Schema({
     markdown: String,
     convertedMD: String,
     comments: [{
-            user: String,
+            user: {
+                username: String,
+                email: String
+            },
             comment: String,
-            isVerified: Boolean,
+            isVerified: {
+                type: Boolean,
+                default: false
+            },
             createdAt: Date
         }],
     mainImage: Object

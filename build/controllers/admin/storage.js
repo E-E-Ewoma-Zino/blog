@@ -23,6 +23,7 @@ const serverResponse_1 = require("../../constants/serverResponse");
 function storage(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            const user = req.user;
             const allImages = yield image_1.default.findAll({});
             const start = Number(req.query.start) || 0;
             const stop = Number(req.query.stop) || 20;
@@ -31,6 +32,7 @@ function storage(req, res) {
             res.render("admin/storage", {
                 stop: stop,
                 start: start,
+                user: user.username,
                 bird: messageBird_1.default.fly,
                 mediaLength: allImages.data.length,
                 images: allImages.data.reverse().slice(start, stop)

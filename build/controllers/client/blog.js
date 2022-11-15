@@ -18,6 +18,7 @@ const blog_1 = __importDefault(require("../../libs/blog"));
 const alerts_1 = __importDefault(require("../../constants/alerts"));
 const httpStatus_1 = __importDefault(require("../../constants/httpStatus"));
 const serverResponse_1 = require("../../constants/serverResponse");
+const messageBird_1 = __importDefault(require("../../utils/messageBird"));
 function clientBlog(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("display all blog");
@@ -35,12 +36,16 @@ function clientBlog(req, res) {
                 ogTitle: data === null || data === void 0 ? void 0 : data.title,
                 description: data === null || data === void 0 ? void 0 : data.description,
                 ogImage: siteUrl + (data === null || data === void 0 ? void 0 : data.mainImage.path),
-                siteUrl
+                siteUrl,
+                siteName: "Xpress Coaching"
             };
+            const user = req.user;
             res.render("client/blog", {
+                head,
                 blog: data,
                 blogs: allBlog.data,
-                head
+                bird: messageBird_1.default.fly,
+                user: req.isAuthenticated() ? user.username : false
             });
         }
         catch (err) {

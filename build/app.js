@@ -35,13 +35,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const dotenv_1 = require("dotenv");
-const express_1 = __importStar(require("express"));
 const db_1 = __importDefault(require("./config/db"));
-const error404_1 = require("./controllers/errors/error404");
 const router_1 = __importDefault(require("./router"));
+const dotenv_1 = require("dotenv");
+const passport_1 = __importDefault(require("./config/passport"));
+const express_session_1 = __importDefault(require("express-session"));
 const method_override_1 = __importDefault(require("method-override"));
-const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const error404_1 = require("./controllers/errors/error404");
+// import { initialize, Passport, session } from "passport";
+const express_1 = __importStar(require("express"));
 // config .env
 (0, dotenv_1.config)();
 // create app
@@ -53,7 +55,21 @@ app.set("view engine", "ejs");
 app.use((0, express_1.urlencoded)({ extended: true }));
 app.use('/uploads', express_1.default.static("uploads"));
 app.use((0, method_override_1.default)("_method"));
-app.use((0, cookie_parser_1.default)());
+// session setup
+// tell app to use express session
+app.use((0, express_session_1.default)({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 3 * 24 * 60 * 1000
+    }
+}));
+// passport config
+app.use(passport_1.default.initialize());
+app.use(passport_1.default.session());
+// app.use(initialize());
+// app.use(session());
 // set up db
 (() => __awaiter(void 0, void 0, void 0, function* () { return yield (0, db_1.default)(); }))();
 // My routes

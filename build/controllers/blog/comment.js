@@ -14,32 +14,36 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // controlls all the post requests
 const alerts_1 = __importDefault(require("../../constants/alerts"));
-const httpStatus_1 = __importDefault(require("../../constants/httpStatus"));
-const serverResponse_1 = require("../../constants/serverResponse");
 const blog_1 = __importDefault(require("../../libs/blog"));
+const messageBird_1 = __importDefault(require("../../utils/messageBird"));
 function createComment(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log("body", req.body);
-        const { comment, blogId, user } = req.body;
+        const { comment, blogId } = req.body;
         try {
-            const newComment = yield blog_1.default.update({
+            const user = req.user;
+            yield blog_1.default.update({
                 itemToUpdate: { _id: blogId },
                 optionsToUse: "$push",
                 propertyToUpdate: "comments",
                 updateValue: {
-                    user,
+                    user: {
+                        email: user === null || user === void 0 ? void 0 : user.email,
+                        username: user === null || user === void 0 ? void 0 : user.username
+                    },
                     comment: comment.toString(),
                     isVerified: false,
                     createdAt: Date.now()
                 }
             });
+            messageBird_1.default.message(alerts_1.default.SUCCESS, "Thank you for your comment");
             // res.status(STATUS.CREATED_201).json(SERVER_RES({ message: "Ceated new comment", err: null, status: STATUS.CREATED_201, alert: ALERTS.SUCCESS }));
             res.redirect("back");
         }
         catch (err) {
             const _err = err;
             console.log("Error:", _err);
-            res.status(httpStatus_1.default.SERVER_ERR_500).json((0, serverResponse_1.SERVER_RES)({ message: "Failed Login", err: _err.message, status: httpStatus_1.default.SERVER_ERR_500, alert: alerts_1.default.DANGER }));
+            res.redirect("back");
+            // res.status(STATUS.SERVER_ERR_500).json(SERVER_RES({ message: "Failed Login", err: _err.message, status: STATUS.SERVER_ERR_500, alert: ALERTS.DANGER }));
         }
     });
 }

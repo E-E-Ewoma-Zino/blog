@@ -12,27 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// The module for the users
-const bcrypt_1 = __importDefault(require("bcrypt"));
-const mongoose_1 = require("mongoose");
-const userSchema = new mongoose_1.Schema({
-    // Things needed for all user Schema
-    email: String,
-    username: String,
-    password: String,
-    authLevel: {
-        type: Number,
-        default: 0,
-        min: 0,
-        max: 1
-    }
-}, { timestamps: true });
-userSchema.pre("save", function (next) {
+// this middleware checks if the users token is valid or if it has expire
+const alerts_1 = __importDefault(require("../constants/alerts"));
+const messageBird_1 = __importDefault(require("../utils/messageBird"));
+function adminAuth(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (!this.isModified("password"))
-            next();
-        const salt = yield bcrypt_1.default.genSalt(10);
-        this.password = yield bcrypt_1.default.hash(this.password, salt);
+        const user = req.user;
+        if (user.authLevel < 1) {
+            messageBird_1.default.message(alerts_1.default.WARNING, "You are not authorised!");
+            return res.redirect("/");
+        }
+        return next();
     });
-});
-exports.default = (0, mongoose_1.model)("User", userSchema);
+}
+exports.default = adminAuth;
+;
