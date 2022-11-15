@@ -9,8 +9,9 @@
 				<div class="row flex-grow">
 					<div class="col-lg-6 d-flex align-items-center justify-content-center">
 						<div class="auth-form-transparent text-left p-3">
-							<div class="brand-logo">
-								<img src="/admin/images/logo.svg" alt="logo">
+							<div class="brand-logo" style="font-weight: bolder;">
+								<img src="/client/images/icons/favicon-32x32.png" class="img-fluid rounded-circle" style="width: 3rem;" alt="logo">
+								Xpress Coaching
 							</div>
 							<h4>Welcome back!</h4>
 							<h6 class="font-weight-light">Happy to see you again!</h6>
@@ -69,8 +70,9 @@
 				<div class="row flex-grow">
 					<div class="col-lg-6 d-flex align-items-center justify-content-center">
 						<div class="auth-form-transparent text-left p-3">
-							<div class="brand-logo">
-								<img src="/admin/images/logo.svg" alt="logo">
+							<div class="brand-logo" style="font-weight: bolder;">
+								<img src="/client/images/icons/favicon-32x32.png" class="img-fluid rounded-circle" style="width: 3rem;" alt="logo">
+								Xpress Coaching
 							</div>
 							<h4>New here?</h4>
 							<h6 class="font-weight-light">Join us today! It takes only few steps</h6>
@@ -163,33 +165,52 @@
 
 						$("form").submit(function (e) {
 							e.preventDefault();
-							
+
 							const data = {}
+							let button;
 
 							for (let index = 0; index < this.length; index++) {
 								const input = this[index];
 
-								if(input.tagName === "BUTTON") input.innerHTML = "Loading...";
+								if (input.tagName === "BUTTON") {
+									button = input;
+									input.innerHTML = "Loading...";
+									input.disabled = true;
+								}
 
 								if (input.tagName !== "INPUT") continue;
-								
+
 								data[input.name] = input.value;
 							}
 
-							axios.post(this.action, data).then(res => {
-								messager({
-									message: res.data.message,
-									alert: res.data.alert,
-									method: () => location.reload()
+							try {
+								axios.post(this.action, data).then(res => {
+									messager({
+										message: res.data.message,
+										alert: res.data.alert,
+										method: () => location.reload()
+									});
+								}).catch(err => {
+									button.disabled = false;
+									button.innerHTML = "Submit";
+
+									console.error("error", err);
+									console.error("error", err.response);
+									if(err.response) messager({
+										message: err.response.data.message,
+										alert: err.response.data.alert
+									});
+									else messager({
+										message: err.message,
+										alert: "danger"
+									});
 								});
-							}).catch(err => {
-								console.error("error", err);
-								console.error("error", err.response);
+							} catch (error) {
 								messager({
-									message: err.response.data.message,
-									alert: err.response.data.alert
+									message: "Check Your Internet Connection and Try Again",
+									alert: "warning"
 								});
-							});
+							}
 						});
 					});
 

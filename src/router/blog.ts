@@ -26,6 +26,6 @@ router.delete("/delete", adminAuth, (req: Request, res: Response): Promise<void>
 
 // @desc	Comment a blog api
 // @route	POST /blog/comment
-router.patch("/comment", auth, (req: Request, res: Response): Promise<void> => blog.comment(req, res));
+// router.patch("/comment", auth, (req: Request, res: Response): Promise<void> => blog.comment(req, res));
 
 export default router;

@@ -4,13 +4,14 @@ import image from "../../libs/image";
 import ALERTS from "../../constants/alerts";
 import { Request, Response } from "express";
 import STATUS from "../../constants/httpStatus";
-import { IImage } from "../../interfaces/schema";
+import { IImage, IUser } from "../../interfaces/schema";
 import messageBird from "../../utils/messageBird";
 import { SERVER_RES } from "../../constants/serverResponse";
 
 
 export async function storage(req: Request, res: Response): Promise<void> {
 	try {
+		const user = req.user as IUser;
 		const allImages = await image.findAll({});
 
 		const start = Number(req.query.start) || 0;
@@ -21,6 +22,7 @@ export async function storage(req: Request, res: Response): Promise<void> {
 		res.render("admin/storage", {
 			stop: stop,
 			start: start,
+			user: user.username,
 			bird: messageBird.fly,
 			mediaLength: allImages.data.length,
 			images: allImages.data.reverse().slice(start, stop)

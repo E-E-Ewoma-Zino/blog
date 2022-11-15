@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import ALERTS from "../../constants/alerts";
 import STATUS from "../../constants/httpStatus";
 import { SERVER_RES } from "../../constants/serverResponse";
+import { IUser } from "../../interfaces/schema";
 import blog from "../../libs/blog";
 import messageBird from "../../utils/messageBird";
 
@@ -10,9 +11,11 @@ import messageBird from "../../utils/messageBird";
 export async function adminEditBlog(req: Request, res: Response): Promise<void> {
 	try{
 		const theBlog = await blog.findAll({ slug: req.params.slug });
+		const user = req.user as IUser;
 		
 		res.render("admin/editBlog", {
 			bird: messageBird.fly,
+			user: user.username,
 			blog: theBlog.data[0]
 		});
 	}catch(err){

@@ -22,6 +22,14 @@ router.get("/blog/create", auth, adminAuth, (req: Request, res: Response): Promi
 // @route	GET /blog/edit/:slug
 router.get("/blog/edit/:slug", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.editBlog(req, res));
 
+// @desc	Admin edit blog page
+// @route	GET /blog/edit/:slug
+router.patch("/blog/edit/:slug/comment", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.verifyComment(req, res));
+
+// @desc	Admin edit blog page
+// @route	GET /blog/edit/:slug
+router.delete("/blog/edit/:slug/comment", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.deleteComment(req, res));
+
 // @desc	Admin storage
 // @route	GET /storage
 router.get("/storage", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.storage(req, res));

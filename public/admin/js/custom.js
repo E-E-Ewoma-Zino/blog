@@ -25,7 +25,7 @@ const swalWithBootstrapButtons = Swal.mixin({
 				e.preventDefault();
 
 				swalWithBootstrapButtons.fire({
-					title: "Delete Blog",
+					title: this.dataset.title,
 					showDenyButton: true,
 					showCancelButton: false,
 					confirmButtonText: "Delete",
@@ -38,6 +38,33 @@ const swalWithBootstrapButtons = Swal.mixin({
 
 						axios.delete(this.dataset.deletePath, { data: data }).then(res => {
 							Swal.fire("Deleted", "", "success").then(finish => location.reload());
+						}).catch(err => {
+							Swal.fire("Failed!", "", "error");
+							console.log("Delete media Error", err);
+						});
+					}
+				});
+			});
+		});
+
+		$("[data-verify]").each(function (index, element) {
+			$(this).click(function (e) {
+				e.preventDefault();
+
+				swalWithBootstrapButtons.fire({
+					title: "Approve this comment",
+					showDenyButton: true,
+					showCancelButton: false,
+					confirmButtonText: "Approve",
+					denyButtonText: "Cancel"
+				}).then((deleteBlog) => {
+					if (deleteBlog.isConfirmed) { // get data
+						const data = {
+							itemId: this.dataset.verify
+						}
+
+						axios.patch(this.dataset.verifyPath, data).then(res => {
+							Swal.fire("Verified", "", "success").then(finish => location.reload());
 						}).catch(err => {
 							Swal.fire("Failed!", "", "error");
 							console.log("Delete media Error", err);

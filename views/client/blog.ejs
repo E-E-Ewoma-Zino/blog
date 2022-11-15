@@ -20,17 +20,24 @@
 									</script>
 								</div>
 								<div class="blog-title-div">
-									<h1 class="h1"><%= blog.title %></h1>
+									<h1 class="h1">
+										<%= blog.title %>
+									</h1>
 								</div>
 								<div class="post-summary-blog-div">
-									<div class="post-summary-blog"><%= blog?.subTite %></div>
+									<div class="post-summary-blog">
+										<%= blog?.subTite %>
+									</div>
 								</div>
 								<div class="author-flex-div left">
 									<div class="_5-px-right-margin">
 										<div class="blog-text">By</div>
-									</div><a href="#" class="author _24-px"><%= blog.author %></a>
+									</div><a href="#" class="author _24-px">
+										<%= blog.author %>
+									</a>
 								</div>
-								<div style="background-image:url('/<%= blog.mainImage.path.replace(/\\/, /\//) %>')"class="post-image-blog-div"></div>
+								<div style="background-image:url('/<%= blog.mainImage.path.replace(/\\/, /\//) %>')"
+									class="post-image-blog-div"></div>
 								<!-- content goes here -->
 								<%- blog?.convertedMD %>
 							</article>
@@ -42,18 +49,17 @@
 										<h6 class="h6-side-bar-title">Share</h6>
 										<div class="share-post-div">
 											<div class="w-embed"><a class="w-inline-block social-share-btn tw"
-													href="https://twitter.com/" target="_blank"
-													title="Tweet"
+													href="https://twitter.com/" target="_blank" title="Tweet"
 													onclick="window.open('https://twitter.com/'); return false;"></a>
 											</div>
 											<div class="w-embed"><a class="w-inline-block social-share-btn fb"
-													href="https://www.facebook.com/"
-													title="Share on Facebook" target="_blank"
+													href="https://www.facebook.com/" title="Share on Facebook"
+													target="_blank"
 													onclick="window.open('https://www.facebook.com'); return false;">
 												</a></div>
 											<div class="w-embed"><a class="w-inline-block social-share-btn lnk"
-													href="http://www.linkedin.com/"
-													target="_blank" title="Share on LinkedIn"
+													href="http://www.linkedin.com/" target="_blank"
+													title="Share on LinkedIn"
 													onclick="window.open('http://www.linkedin.com/'); return false;"></a>
 											</div>
 										</div>
@@ -65,25 +71,25 @@
 									</div>
 									<div class="w-dyn-list">
 										<div role="list" class="w-dyn-items">
-											<% for (let index = 0; index < blogs.length; index++) { %>
-												<% if(index > 5) break %>
-												<% const blog = blogs[index]; %>
+											<% for (let index=0; index < blogs.length; index++) { %>
+												<% if(index> 5) break %>
+													<% const blog=blogs[index]; %>
 
-												<div role="listitem" class="w-dyn-item">
-													<div class="_20-px-bottom-margin">
-														<div class="flex-div no-padding">
-															<div class="div-post flex vertical">
-																<div>
-																	<a href="/blogs/<%= blog.slug %>"
-																		class="post-title">
-																		<%= blog.title %>
-																	</a>
+														<div role="listitem" class="w-dyn-item">
+															<div class="_20-px-bottom-margin">
+																<div class="flex-div no-padding">
+																	<div class="div-post flex vertical">
+																		<div>
+																			<a href="/blogs/<%= blog.slug %>"
+																				class="post-title">
+																				<%= blog.title %>
+																			</a>
+																		</div>
+																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
-												</div>
-											<% } %>
+														<% } %>
 										</div>
 									</div>
 								</div>
@@ -94,8 +100,8 @@
 							<!-- components -->
 
 							<!-- components: components/comment -->
-						<%- include("components/comment") %>
-						<!-- components -->
+							<%- include("components/comment") %>
+								<!-- components -->
 					</div>
 				</div>
 			</div>
@@ -126,8 +132,8 @@
 													</a>
 												</div>
 												<div class="_130-px-div">
-													<a href="/blogs/<%= blog.slug %>" class="post-title _16-px">
-														<%= blog.title %>
+													<a href="/blogs/<%= blog.slug %>" class="post-title _16-px" title="<%= blog.title %>">
+														<%= blog?.title.length > 30? blog?.title.substring(0,30) + "...": blog.title %>
 													</a>
 												</div>
 											</div>
@@ -139,27 +145,29 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- partials: partials/_footer -->
-			<%- include("partials/_footer") %>
-				<!-- partials -->
-
-				<!-- partials: partials/_scripts -->
-				<%- include("partials/_scripts") %>
+			<!-- partial:partials/messageBird -->
+			<%- include("../admin/utils/messageBird") %>
+				<!-- partial -->
+				<!-- partials: partials/_footer -->
+				<%- include("partials/_footer") %>
 					<!-- partials -->
 
-					<script>
-						$("#my-article").children("h1").next().css({
-							fontSize: "20px",
-							lineHeight: "24px",
-							fontWeight: 300
-						}).next().css({
-							color: "#000",
-							fontSize: "24px",
-							lineHeight: "26px",
-							fontWeight: 500,
-						});
-					</script>
-					</body>
+					<!-- partials: partials/_scripts -->
+					<%- include("partials/_scripts") %>
+						<!-- partials -->
 
-					</html>
+						<script>
+							$("#my-article").children("h1").next().css({
+								fontSize: "20px",
+								lineHeight: "24px",
+								fontWeight: 300
+							}).next().css({
+								color: "#000",
+								fontSize: "24px",
+								lineHeight: "26px",
+								fontWeight: 500,
+							});
+						</script>
+						</body>
+
+						</html>

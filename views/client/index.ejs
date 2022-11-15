@@ -19,34 +19,44 @@
 							<h3 class="h3 orange">Trending Stories</h3>
 							<div class="w-dyn-list">
 								<div role="list" class="hero-left-divbox w-dyn-items">
-									<% blogs.forEach((blog, index) => { %>
-										<% if(index > 5) return %> 
-										<div data-w-id="120b8056-58a9-f0d3-ad8d-238e680a2483"
-											style="opacity: 1; transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"
-											role="listitem" class="w-dyn-item">
-											<div>
-												<div class="div-category">
-													<div class="category" style="text-transform: capitalize;"><%= blog.keywords.split(",")[0] %></div>
-												</div>
-												<div class="flex-div add-bottom-border">
-													<div class="circle">
-														<div class="nr"><%= index + 1 %></div>
+									<% blogs.forEach((blog, index)=> { %>
+										<% if(index> 5) return %>
+											<div data-w-id="120b8056-58a9-f0d3-ad8d-238e680a2483"
+												style="opacity: 1; transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"
+												role="listitem" class="w-dyn-item">
+												<div>
+													<div class="div-category">
+														<div class="category" style="text-transform: capitalize;">
+															<%= blog.keywords.split(",")[0] %>
+														</div>
 													</div>
-													<div class="div-post no-border-in-mobile">
-														<div class="_180-px-div"><a href="/blogs/<%= blog.slug %>"
-																class="post-title"><%= blog.title %></a></div>
-														<div class="date-author-flex">
-															<div class="date"><script>
-																document.write(moment("<%= new Date(blog?.updatedAt) %>").format('l'))
-															</script></div>
-															<div class="sep-circle"></div><a href="/blogs/<%= blog.slug %>"
-																class="author"><%= blog.author %></a>
+													<div class="flex-div add-bottom-border">
+														<div class="circle">
+															<div class="nr">
+																<%= index + 1 %>
+															</div>
+														</div>
+														<div class="div-post no-border-in-mobile">
+															<div class="_180-px-div"><a href="/blogs/<%= blog.slug %>"
+																	class="post-title" title="<%= blog.title %>">
+																	<%= blog?.title.length > 30? blog?.title.substring(0,30) + "...": blog.title %>
+																</a></div>
+															<div class="date-author-flex">
+																<div class="date">
+																	<script>
+																		document.write(moment("<%= new Date(blog?.updatedAt) %>").format('l'))
+																	</script>
+																</div>
+																<div class="sep-circle"></div><a
+																	href="/blogs/<%= blog.slug %>" class="author">
+																	<%= blog.author %>
+																</a>
+															</div>
 														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-									<% }); %>
+											<% }); %>
 								</div>
 							</div>
 						</div>
@@ -66,20 +76,20 @@
 											</a>
 											<div data-w-id="aad04659-c321-6f7d-a3f8-cb14e0df4462" style="opacity:0"
 												class="hero-divbox">
-												<a href="/blogs/<%= blog.slug %>" class="title-link">
-													<%= blog.title %>
+												<a href="/blogs/<%= blog.slug %>" class="title-link" title="<% blog.title %>">
+													<%= blog?.title.length > 30? blog?.title.substring(0,30) + "...": blog.title %>
 												</a>
-												<% if(blog?.subTite !=='' ) { %>
+												<% if(blog?.subTitle !=='') { %>
 													<div class="_20-px-top-margin-div">
-														<div class="hero-text">
-															<%= blog?.subTite %>
+														<div class="hero-text" title="<% blog.subTitle %>">
+															<%= blog?.subTitle.length > 50? blog?.subTitle.substring(0,50) + "...": blog?.subTitle %>
 														</div>
 													</div>
 													<% } %>
 														<div class="post-summary-div">
 															<p>
-																<%= blog.description.length> 500?
-																	blog.description.substring(0, 500) + "...":
+																<%= blog.description.length > 250?
+																	blog.description.substring(0, 250) + "...":
 																	blog.description %>
 															</p>
 														</div>
@@ -121,14 +131,14 @@
 											<div class="flex-div">
 												<div class="div-post flex vertical">
 													<div>
-														<a href="/blogs/<%= blog.slug %>" class="post-title">
-															<%= blog.title %>
+														<a href="/blogs/<%= blog.slug %>" class="post-title" title="<%= blog.title %>">
+															<%= blog?.title.length > 30? blog?.title.substring(0,30) + "...": blog.title %>
 														</a>
 													</div>
 													<div class="sub-div">
 														<div class="post-summary-text">
-															<%= blog.description.length> 500?
-																blog.description.substring(0, 500) + "...":
+															<%= blog.description.length> 250?
+																blog.description.substring(0, 250) + "...":
 																blog.description %>
 														</div>
 													</div>

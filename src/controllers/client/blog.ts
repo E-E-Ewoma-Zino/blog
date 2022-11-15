@@ -6,6 +6,7 @@ import ALERTS from "../../constants/alerts";
 import STATUS from "../../constants/httpStatus";
 import { SERVER_RES } from "../../constants/serverResponse";
 import { IBlog, IUser } from "../../interfaces/schema";
+import messageBird from "../../utils/messageBird";
 
 export async function clientBlog(req: Request, res: Response): Promise<void> {
 	console.log("display all blog");
@@ -36,6 +37,7 @@ export async function clientBlog(req: Request, res: Response): Promise<void> {
 			head,
 			blog: data,
 			blogs: allBlog.data,
+			bird: messageBird.fly,
 			user: req.isAuthenticated()? user.username: false
 		});
 	}catch(err){

@@ -1,5 +1,7 @@
 <!-- partial:partials/_head -->
 <%- include("partials/_head") %>
+<!-- moment script -->
+<script src="/client/js/moment.js"></script>
 	<!-- partial -->
 	<div class="container-scroller">
 		<!-- partial:partials/_navbar -->
@@ -32,7 +34,7 @@
 											<p class="card-title text-md-center text-xl-left">Blogs</p>
 											<div
 												class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-												<h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">1</h3>
+												<h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><%= blogLength %></h3>
 												<i class="ti-bookmark icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
 											</div>
 										</div>
@@ -44,7 +46,7 @@
 											<p class="card-title text-md-center text-xl-left">Images</p>
 											<div
 												class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-												<h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">3</h3>
+												<h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><%= imageLength %></h3>
 												<i class="ti-gallery icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
 											</div>
 										</div>
@@ -53,10 +55,10 @@
 								<div class="col-md-4 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">
-											<p class="card-title text-md-center text-xl-left">New Comments</p>
+											<p class="card-title text-md-center text-xl-left">Comments</p>
 											<div
 												class="d-flex flex-wrap justify-content-between justify-content-md-center justify-content-xl-between align-items-center">
-												<h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0">40016</h3>
+												<h3 class="mb-0 mb-md-2 mb-xl-0 order-md-1 order-xl-0"><%= blogCommentRatio.toFixed(2) %>%</h3>
 												<i class="ti-comment icon-md text-muted mb-0 mb-md-3 mb-xl-0"></i>
 											</div>
 										</div>
@@ -87,25 +89,43 @@
 															<th>
 																Comment
 															</th>
+															<th>
+																Action
+															</th>
 														</tr>
 													</thead>
 													<tbody>
 														<% blogs.forEach(blog => { %>
-															<% blog.comments.forEach(comment => { %>
-																<tr>
-																	<td class="py-1">
-																		<span style="text-transform: capitalize;font-weight: bold;font-size: larger;border: 1px solid #787878;padding: .5rem;border-radius: 50%;"><%= comment.user?.username.substring(0, 1) %></span>
-																	</td>
-																	<td>
-																		<%= comment.user?.username %>
-																	</td>
-																	<td>
-																		<%= comment?.createdAt %>
-																	</td>
-																	<td>
-																		<%= comment.comment %>
-																	</td>
-																</tr>
+															<% blog.comments.forEach((comment, index) => { %>
+																<% if(!comment.isVerified){ %>
+																	<tr>
+																		<td class="py-1">
+																			<span style="text-transform: capitalize;font-weight: bold;font-size: larger;border: 1px solid #787878;padding: .5rem;border-radius: 50%;"><%= comment.user?.username.substring(0, 1) %></span>
+																		</td>
+																		<td>
+																			<%= comment.user?.username %>
+																		</td>
+																		<td>
+																			<script>
+																				document.write(moment(new Date("<%= comment?.createdAt %>")).startOf('seconds').fromNow());
+																			</script>
+																		</td>
+																		<td>
+																			<%= comment.comment %>
+																		</td>
+																		<td>
+																			<button title="Edit" data-edit="/admin/blog/edit/<%= blog.slug %>#comment<%= index %>?id=<%= blog._id %>" type="button" class="btn btn-primary btn-rounded btn-icon">
+																				<i class="ti-pencil"></i>
+																			</button>
+																			<button title="Approve" data-verify="<%= index %>" data-verify-path="/admin/blog/edit/<%= blog.slug %>/comment?id=<%= blog._id %>" type="button" class="btn btn-primary btn-rounded btn-icon">
+																				<i class="ti-check"></i>
+																			</button>
+																			<button title="Delete" data-title="Delete Comment" data-delete-path="/admin/blog/edit/<%= blog.slug %>/comment?id=<%= blog._id %>" data-delete="<%= comment._id %>" type="button" class="btn btn-danger btn-rounded btn-icon">
+																				<i class="ti-trash"></i>
+																			</button>
+																		</td>
+																	</tr>
+																<% } %>
 															<% }); %> 
 														<% }); %>
 													</tbody>

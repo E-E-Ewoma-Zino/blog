@@ -23315,4 +23315,15 @@ dl li {
 	filter: brightness(.5);
 }
 
+.circle-profile {
+	align-items: center;
+	text-transform: capitalize;
+	font-weight: bold;
+	font-size: 1.5em;
+	border: 3px solid #787878;
+	height: 2em;
+	width: 2em;
+	display: flex;
+	justify-content: center;
+}
 /* end */

@@ -46,6 +46,6 @@ export default async function deleteBolg(req: Request, res: Response): Promise<v
 		const _err = err as Error;
 		console.log("Error:", _err);
 		messageBird.message(ALERTS.DANGER, "Internal Server Error");
-		res.status(STATUS.SERVER_ERR_500).json(SERVER_RES({ message: "Failed Login", err: _err.message, status: STATUS.SERVER_ERR_500, alert: ALERTS.DANGER }));
+		res.status(STATUS.SERVER_ERR_500).json(SERVER_RES({ message: "Failed To Delete", err: _err.message, status: STATUS.SERVER_ERR_500, alert: ALERTS.DANGER }));
 	}
 }
