@@ -18,7 +18,9 @@ const Blogs_1 = __importDefault(require("../../schema/Blogs"));
 const alerts_1 = __importDefault(require("../../constants/alerts"));
 const messageBird_1 = __importDefault(require("../../utils/messageBird"));
 const preBlog_1 = __importDefault(require("../../module/preBlog"));
+const generateTinifyImg_1 = __importDefault(require("../../module/generateTinifyImg"));
 function editBolg(req, res) {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         // console.log("body", req.body);
         console.log("query", req.query);
@@ -56,6 +58,8 @@ function editBolg(req, res) {
                 });
             // prevalidate blog
             (0, preBlog_1.default)(updatedBlog._id);
+            // generate thumbnail
+            (0, generateTinifyImg_1.default)((_a = req.file) === null || _a === void 0 ? void 0 : _a.path, (_b = req.file) === null || _b === void 0 ? void 0 : _b.filename);
             messageBird_1.default.message(alerts_1.default.SUCCESS, "Updated Blog");
             return res.redirect("back");
         }

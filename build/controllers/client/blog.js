@@ -26,6 +26,10 @@ function clientBlog(req, res) {
             const theBlog = yield blog_1.default.findAll({ slug: req.params.slug });
             const allBlog = yield blog_1.default.findAll({});
             const data = theBlog.data[0];
+            if (!data) {
+                messageBird_1.default.message(alerts_1.default.WARNING, "Page does not or no longer exist");
+                res.redirect("/");
+            }
             const siteUrl = "https://www.global-finance-news.com/";
             const head = {
                 themeColor: "#ffffff",
@@ -35,9 +39,9 @@ function clientBlog(req, res) {
                 ogUrl: siteUrl + "blogs/" + (data === null || data === void 0 ? void 0 : data.slug),
                 ogTitle: data === null || data === void 0 ? void 0 : data.title,
                 description: data === null || data === void 0 ? void 0 : data.description,
-                ogImage: siteUrl + (data === null || data === void 0 ? void 0 : data.mainImage.path),
+                ogImage: siteUrl + (data === null || data === void 0 ? void 0 : data.mainImage.path.replace("uploads\\", "uploads/thumbnail/")),
                 siteUrl,
-                siteName: "Xpress Coaching"
+                siteName: "Global Finance"
             };
             const user = req.user;
             res.render("client/blog", {

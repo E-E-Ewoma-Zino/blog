@@ -18,6 +18,7 @@ const blog_1 = __importDefault(require("../../libs/blog"));
 const alerts_1 = __importDefault(require("../../constants/alerts"));
 const httpStatus_1 = __importDefault(require("../../constants/httpStatus"));
 const serverResponse_1 = require("../../constants/serverResponse");
+const messageBird_1 = __importDefault(require("../../utils/messageBird"));
 function clientHome(req, res) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
@@ -28,17 +29,18 @@ function clientHome(req, res) {
             const description = `Global finance news is a blog devoted to providing in-depth information on the financial world globally in areas that are crucial to everything finance you can rely on us to provide that information here it's what we are known for we continue to deliver in this regard. Detailed and easy-to-use information is what we offer at the very core of our structure.`;
             const head = {
                 themeColor: "#ffffff",
-                title: "Xpress Coaching",
-                keywords: "Xpress Coaching, " + (data === null || data === void 0 ? void 0 : data.keywords),
+                title: "Global Finance",
+                keywords: "Global Finance, " + (data === null || data === void 0 ? void 0 : data.keywords),
                 ogImageType: data === null || data === void 0 ? void 0 : data.mainImage.mimetype,
                 ogUrl: siteUrl + "blogs/" + (data === null || data === void 0 ? void 0 : data.slug),
-                ogTitle: "Xpress Coaching",
+                ogTitle: "Global Finance",
                 ogImage: siteUrl + ((_a = data === null || data === void 0 ? void 0 : data.mainImage) === null || _a === void 0 ? void 0 : _a.path),
                 description,
                 siteUrl,
-                siteName: "Xpress Coaching"
+                siteName: "Global Finance"
             };
             res.render("client/index", {
+                bird: messageBird_1.default.fly,
                 blogs: theBlog.data,
                 head
             });

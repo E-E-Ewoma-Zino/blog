@@ -3,6 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ALERTS = {
     SUCCESS: "success",
     DANGER: "danger",
-    WARNING: "waring"
+    WARNING: "warning"
 };
 exports.default = ALERTS;
