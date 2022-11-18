@@ -9,6 +9,7 @@ import messageBird from "../../utils/messageBird";
 import { SERVER_RES } from "../../constants/serverResponse";
 import { IBlog } from "../../interfaces/schema";
 import preBlog from "../../module/preBlog";
+import generateTinifyImg from "../../module/generateTinifyImg";
 
 export default async function editBolg(req: Request, res: Response): Promise<void> {
 	// console.log("body", req.body);
@@ -50,6 +51,9 @@ export default async function editBolg(req: Request, res: Response): Promise<voi
 
 		// prevalidate blog
 		preBlog(updatedBlog!._id);
+
+		// generate thumbnail
+		generateTinifyImg(req.file?.path as string, req.file?.filename as string);
 
 		messageBird.message(ALERTS.SUCCESS, "Updated Blog");
 		return res.redirect("back");

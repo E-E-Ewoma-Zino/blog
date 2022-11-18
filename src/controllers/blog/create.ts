@@ -6,6 +6,7 @@ import STATUS from "../../constants/httpStatus";
 import messageBird from "../../utils/messageBird";
 import { SERVER_RES } from "../../constants/serverResponse";
 import preBlog from "../../module/preBlog";
+import generateTinifyImg from "../../module/generateTinifyImg";
 
 export default async function createBlog(req: Request, res: Response): Promise<void> {
 	console.log("body", req.body);
@@ -29,6 +30,8 @@ export default async function createBlog(req: Request, res: Response): Promise<v
 
 		// pre validate blog
 		preBlog(newBlog.data!._id);
+		// crop img to thumbnail
+		generateTinifyImg(req.file?.path as string, req.file?.filename as string);
 
 		res.redirect("back");
 	}catch(err) {

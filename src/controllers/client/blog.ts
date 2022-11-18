@@ -16,8 +16,13 @@ export async function clientBlog(req: Request, res: Response): Promise<void> {
 		const allBlog = await blog.findAll({});
 		
 		const data = theBlog.data[0] as IBlog;
+		if(!data) {
+			messageBird.message(ALERTS.WARNING, "Page does not or no longer exist");
+			res.redirect("/");
+		}
+		
 		const siteUrl = "https://www.global-finance-news.com/";
-
+		
 		const head = {
 			themeColor: "#ffffff",
 			title: data?.title,
@@ -26,9 +31,9 @@ export async function clientBlog(req: Request, res: Response): Promise<void> {
 			ogUrl: siteUrl + "blogs/" + data?.slug,
 			ogTitle: data?.title,
 			description: data?.description,
-			ogImage: siteUrl + data?.mainImage.path,
+			ogImage: siteUrl + data?.mainImage.path.replace("uploads\\", "uploads/thumbnail/"),
 			siteUrl,
-			siteName: "Xpress Coaching"
+			siteName: "Global Finance"
 		}
 
 		const user = req.user as IUser;

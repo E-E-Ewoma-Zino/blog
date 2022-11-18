@@ -23,7 +23,14 @@ export default async function deleteBolg(req: Request, res: Response): Promise<v
 		if (data) {
 			fs.unlink(__dirname + "../../../../" + data.mainImage.path, async (err) => {
 				if (err) {
-					messageBird.message(ALERTS.SUCCESS, "Issues deleting blog image");
+					messageBird.message(ALERTS.WARNING, "Issues deleting blog image");
+					// res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: err.message, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
+				}
+			});
+
+			fs.unlink(__dirname + "../../../../" + data.mainImage.path.replace("uploads\\", "uploads/thumbnail/"), async (err) => {
+				if (err) {
+					messageBird.message(ALERTS.WARNING, "Issues deleting thumbnail blog image");
 					// res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: err.message, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
 				}
 			});

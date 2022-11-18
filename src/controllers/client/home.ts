@@ -6,6 +6,7 @@ import ALERTS from "../../constants/alerts";
 import STATUS from "../../constants/httpStatus";
 import { SERVER_RES } from "../../constants/serverResponse";
 import { IBlog } from "../../interfaces/schema";
+import messageBird from "../../utils/messageBird";
 
 export async function clientHome(req: Request, res: Response): Promise<void> {
 	try{
@@ -17,18 +18,19 @@ export async function clientHome(req: Request, res: Response): Promise<void> {
 
 		const head = {
 			themeColor: "#ffffff",
-			title: "Xpress Coaching",
-			keywords: "Xpress Coaching, " + data?.keywords,
+			title: "Global Finance",
+			keywords: "Global Finance, " + data?.keywords,
 			ogImageType: data?.mainImage.mimetype,
 			ogUrl: siteUrl + "blogs/" + data?.slug,
-			ogTitle: "Xpress Coaching",
+			ogTitle: "Global Finance",
 			ogImage: siteUrl + data?.mainImage?.path,
 			description,
 			siteUrl,
-			siteName: "Xpress Coaching"
+			siteName: "Global Finance"
 		}
 
 		res.render("client/index", {
+			bird: messageBird.fly,
 			blogs: theBlog.data,
 			head
 		});
