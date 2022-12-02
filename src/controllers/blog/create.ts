@@ -12,29 +12,33 @@ export default async function createBlog(req: Request, res: Response): Promise<v
 	console.log("body", req.body);
 	console.log("file", req.file);
 
-	const { title, markdown, subTitle, author, keywords, description } = req.body;
+	const { title, markdown, subTitle, author, keywords, caption, description } = req.body;
 
 	try {
 		const newBlog = await blog.create({
 			title,
 			author,
 			subTitle,
+			caption,
 			markdown,
 			keywords,
 			description,
 			mainImage: req.file
 		});
-		
-		if(newBlog.err) messageBird.message(ALERTS.DANGER, newBlog.err as string);
+
+		if (newBlog.err) {
+			messageBird.message(ALERTS.DANGER, newBlog.err as string);
+			return res.redirect("back");
+		}
 		else messageBird.message(ALERTS.SUCCESS, "New Blog Created");
 
 		// pre validate blog
 		preBlog(newBlog.data!._id);
 		// crop img to thumbnail
-		generateTinifyImg(req.file?.path as string, req.file?.filename as string);
+		if (req.file) generateTinifyImg(req.file?.path as string, req.file?.filename as string);
 
 		res.redirect("back");
-	}catch(err) {
+	} catch (err) {
 		const _err = err as Error;
 		console.log("Error:", _err);
 		messageBird.message(ALERTS.DANGER, "Internal Server Error");

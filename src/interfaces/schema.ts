@@ -40,6 +40,8 @@ export interface IBlog {
 	author: String,
 	subTitle: String,
 	keywords: String,
+	caption: String,
+	dummyDate: Date,
 	description: String,
 	comments: Array <{
 		comment: String,

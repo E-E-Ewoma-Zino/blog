@@ -27,11 +27,11 @@ export async function clientBlog(req: Request, res: Response): Promise<void> {
 			themeColor: "#ffffff",
 			title: data?.title,
 			keywords: data?.keywords,
-			ogImageType: data?.mainImage.mimetype,
+			ogImageType: data?.mainImage?.mimetype,
 			ogUrl: siteUrl + "blogs/" + data?.slug,
 			ogTitle: data?.title,
 			description: data?.description,
-			ogImage: siteUrl + data?.mainImage.path.replace("uploads\\", "uploads/thumbnail/"),
+			ogImage: siteUrl + data?.mainImage?.path?.replace("uploads\\", "uploads/thumbnail/"),
 			siteUrl,
 			siteName: "Global Finance"
 		}

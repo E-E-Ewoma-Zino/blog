@@ -16,12 +16,15 @@
 							<article id="my-article">
 								<div class="date blog">
 									<script>
-										document.write(moment("<%= new Date(blog?.updatedAt) %>").format('LL'))
+										document.write("Created: ");
+										document.write(moment("<%= new Date(blog?.dummyDate) %>").format('LL'));
+										document.write(" - Updated: ");
+										document.write(moment("<%= new Date(blog?.updatedAt) %>").startOf('seconds').fromNow());
 									</script>
 								</div>
 								<div class="blog-title-div">
 									<h1 class="h1">
-										<%= blog.title %>
+										<%= blog?.title %>
 									</h1>
 								</div>
 								<div class="post-summary-blog-div">
@@ -33,11 +36,11 @@
 									<div class="_5-px-right-margin">
 										<div class="blog-text">By</div>
 									</div><a href="#" class="author _24-px">
-										<%= blog.author %>
+										<%= blog?.author %>
 									</a>
 								</div>
-								<div style="background-image:url('/<%= blog.mainImage.path.replace(/\\/, /\//) %>')"
-									class="post-image-blog-div"></div>
+								<div style="background-image:url('/<%= blog?.mainImage?.path.replace(/\\/, /\//) %>')"
+									class="post-image-blog-div position-relative"><span class="img-caption w-100">This is a caption for this image</span></div>
 								<!-- content goes here -->
 								<%- blog?.convertedMD %>
 							</article>
@@ -80,9 +83,9 @@
 																<div class="flex-div no-padding">
 																	<div class="div-post flex vertical">
 																		<div>
-																			<a href="/blogs/<%= blog.slug %>"
+																			<a href="/blogs/<%= blog?.slug %>"
 																				class="post-title">
-																				<%= blog.title %>
+																				<%= blog?.title %>
 																			</a>
 																		</div>
 																	</div>
@@ -116,10 +119,10 @@
 								<div role="listitem" class="w-dyn-item">
 									<div class="flex-div">
 										<div class="div-post flex">
-											<a href="/blogs/<%= blog.slug %>" class="_120-px-height-div w-inline-block">
-												<img src="/<%= blog.mainImage.path %>" loading="lazy"
-													alt="<%= blog.title %>" loading="lazy" alt="" sizes="150px"
-													srcset="/<%= blog.mainImage.path %> 500w, /<%= blog.mainImage.path %> 800w, /<%= blog.mainImage.path %> 1300w"
+											<a href="/blogs/<%= blog?.slug %>" class="_120-px-height-div w-inline-block">
+												<img src="/<%= blog?.mainImage?.path %>" loading="lazy"
+													alt="<%= blog?.title %>" loading="lazy" alt="" sizes="150px"
+													srcset="/<%= blog?.mainImage?.path %> 500w, /<%= blog?.mainImage?.path %> 800w, /<%= blog?.mainImage?.path %> 1300w"
 													class="post-image" />
 											</a>
 											<div class="title-date-div">
@@ -127,13 +130,13 @@
 													<div class="_5-px-right-margin">
 														<div class="text-block">By</div>
 													</div>
-													<a href="/blogs/<%= blog.slug %>" class="author _16-px orange">
-														<%= blog.author %>
+													<a href="/blogs/<%= blog?.slug %>" class="author _16-px orange">
+														<%= blog?.author %>
 													</a>
 												</div>
 												<div class="_130-px-div">
-													<a href="/blogs/<%= blog.slug %>" class="post-title _16-px" title="<%= blog.title %>">
-														<%= blog?.title.length > 30? blog?.title.substring(0,30) + "...": blog.title %>
+													<a href="/blogs/<%= blog?.slug %>" class="post-title _16-px" title="<%= blog?.title %>">
+														<%= blog?.title.length > 30? blog?.title.substring(0,30) + "...": blog?.title %>
 													</a>
 												</div>
 											</div>

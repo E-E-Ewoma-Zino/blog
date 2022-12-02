@@ -29,18 +29,20 @@ function deleteBolg(req, res) {
             // delete img
             // Using fs to also delete the book file
             if (data) {
-                fs_1.default.unlink(__dirname + "../../../../" + data.mainImage.path, (err) => __awaiter(this, void 0, void 0, function* () {
-                    if (err) {
-                        messageBird_1.default.message(alerts_1.default.WARNING, "Issues deleting blog image");
-                        // res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: err.message, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
-                    }
-                }));
-                fs_1.default.unlink(__dirname + "../../../../" + data.mainImage.path.replace("uploads\\", "uploads/thumbnail/"), (err) => __awaiter(this, void 0, void 0, function* () {
-                    if (err) {
-                        messageBird_1.default.message(alerts_1.default.WARNING, "Issues deleting thumbnail blog image");
-                        // res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: err.message, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
-                    }
-                }));
+                if (data.mainImage) {
+                    fs_1.default.unlink(__dirname + "../../../../" + data.mainImage.path, (err) => __awaiter(this, void 0, void 0, function* () {
+                        if (err) {
+                            messageBird_1.default.message(alerts_1.default.WARNING, "Issues deleting blog image");
+                            // res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: err.message, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
+                        }
+                    }));
+                    fs_1.default.unlink(__dirname + "../../../../" + data.mainImage.path.replace("uploads\\", "uploads/thumbnail/"), (err) => __awaiter(this, void 0, void 0, function* () {
+                        if (err) {
+                            messageBird_1.default.message(alerts_1.default.WARNING, "Issues deleting thumbnail blog image");
+                            // res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: err.message, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
+                        }
+                    }));
+                }
                 const deleteBlog = yield blog_1.default.remove(itemId);
                 if (!deleteBlog.data) {
                     messageBird_1.default.message(alerts_1.default.SUCCESS, "Issues deleting blog");

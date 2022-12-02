@@ -20,10 +20,10 @@ export async function clientHome(req: Request, res: Response): Promise<void> {
 			themeColor: "#ffffff",
 			title: "Global Finance",
 			keywords: "Global Finance, " + data?.keywords,
-			ogImageType: data?.mainImage.mimetype,
+			ogImageType: data?.mainImage?.mimetype,
 			ogUrl: siteUrl + "blogs/" + data?.slug,
 			ogTitle: "Global Finance",
-			ogImage: siteUrl + data?.mainImage?.path,
+			ogImage: siteUrl + data?.mainImage?.path?.replace("uploads\\", "uploads/thumbnail/"),
 			description,
 			siteUrl,
 			siteName: "Global Finance"

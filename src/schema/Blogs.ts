@@ -1,7 +1,7 @@
 // The module for the users
+import slugify from "slugify";
 import { model, Schema } from "mongoose";
 import { IBlog } from "../interfaces/schema";
-
 
 const blogSchema = new Schema<IBlog>({
 	title: String,
@@ -13,7 +13,12 @@ const blogSchema = new Schema<IBlog>({
 	subTitle: String,
 	keywords: String,
 	description: String,
+	caption: String,
 	markdown: String,
+	dummyDate: {
+		type: Date,
+		default: Date.now()
+	},
 	convertedMD: String,
 	comments: [{
 		user: {
@@ -29,5 +34,14 @@ const blogSchema = new Schema<IBlog>({
 	}],
 	mainImage: Object
 }, { timestamps: true });
+
+blogSchema.pre("save", function (){
+	if (this.title) {
+		this.slug = slugify(this.title as string, {
+			lower: true,
+			strict: true
+		});
+	}
+});
 
 export default model<IBlog>("Blog", blogSchema);

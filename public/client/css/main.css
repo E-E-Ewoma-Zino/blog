@@ -5857,4 +5857,20 @@ blockquote {
 	justify-content: center;
 }
 
+.navbar {
+	display: block!important;
+	position: sticky!important;
+}
+
+.h-text-black:hover {
+	color: black;
+}
+
+.img-caption {
+	position: absolute;
+    bottom: 0;
+    color: white;
+    background: linear-gradient(0deg, transparent, #606060e6, #606060e6 10%, transparent);
+}
+
 /* end */

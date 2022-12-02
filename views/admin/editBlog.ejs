@@ -45,30 +45,34 @@
 													<label for="title">Title</label>
 													<input type="text" class="form-control" id="title" name="title"
 														placeholder="<%= blog.title %>" value="<%= blog.title %>"
-														required>
+													required>
 												</div>
 												<div class="form-group">
 													<label for="subTitle">Sub Title</label>
 													<input type="text" class="form-control" id="subTitle" name="subTitle"
-														placeholder="<%= blog.subTitle %>" value="<%= blog.subTitle %>" required>
+														placeholder="<%= blog.subTitle %>" value="<%= blog.subTitle %>">
 												</div>
 												<div class="form-group">
 													<label for="author">Author</label>
 													<input type="text" class="form-control" id="author" name="author"
-														placeholder="<%= blog.author %>" value="<%= blog.author %>"
-														required>
+														placeholder="<%= blog.author %>" value="<%= blog.author %>">
+												</div>
+												<div class="form-group">
+													<label for="dummyDate">Date Created</label>
+													<input type="date" class="form-control" id="dummyDate" name="dummyDate"
+														placeholder="<%= blog.dummyDate %>" value="<%= blog.dummyDate %>">
 												</div>
 												<div class="form-group">
 													<label for="description">Description</label>
 													<input type="text" class="form-control" id="description"
 														name="description" placeholder="<%= blog.description %>"
-														value="<%= blog.description%>" required>
+														value="<%= blog.description%>">
 												</div>
 												<div class="form-group">
 													<label for="keywords">Keywords</label>
 													<input type="text" class="form-control" id="keywords"
 														name="keywords" placeholder="<%= blog.keywords %>"
-														value="<%= blog.keywords %>" required>
+														value="<%= blog.keywords %>">
 												</div>
 												<div class="form-group">
 													<label>Image upload</label>
@@ -84,10 +88,16 @@
 													</div>
 												</div>
 												<div class="form-group">
+													<label for="caption">Caption</label>
+													<input type="text" class="form-control" id="caption"
+														name="caption"
+														placeholder="<%= blog.caption %>" value="<%= blog.caption %>">
+												</div>
+												<div class="form-group">
 													<label for="markdown">Content</label>
 													<textarea rows="4" class="form-control" id="markdown"
 														name="markdown" placeholder="<%= blog.markdown %>"
-														style="resize: auto" required><%= blog.markdown %></textarea>
+														style="resize: auto"><%= blog.markdown %></textarea>
 												</div>
 												<button type="submit" class="btn btn-primary mr-2">Submit</button>
 											</form>

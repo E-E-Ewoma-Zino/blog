@@ -1,7 +1,6 @@
 // controlls all the post requests
 import fs from "fs";
 import blog from "../../libs/blog";
-import Blogs from "../../schema/Blogs";
 import ALERTS from "../../constants/alerts";
 import { Request, Response } from "express";
 import STATUS from "../../constants/httpStatus";
@@ -21,19 +20,21 @@ export default async function deleteBolg(req: Request, res: Response): Promise<v
 		// delete img
 		// Using fs to also delete the book file
 		if (data) {
-			fs.unlink(__dirname + "../../../../" + data.mainImage.path, async (err) => {
-				if (err) {
-					messageBird.message(ALERTS.WARNING, "Issues deleting blog image");
-					// res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: err.message, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
-				}
-			});
+			if (data.mainImage) {
+				fs.unlink(__dirname + "../../../../" + data.mainImage.path, async (err) => {
+					if (err) {
+						messageBird.message(ALERTS.WARNING, "Issues deleting blog image");
+						// res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: err.message, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
+					}
+				});
 
-			fs.unlink(__dirname + "../../../../" + data.mainImage.path.replace("uploads\\", "uploads/thumbnail/"), async (err) => {
-				if (err) {
-					messageBird.message(ALERTS.WARNING, "Issues deleting thumbnail blog image");
-					// res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: err.message, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
-				}
-			});
+				fs.unlink(__dirname + "../../../../" + data.mainImage.path.replace("uploads\\", "uploads/thumbnail/"), async (err) => {
+					if (err) {
+						messageBird.message(ALERTS.WARNING, "Issues deleting thumbnail blog image");
+						// res.status(STATUS.NOT_FOUND_404).json(SERVER_RES({ message: "Could not find image", err: err.message, status: STATUS.NOT_FOUND_404, alert: ALERTS.DANGER }));
+					}
+				});
+			}
 
 			const deleteBlog = await blog.remove(itemId);
 

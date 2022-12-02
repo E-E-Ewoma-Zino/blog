@@ -20,6 +20,7 @@ const httpStatus_1 = __importDefault(require("../../constants/httpStatus"));
 const serverResponse_1 = require("../../constants/serverResponse");
 const messageBird_1 = __importDefault(require("../../utils/messageBird"));
 function clientBlog(req, res) {
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         console.log("display all blog");
         try {
@@ -35,11 +36,11 @@ function clientBlog(req, res) {
                 themeColor: "#ffffff",
                 title: data === null || data === void 0 ? void 0 : data.title,
                 keywords: data === null || data === void 0 ? void 0 : data.keywords,
-                ogImageType: data === null || data === void 0 ? void 0 : data.mainImage.mimetype,
+                ogImageType: (_a = data === null || data === void 0 ? void 0 : data.mainImage) === null || _a === void 0 ? void 0 : _a.mimetype,
                 ogUrl: siteUrl + "blogs/" + (data === null || data === void 0 ? void 0 : data.slug),
                 ogTitle: data === null || data === void 0 ? void 0 : data.title,
                 description: data === null || data === void 0 ? void 0 : data.description,
-                ogImage: siteUrl + (data === null || data === void 0 ? void 0 : data.mainImage.path.replace("uploads\\", "uploads/thumbnail/")),
+                ogImage: siteUrl + ((_c = (_b = data === null || data === void 0 ? void 0 : data.mainImage) === null || _b === void 0 ? void 0 : _b.path) === null || _c === void 0 ? void 0 : _c.replace("uploads\\", "uploads/thumbnail/")),
                 siteUrl,
                 siteName: "Global Finance"
             };

@@ -27,7 +27,7 @@
 												<div>
 													<div class="div-category">
 														<div class="category" style="text-transform: capitalize;">
-															<%= blog.keywords.split(",")[0] %>
+															<%= blog?.keywords.split(",")[0] %>
 														</div>
 													</div>
 													<div class="flex-div add-bottom-border">
@@ -37,9 +37,9 @@
 															</div>
 														</div>
 														<div class="div-post no-border-in-mobile">
-															<div class="_180-px-div"><a href="/blogs/<%= blog.slug %>"
-																	class="post-title" title="<%= blog.title %>">
-																	<%= blog?.title.length > 30? blog?.title.substring(0,30) + "...": blog.title %>
+															<div class="_180-px-div"><a href="/blogs/<%= blog?.slug %>"
+																	class="post-title" title="<%= blog?.title %>">
+																	<%= blog?.title.length > 30? blog?.title.substring(0,30) + "...": blog?.title %>
 																</a></div>
 															<div class="date-author-flex">
 																<div class="date">
@@ -48,8 +48,8 @@
 																	</script>
 																</div>
 																<div class="sep-circle"></div><a
-																	href="/blogs/<%= blog.slug %>" class="author">
-																	<%= blog.author %>
+																	href="/blogs/<%= blog?.slug %>" class="author">
+																	<%= blog?.author %>
 																</a>
 															</div>
 														</div>
@@ -66,34 +66,34 @@
 									<% if (index> 2) return %>
 										<div role="listitem" class="main-item w-dyn-item">
 											<a data-w-id="0e86534f-1e4e-d2a4-9f37-058c64f8b2b1" style="opacity:0"
-												href="/blogs/<%= blog.slug %>"
+												href="/blogs/<%= blog?.slug %>"
 												class="main-hero-div-image w-inline-block">
-												<img src="/<%= blog.mainImage.path %>" loading="lazy"
-													alt="<%= blog.title %>"
+												<img src="/<%= blog?.mainImage?.path %>" loading="lazy"
+													alt="<%= blog?.title %>"
 													sizes="(max-width: 479px) 100vw, (max-width: 767px) 92vw, (max-width: 991px) 80vw, 44vw"
-													srcset="/<%= blog.mainImage.path %> 500w, /<%= blog.mainImage.path %> 800w, /<%= blog.mainImage.path %> 1300w"
+													srcset="/<%= blog?.mainImage?.path %> 500w, /<%= blog?.mainImage?.path %> 800w, /<%= blog?.mainImage?.path %> 1300w"
 													class="hero-image" />
 											</a>
 											<div data-w-id="aad04659-c321-6f7d-a3f8-cb14e0df4462" style="opacity:0"
 												class="hero-divbox">
-												<a href="/blogs/<%= blog.slug %>" class="title-link" title="<% blog.title %>">
-													<%= blog?.title.length > 30? blog?.title.substring(0,30) + "...": blog.title %>
+												<a href="/blogs/<%= blog?.slug %>" class="title-link" title="<% blog?.title %>">
+													<%= blog?.title.length > 30? blog?.title.substring(0,30) + "...": blog?.title %>
 												</a>
 												<% if(blog?.subTitle !=='') { %>
 													<div class="_20-px-top-margin-div">
-														<div class="hero-text" title="<% blog.subTitle %>">
+														<div class="hero-text" title="<% blog?.subTitle %>">
 															<%= blog?.subTitle.length > 50? blog?.subTitle.substring(0,50) + "...": blog?.subTitle %>
 														</div>
 													</div>
 													<% } %>
 														<div class="post-summary-div">
 															<p>
-																<%= blog.description.length > 250?
-																	blog.description.substring(0, 250) + "...":
-																	blog.description %>
+																<%= blog?.description.length > 250?
+																	blog?.description.substring(0, 250) + "...":
+																	blog?.description %>
 															</p>
 														</div>
-														<a href="/blogs/<%= blog.slug %>" class="button w-button">
+														<a href="/blogs/<%= blog?.slug %>" class="button w-button">
 															READ MORE
 														</a>
 											</div>
@@ -121,25 +121,25 @@
 								<% blogs.forEach(blog=> { %>
 									<div role="listitem" class="w-dyn-item">
 										<div id="w-node-c438a415-9175-dd16-339e-75acdf2fa5bd-b6c5b91f">
-											<a href="/blogs/<%= blog.slug %>" class="_220-px-height-div w-inline-block">
-												<img src="/<%= blog.mainImage.path %>" loading="lazy"
-													alt="<%= blog.title %>"
+											<a href="/blogs/<%= blog?.slug %>" class="_220-px-height-div w-inline-block">
+												<img src="/<%= blog?.mainImage?.path %>" loading="lazy"
+													alt="<%= blog?.title %>"
 													sizes="(max-width: 479px) 100vw, (max-width: 767px) 92vw, (max-width: 991px) 80vw, 44vw"
-													srcset="/<%= blog.mainImage.path %> 500w, /<%= blog.mainImage.path %> 800w, /<%= blog.mainImage.path %> 1300w"
+													srcset="/<%= blog?.mainImage?.path %> 500w, /<%= blog?.mainImage?.path %> 800w, /<%= blog?.mainImage?.path %> 1300w"
 													class="post-image" />
 											</a>
 											<div class="flex-div">
 												<div class="div-post flex vertical">
 													<div>
-														<a href="/blogs/<%= blog.slug %>" class="post-title" title="<%= blog.title %>">
-															<%= blog?.title.length > 30? blog?.title.substring(0,30) + "...": blog.title %>
+														<a href="/blogs/<%= blog?.slug %>" class="post-title" title="<%= blog?.title %>">
+															<%= blog?.title.length > 30? blog?.title.substring(0,30) + "...": blog?.title %>
 														</a>
 													</div>
 													<div class="sub-div">
 														<div class="post-summary-text">
-															<%= blog.description.length> 250?
-																blog.description.substring(0, 250) + "...":
-																blog.description %>
+															<%= blog?.description.length> 250?
+																blog?.description.substring(0, 250) + "...":
+																blog?.description %>
 														</div>
 													</div>
 													<div class="date-author-flex">
@@ -149,8 +149,8 @@
 															</script>
 														</div>
 														<div class="sep-circle"></div>
-														<a href="/blogs/<%= blog.slug %>" class="author">
-															<%= blog.author %>
+														<a href="/blogs/<%= blog?.slug %>" class="author">
+															<%= blog?.author %>
 														</a>
 													</div>
 												</div>

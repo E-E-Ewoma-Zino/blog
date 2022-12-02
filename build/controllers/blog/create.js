@@ -23,25 +23,29 @@ function createBlog(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log("body", req.body);
         console.log("file", req.file);
-        const { title, markdown, subTitle, author, keywords, description } = req.body;
+        const { title, markdown, subTitle, author, keywords, caption, description } = req.body;
         try {
             const newBlog = yield blog_1.default.create({
                 title,
                 author,
                 subTitle,
+                caption,
                 markdown,
                 keywords,
                 description,
                 mainImage: req.file
             });
-            if (newBlog.err)
+            if (newBlog.err) {
                 messageBird_1.default.message(alerts_1.default.DANGER, newBlog.err);
+                return res.redirect("back");
+            }
             else
                 messageBird_1.default.message(alerts_1.default.SUCCESS, "New Blog Created");
             // pre validate blog
             (0, preBlog_1.default)(newBlog.data._id);
             // crop img to thumbnail
-            (0, generateTinifyImg_1.default)((_a = req.file) === null || _a === void 0 ? void 0 : _a.path, (_b = req.file) === null || _b === void 0 ? void 0 : _b.filename);
+            if (req.file)
+                (0, generateTinifyImg_1.default)((_a = req.file) === null || _a === void 0 ? void 0 : _a.path, (_b = req.file) === null || _b === void 0 ? void 0 : _b.filename);
             res.redirect("back");
         }
         catch (err) {

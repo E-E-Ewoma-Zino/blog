@@ -1,14 +1,10 @@
 // controlls update for blog post requests
 import fs from "fs";
-import blog from "../../libs/blog";
 import Blogs from "../../schema/Blogs";
+import preBlog from "../../module/preBlog";
 import ALERTS from "../../constants/alerts";
 import { Request, Response } from "express";
-import STATUS from "../../constants/httpStatus";
 import messageBird from "../../utils/messageBird";
-import { SERVER_RES } from "../../constants/serverResponse";
-import { IBlog } from "../../interfaces/schema";
-import preBlog from "../../module/preBlog";
 import generateTinifyImg from "../../module/generateTinifyImg";
 
 export default async function editBolg(req: Request, res: Response): Promise<void> {
@@ -16,10 +12,10 @@ export default async function editBolg(req: Request, res: Response): Promise<voi
 	console.log("query", req.query);
 	console.log("file", req.file);
 
-	const { title, subTitle, markdown, author, keywords, description } = req.body;
+	const { title, subTitle, markdown, author, dummyDate, keywords, caption, description } = req.body;
 
 	try {
-		const updatedBlog = await Blogs.findOneAndUpdate({ _id: req.query.id }, { $set: { title, subTitle, markdown, author, keywords, description, mainImage: req.file } });
+		const updatedBlog = await Blogs.findOneAndUpdate({ _id: req.query.id }, { $set: { title, subTitle, markdown, author, dummyDate, keywords, caption, description, mainImage: req.file } });
 
 		if (req.file && updatedBlog) fs.stat(__dirname + "../../../../" + updatedBlog.mainImage.path, (fsStats_err, stats) => {
 			if (fsStats_err) {
@@ -53,7 +49,7 @@ export default async function editBolg(req: Request, res: Response): Promise<voi
 		preBlog(updatedBlog!._id);
 
 		// generate thumbnail
-		generateTinifyImg(req.file?.path as string, req.file?.filename as string);
+		if(req.file) generateTinifyImg(req.file?.path as string, req.file?.filename as string);
 
 		messageBird.message(ALERTS.SUCCESS, "Updated Blog");
 		return res.redirect("back");
