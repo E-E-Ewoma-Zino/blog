@@ -40,7 +40,7 @@
 									</a>
 								</div>
 								<div style="background-image:url('/<%= blog?.mainImage?.path.replace(/\\/, /\//) %>')"
-									class="post-image-blog-div position-relative"><span class="img-caption w-100">This is a caption for this image</span></div>
+									class="post-image-blog-div position-relative"><span class="img-caption w-100"><%= blog?.caption %></span></div>
 								<!-- content goes here -->
 								<%- blog?.convertedMD %>
 							</article>
