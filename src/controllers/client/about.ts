@@ -33,6 +33,7 @@ export async function clientAbout(req: Request, res: Response): Promise<void> {
 		res.render("client/about", {
 			bird: messageBird.fly,
 			blogs: theBlog.data,
+			user: req.isAuthenticated()? true: false,
 			head
 		});
 	}catch(err){

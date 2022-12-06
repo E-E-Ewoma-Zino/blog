@@ -32,6 +32,9 @@
 			<div class="w-layout-grid _2-column-top-grid hide-on-desktop">
 				<a href="/" class="top-link">Home</a>
 				<a href="/about" class="top-link">About</a>
+				<% if(user){ %> 
+					<a href="/auth/logout" class="top-link"><i class="fa fa-sign-out"></i></a>
+					<% } %> 
 				<!-- <a href="/contact" class="top-link">Contact</a> -->
 			</div>
 			<!-- <form action="/search" class="search ipad w-form">

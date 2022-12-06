@@ -32,6 +32,7 @@ export async function clientHome(req: Request, res: Response): Promise<void> {
 		res.render("client/index", {
 			bird: messageBird.fly,
 			blogs: theBlog.data,
+			user: req.isAuthenticated()? true: false,
 			head
 		});
 	}catch(err){

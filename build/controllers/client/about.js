@@ -41,6 +41,7 @@ function clientAbout(req, res) {
             res.render("client/about", {
                 bird: messageBird_1.default.fly,
                 blogs: theBlog.data,
+                user: req.isAuthenticated() ? true : false,
                 head
             });
         }

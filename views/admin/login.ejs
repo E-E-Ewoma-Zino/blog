@@ -10,7 +10,8 @@
 					<div class="col-lg-6 d-flex align-items-center justify-content-center">
 						<div class="auth-form-transparent text-left p-3">
 							<div class="brand-logo" style="font-weight: bolder;">
-								<img src="/admin/images/logo.png" class="img-fluid rounded-circle" style="width: 3rem;" alt="logo">
+								<img src="/admin/images/logo.png" class="img-fluid rounded-circle" style="width: 3rem;"
+									alt="logo">
 								Global Finance
 							</div>
 							<h4>Welcome back!</h4>
@@ -71,7 +72,8 @@
 					<div class="col-lg-6 d-flex align-items-center justify-content-center">
 						<div class="auth-form-transparent text-left p-3">
 							<div class="brand-logo" style="font-weight: bolder;">
-								<img src="/admin/images/logo.png" class="img-fluid rounded-circle" style="width: 3rem;" alt="logo">
+								<img src="/admin/images/logo.png" class="img-fluid rounded-circle" style="width: 3rem;"
+									alt="logo">
 								Global Finance
 							</div>
 							<h4>New here?</h4>
@@ -140,84 +142,12 @@
 		<!-- partial:partials/_scripts -->
 		<%- include("partials/_scripts") %>
 			<!-- partial -->
-			<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-			<script>
-
-				$(document).ready(function () {
-					$("#register").hide();
-
-					$(function () {
-						$("#openRegister").click(function (e) {
-							e.preventDefault();
-
-							$("#login").fadeOut(300, function () {
-								$("#register").fadeIn();
-							});
-						});
-
-						$("#openLogin").click(function (e) {
-							e.preventDefault();
-
-							$("#register").fadeOut(300, function () {
-								$("#login").fadeIn();
-							});
-						});
-
-						$("form").submit(function (e) {
-							e.preventDefault();
-
-							const data = {}
-							let button;
-
-							for (let index = 0; index < this.length; index++) {
-								const input = this[index];
-
-								if (input.tagName === "BUTTON") {
-									button = input;
-									input.innerHTML = "Loading...";
-									input.disabled = true;
-								}
-
-								if (input.tagName !== "INPUT") continue;
-
-								data[input.name] = input.value;
-							}
-
-							try {
-								axios.post(this.action, data).then(res => {
-									messager({
-										message: res.data.message,
-										alert: res.data.alert,
-										method: () => location.reload()
-									});
-								}).catch(err => {
-									button.disabled = false;
-									button.innerHTML = "Submit";
-
-									console.error("error", err);
-									console.error("error", err.response);
-									if(err.response) messager({
-										message: err.response.data.message,
-										alert: err.response.data.alert
-									});
-									else messager({
-										message: err.message,
-										alert: "danger"
-									});
-								});
-							} catch (error) {
-								messager({
-									message: "Check Your Internet Connection and Try Again",
-									alert: "warning"
-								});
-							}
-						});
-					});
-
-				});
-
-
-			</script>
+			<!-- axios -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js"
+				integrity="sha512-0qU9M9jfqPw6FKkPafM3gy2CBAvUWnYVOfNPDYKVuRTel1PrciTj+a9P3loJB+j0QmN2Y0JYQmkBBS8W+mbezg=="
+				crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+			<!-- end axios -->
+			<script src="/admin/js/auth.js"></script>
 			</body>
 
 			</html>

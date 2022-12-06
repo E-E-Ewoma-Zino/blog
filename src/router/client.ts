@@ -1,7 +1,7 @@
 import { IRouter, Request, Response, Router } from "express";
 import blog from "../controllers/blog";
 import client from "../controllers/client";
-import auth from "../middleware/auth";
+import clientAuth from "../middleware/clientAuth";
 
 const router: IRouter = Router();
 
@@ -19,6 +19,6 @@ router.get("/blogs/:slug", (req: Request, res: Response): Promise<void> => clien
 
 // @desc	Blogs comments
 // @route	GET /blogs/:slug
-router.patch("/blogs/:slug", auth, (req: Request, res: Response): Promise<void> => blog.comment(req, res));
+router.patch("/blogs/:slug", clientAuth, (req: Request, res: Response): Promise<void> => blog.comment(req, res));
 
 export default router;

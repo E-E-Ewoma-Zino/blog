@@ -5873,4 +5873,7 @@ blockquote {
     background: linear-gradient(0deg, transparent, #606060e6, #606060e6 10%, transparent);
 }
 
+.primary-bg {
+	background: linear-gradient(45deg, #1e2361, #3283ee);
+}
 /* end */

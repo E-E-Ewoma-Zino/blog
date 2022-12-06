@@ -5,6 +5,6 @@ exports.default = (req, res) => {
     req.logout;
     req.session.destroy((err) => {
         res.clearCookie("connect.sid");
-        return res.redirect("/");
+        return res.redirect("back");
     });
 };

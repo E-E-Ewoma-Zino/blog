@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const blog_1 = __importDefault(require("../controllers/blog"));
 const client_1 = __importDefault(require("../controllers/client"));
-const auth_1 = __importDefault(require("../middleware/auth"));
+const clientAuth_1 = __importDefault(require("../middleware/clientAuth"));
 const router = (0, express_1.Router)();
 // @desc	Client Router
 // @route	GET /
@@ -19,5 +19,5 @@ router.get("/about", (req, res) => client_1.default.about(req, res));
 router.get("/blogs/:slug", (req, res) => client_1.default.blog(req, res));
 // @desc	Blogs comments
 // @route	GET /blogs/:slug
-router.patch("/blogs/:slug", auth_1.default, (req, res) => blog_1.default.comment(req, res));
+router.patch("/blogs/:slug", clientAuth_1.default, (req, res) => blog_1.default.comment(req, res));
 exports.default = router;

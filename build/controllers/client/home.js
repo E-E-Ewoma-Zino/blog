@@ -42,6 +42,7 @@ function clientHome(req, res) {
             res.render("client/index", {
                 bird: messageBird_1.default.fly,
                 blogs: theBlog.data,
+                user: req.isAuthenticated() ? true : false,
                 head
             });
         }

@@ -1,14 +1,14 @@
 import { IRouter, Request, Response, Router } from "express";
+import auth from "../middleware/auth";
 import multer from "../config/multer";
 import admin from "../controllers/admin";
 import adminAuth from "../middleware/adminAuth";
-import auth from "../middleware/auth";
 
 const router: IRouter = Router();
 
 // @desc	Admin Router
 // @route	GET /
-router.get("/", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.dashboard(req, res));
+router.get("/", auth, adminAuth , (req: Request, res: Response): Promise<void> => admin.dashboard(req, res));
 
 // @desc	Admin blog page
 // @route	GET /blog

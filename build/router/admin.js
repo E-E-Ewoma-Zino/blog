@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const auth_1 = __importDefault(require("../middleware/auth"));
 const multer_1 = __importDefault(require("../config/multer"));
 const admin_1 = __importDefault(require("../controllers/admin"));
 const adminAuth_1 = __importDefault(require("../middleware/adminAuth"));
-const auth_1 = __importDefault(require("../middleware/auth"));
 const router = (0, express_1.Router)();
 // @desc	Admin Router
 // @route	GET /
