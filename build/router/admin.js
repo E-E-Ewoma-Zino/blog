@@ -15,6 +15,9 @@ router.get("/", auth_1.default, adminAuth_1.default, (req, res) => admin_1.defau
 // @desc	Admin blog page
 // @route	GET /blog
 router.get("/blog", auth_1.default, adminAuth_1.default, (req, res) => admin_1.default.blogs(req, res));
+// @desc	Admin users page
+// @route	GET /users
+router.get("/users", auth_1.default, adminAuth_1.default, (req, res) => admin_1.default.allUsers(req, res));
 // @desc	Admin create blog page
 // @route	GET /blog/create
 router.get("/blog/create", auth_1.default, adminAuth_1.default, (req, res) => admin_1.default.createBlog(req, res));

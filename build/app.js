@@ -87,7 +87,7 @@ app.use("/admin", router_1.default.admin);
 app.use("/blog", router_1.default.blog);
 // @desc	for all comment api "/comment"
 // @route	/comment
-app.use("/comment", router_1.default.comment);
+app.use("/mail", router_1.default.mails);
 // @desc	404 Page
 app.use((req, res) => (0, error404_1.error404)(req, res));
 const port = Number(process.env.PORT) || 5001;

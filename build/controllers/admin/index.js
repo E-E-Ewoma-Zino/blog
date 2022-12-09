@@ -4,10 +4,12 @@ const blogs_1 = require("./blogs");
 const comments_1 = require("./comments");
 const createBlog_1 = require("./createBlog");
 const dashboard_1 = require("./dashboard");
+const users_1 = require("./users");
 const editBlog_1 = require("./editBlog");
 const storage_1 = require("./storage");
 const admin = {
     storage: storage_1.storage,
+    allUsers: users_1.allUsers,
     verifyComment: comments_1.verifyComment,
     deleteComment: comments_1.deleteComment,
     storageDelete: storage_1.storageDelete,

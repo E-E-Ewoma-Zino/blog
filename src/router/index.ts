@@ -2,11 +2,11 @@ import auth from "./auth";
 import blog from "./blog";
 import admin from "./admin";
 import client from "./client";
-import comment from "./comment";
+import mails from "./mails";
 
 const routes = {
-	comment,
 	client,
+	mails,
 	admin,
 	blog,
 	auth

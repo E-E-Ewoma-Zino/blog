@@ -74,6 +74,36 @@ const swalWithBootstrapButtons = Swal.mixin({
 			});
 		});
 
+		$("[data-mail]").each(function (index, element) {
+			$(this).click(function (e) {
+				e.preventDefault();
+
+				swalWithBootstrapButtons.fire({
+					title: "Send a mail",
+					html: `<form id="sendMail"><div class="form-group"><input type="text" class="form-control" name="subject" placeholder="Subject"/></div><div class="form-group"><textarea class="form-control" rows="5" cols="5" placeholder="Enter a message"></textarea></div></form>`,
+					showDenyButton: false,
+					showCancelButton: false,
+					confirmButtonText: "Send",
+					denyButtonText: "Cancel"
+				}).then((sendMail) => {
+					if (sendMail.isConfirmed) { // get data
+						const data = {
+							to: this.dataset.mail,
+							message: document.querySelector("#sendMail")[0].value,
+							subject: document.querySelector("#sendMail")[1].value
+						}
+
+						axios.post("/mail/send", data).then(res => {
+							Swal.fire("Sent", "", "success").then();
+						}).catch(err => {
+							Swal.fire("Failed!", "", "error");
+							console.log("Failed to send mail", err);
+						});
+					}
+				});
+			});
+		});
+
 		if ($(".next-btn").length) {
 			const nextBtn = document.querySelectorAll(".next-btn");
 			const prevBtn = document.querySelectorAll(".prev-btn");

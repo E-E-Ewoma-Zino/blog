@@ -57,7 +57,7 @@ app.use("/admin", routes.admin);
 app.use("/blog", routes.blog);
 // @desc	for all comment api "/comment"
 // @route	/comment
-app.use("/comment", routes.comment);
+app.use("/mail", routes.mails);
 // @desc	404 Page
 app.use((req: Request, res: Response)=> error404(req, res));
 

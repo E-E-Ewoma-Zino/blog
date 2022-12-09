@@ -7,10 +7,10 @@ const auth_1 = __importDefault(require("./auth"));
 const blog_1 = __importDefault(require("./blog"));
 const admin_1 = __importDefault(require("./admin"));
 const client_1 = __importDefault(require("./client"));
-const comment_1 = __importDefault(require("./comment"));
+const mails_1 = __importDefault(require("./mails"));
 const routes = {
-    comment: comment_1.default,
     client: client_1.default,
+    mails: mails_1.default,
     admin: admin_1.default,
     blog: blog_1.default,
     auth: auth_1.default

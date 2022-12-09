@@ -5,7 +5,7 @@ import messageBird from "../../utils/messageBird";
 import { IUser } from "../../interfaces/schema";
 
 export default (req: Request, res: Response, next: NextFunction) => {
-	console.log("body", req.body)
+	// console.log("body", req.body)
 	// LogIn a user
 	// I am using the passport custom callback to authenticate the user
 	passport.authenticate("local", function (logIn_err, user, info) {

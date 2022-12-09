@@ -14,6 +14,10 @@ router.get("/", auth, adminAuth , (req: Request, res: Response): Promise<void> =
 // @route	GET /blog
 router.get("/blog", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.blogs(req, res));
 
+// @desc	Admin users page
+// @route	GET /users
+router.get("/users", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.allUsers(req, res));
+
 // @desc	Admin create blog page
 // @route	GET /blog/create
 router.get("/blog/create", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.createBlog(req, res));

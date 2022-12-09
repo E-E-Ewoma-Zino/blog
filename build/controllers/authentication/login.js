@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const passport_1 = __importDefault(require("passport"));
 const messageBird_1 = __importDefault(require("../../utils/messageBird"));
 exports.default = (req, res, next) => {
-    console.log("body", req.body);
+    // console.log("body", req.body)
     // LogIn a user
     // I am using the passport custom callback to authenticate the user
     passport_1.default.authenticate("local", function (logIn_err, user, info) {
