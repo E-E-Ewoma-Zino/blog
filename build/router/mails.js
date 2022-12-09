@@ -40,6 +40,9 @@ const adminAuth_1 = __importDefault(require("../middleware/adminAuth"));
 const mailchimp_1 = __importStar(require("../config/mailchimp"));
 const auth_1 = __importDefault(require("../middleware/auth"));
 const nodemailer_1 = __importDefault(require("../config/nodemailer"));
+const httpStatus_1 = __importDefault(require("../constants/httpStatus"));
+const serverResponse_1 = require("../constants/serverResponse");
+const alerts_1 = __importDefault(require("../constants/alerts"));
 const router = (0, express_1.Router)();
 // @desc	Send a mail
 // @route	POST /mail/send
@@ -69,12 +72,13 @@ router.post("/send", auth_1.default, adminAuth_1.default, (req, res) => __awaite
     nodemailer_1.default.sendMail(mailMessage, function (error, data) {
         if (error) {
             console.log("Email err:", error);
+            res.status(httpStatus_1.default.BAD_REQUEST_400).json((0, serverResponse_1.SERVER_RES)({ message: "Failed to send mail", err: error.message, alert: alerts_1.default.DANGER, status: httpStatus_1.default.BAD_REQUEST_400 }));
         }
         else {
             console.log('Email sent: ' + data.response);
+            res.status(httpStatus_1.default.CREATED_201).json((0, serverResponse_1.SERVER_RES)({ message: "Mail Sent", err: null, alert: alerts_1.default.SUCCESS, status: httpStatus_1.default.CREATED_201 }));
         }
     });
-    res.redirect("back");
 }));
 // @desc	Join newslatter
 // @route	POST /mail/newslatter

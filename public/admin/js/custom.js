@@ -94,7 +94,8 @@ const swalWithBootstrapButtons = Swal.mixin({
 						}
 
 						axios.post("/mail/send", data).then(res => {
-							Swal.fire("Sent", "", "success").then();
+							console.log("res", res.data);
+							Swal.fire(res.data.message, "", res.data.alert == "danger"? "error": "success");
 						}).catch(err => {
 							Swal.fire("Failed!", "", "error");
 							console.log("Failed to send mail", err);

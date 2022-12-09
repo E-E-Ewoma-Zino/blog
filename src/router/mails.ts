@@ -4,6 +4,9 @@ import mailchimp, { testMarketingMailchimp, testTransactionalMailchimp } from ".
 import auth from "../middleware/auth";
 import { MessagesMessage } from "@mailchimp/mailchimp_transactional";
 import transporter from "../config/nodemailer";
+import STATUS from "../constants/httpStatus";
+import { SERVER_RES } from "../constants/serverResponse";
+import ALERTS from "../constants/alerts";
 
 const router: IRouter = Router();
 
@@ -40,11 +43,12 @@ router.post("/send", auth, adminAuth, async (req: Request, res: Response) => {
 	transporter.sendMail(mailMessage, function (error, data) {
 		if (error) {
 			console.log("Email err:", error);
+			res.status(STATUS.BAD_REQUEST_400).json(SERVER_RES({message: "Failed to send mail", err: error.message, alert: ALERTS.DANGER, status: STATUS.BAD_REQUEST_400 }));
 		} else {
 			console.log('Email sent: ' + data.response);
+			res.status(STATUS.CREATED_201).json(SERVER_RES({message: "Mail Sent", err: null, alert: ALERTS.SUCCESS, status: STATUS.CREATED_201 }));
 		}
 	});
-	res.redirect("back");
 });
 
 // @desc	Join newslatter
