@@ -1,27 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -37,12 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const adminAuth_1 = __importDefault(require("../middleware/adminAuth"));
-const mailchimp_1 = __importStar(require("../config/mailchimp"));
+const mailchimp_1 = __importDefault(require("../config/mailchimp"));
 const auth_1 = __importDefault(require("../middleware/auth"));
 const nodemailer_1 = __importDefault(require("../config/nodemailer"));
 const httpStatus_1 = __importDefault(require("../constants/httpStatus"));
 const serverResponse_1 = require("../constants/serverResponse");
 const alerts_1 = __importDefault(require("../constants/alerts"));
+const messageBird_1 = __importDefault(require("../utils/messageBird"));
 const router = (0, express_1.Router)();
 // @desc	Send a mail
 // @route	POST /mail/send
@@ -84,34 +62,29 @@ router.post("/send", auth_1.default, adminAuth_1.default, (req, res) => __awaite
 // @route	POST /mail/newslatter
 router.post("/newslatter", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("body", req.body);
-    (0, mailchimp_1.testMarketingMailchimp)();
-    const event = {
-        name: "Global Finance Mail"
+    const listId = "783e5bb232";
+    const subscribingUser = {
+        // firstName: "Prudence",
+        // lastName: "McVankab",
+        email: req.body.email
     };
-    const footerContactInfo = {
-        company: "Mailchimp",
-        address1: "675 Ponce de Leon Ave NE",
-        address2: "Suite 5000",
-        city: "Atlanta",
-        state: "GA",
-        zip: "30308",
-        country: "US"
-    };
-    const campaignDefaults = {
-        from_name: "Admin",
-        from_email: "info@global-finance-news.com",
-        subject: "Welcome",
-        language: "EN_US"
-    };
-    const response = yield mailchimp_1.default.marketingMC.lists.createList({
-        name: event.name,
-        contact: footerContactInfo,
-        permission_reminder: "permission_reminder",
-        email_type_option: true,
-        campaign_defaults: campaignDefaults
-    });
-    console.log(`Successfully created an audience. The audience id is ${response.id}.`);
-    res.redirect("back");
+    try {
+        const response = yield mailchimp_1.default.marketingMC.lists.addListMember(listId, {
+            email_address: subscribingUser.email,
+            status: "subscribed"
+            // merge_fields: {
+            // 	FNAME: subscribingUser.firstName,
+            // 	LNAME: subscribingUser.lastName
+            // }
+        });
+        console.log(`Successfully added contact as an audience member. The contact's id is ${response.id}.`);
+        messageBird_1.default.message(alerts_1.default.SUCCESS, "Thank you for subscribing");
+        res.redirect("back");
+    }
+    catch (error) {
+        messageBird_1.default.message(alerts_1.default.DANGER, "Something went wrong");
+        res.redirect("back");
+    }
 }));
 // @desc	Display a blog post
 // @route	GET /blog/post/:topic

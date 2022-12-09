@@ -7,6 +7,7 @@ import transporter from "../config/nodemailer";
 import STATUS from "../constants/httpStatus";
 import { SERVER_RES } from "../constants/serverResponse";
 import ALERTS from "../constants/alerts";
+import messageBird from "../utils/messageBird";
 
 const router: IRouter = Router();
 
@@ -43,10 +44,10 @@ router.post("/send", auth, adminAuth, async (req: Request, res: Response) => {
 	transporter.sendMail(mailMessage, function (error, data) {
 		if (error) {
 			console.log("Email err:", error);
-			res.status(STATUS.BAD_REQUEST_400).json(SERVER_RES({message: "Failed to send mail", err: error.message, alert: ALERTS.DANGER, status: STATUS.BAD_REQUEST_400 }));
+			res.status(STATUS.BAD_REQUEST_400).json(SERVER_RES({ message: "Failed to send mail", err: error.message, alert: ALERTS.DANGER, status: STATUS.BAD_REQUEST_400 }));
 		} else {
 			console.log('Email sent: ' + data.response);
-			res.status(STATUS.CREATED_201).json(SERVER_RES({message: "Mail Sent", err: null, alert: ALERTS.SUCCESS, status: STATUS.CREATED_201 }));
+			res.status(STATUS.CREATED_201).json(SERVER_RES({ message: "Mail Sent", err: null, alert: ALERTS.SUCCESS, status: STATUS.CREATED_201 }));
 		}
 	});
 });
@@ -56,42 +57,30 @@ router.post("/send", auth, adminAuth, async (req: Request, res: Response) => {
 router.post("/newslatter", async (req: Request, res: Response) => {
 	console.log("body", req.body);
 
-	testMarketingMailchimp();
-
-	const event = {
-		name: "Global Finance Mail"
+	const listId = "783e5bb232";
+	const subscribingUser = {
+		// firstName: "Prudence",
+		// lastName: "McVankab",
+		email: req.body.email
 	};
 
-	const footerContactInfo = {
-		company: "Mailchimp",
-		address1: "675 Ponce de Leon Ave NE",
-		address2: "Suite 5000",
-		city: "Atlanta",
-		state: "GA",
-		zip: "30308",
-		country: "US"
-	};
+	try {
+		const response = await mailchimp.marketingMC.lists.addListMember(listId, {
+			email_address: subscribingUser.email,
+			status: "subscribed"
+			// merge_fields: {
+			// 	FNAME: subscribingUser.firstName,
+			// 	LNAME: subscribingUser.lastName
+			// }
+		});
 
-	const campaignDefaults = {
-		from_name: "Admin",
-		from_email: "info@global-finance-news.com",
-		subject: "Welcome",
-		language: "EN_US"
-	};
-
-	const response = await mailchimp.marketingMC.lists.createList({
-		name: event.name,
-		contact: footerContactInfo,
-		permission_reminder: "permission_reminder",
-		email_type_option: true,
-		campaign_defaults: campaignDefaults
-	});
-
-	console.log(
-		`Successfully created an audience. The audience id is ${response.id}.`
-	);
-
-	res.redirect("back");
+		console.log(`Successfully added contact as an audience member. The contact's id is ${response.id}.`);
+		messageBird.message(ALERTS.SUCCESS, "Thank you for subscribing");
+		res.redirect("back");
+	} catch (error) {
+		messageBird.message(ALERTS.DANGER, "Something went wrong");
+		res.redirect("back");
+	}
 });
 
 
