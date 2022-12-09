@@ -1,7 +1,7 @@
 import nodeMailer from "nodemailer";
 
 const transporter = nodeMailer.createTransport({
-	host: "cpanel-s251.web-hosting.com:2096",
+	host: "global-finance-news.com",
 	port: 465,
 	secure: true,
 	requireTLS: true,
