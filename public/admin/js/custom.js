@@ -89,8 +89,8 @@ const swalWithBootstrapButtons = Swal.mixin({
 					if (sendMail.isConfirmed) { // get data
 						const data = {
 							to: this.dataset.mail,
-							message: document.querySelector("#sendMail")[0].value,
-							subject: document.querySelector("#sendMail")[1].value
+							message: document.querySelector("#sendMail")[1].value,
+							subject: document.querySelector("#sendMail")[0].value
 						}
 
 						axios.post("/mail/send", data).then(res => {
