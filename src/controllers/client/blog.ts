@@ -21,7 +21,7 @@ export async function clientBlog(req: Request, res: Response): Promise<void> {
 			res.redirect("/");
 		}
 		
-		const siteUrl = "https://www.global-finance-news.com/";
+		const siteUrl = "https://www.onefinanceblog.com/";
 		
 		const head = {
 			themeColor: "#ffffff",
@@ -33,7 +33,7 @@ export async function clientBlog(req: Request, res: Response): Promise<void> {
 			description: data?.description,
 			ogImage: siteUrl + data?.mainImage?.path?.replace("uploads\\", "uploads/thumbnail/"),
 			siteUrl,
-			siteName: "Global Finance"
+			siteName: "One Finance Blog"
 		}
 
 		const user = req.user as IUser;

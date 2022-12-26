@@ -29,7 +29,7 @@ router.post("/send", auth_1.default, adminAuth_1.default, (req, res) => __awaite
     // fuck mailchimp
     // testTransactionalMailchimp();
     // const message = {
-    // 	from_email: "info@global-finance-news.com",
+    // 	from_email: "info@onefinanceblog.com",
     // 	subject: req.body.subject,
     // 	text: req.body.message,
     // 	to: [{
@@ -42,7 +42,7 @@ router.post("/send", auth_1.default, adminAuth_1.default, (req, res) => __awaite
     // });
     // console.log(response);
     var mailMessage = {
-        from: "info@global-finance-news.com",
+        from: "info@onefinanceblog.com",
         to: req.body.to,
         subject: req.body.subject,
         text: req.body.message

@@ -25,19 +25,19 @@ function clientHome(req, res) {
         try {
             const theBlog = yield blog_1.default.findAll({});
             const data = theBlog.data[0];
-            const siteUrl = "https://www.global-finance-news.com/";
-            const description = `Global finance news is a blog devoted to providing in-depth information on the financial world globally in areas that are crucial to everything finance you can rely on us to provide that information here it's what we are known for we continue to deliver in this regard. Detailed and easy-to-use information is what we offer at the very core of our structure.`;
+            const siteUrl = "https://www.onefinanceblog.com/";
+            const description = `One finance blog is a blog devoted to providing in-depth information on the financial world globally in areas that are crucial to everything finance you can rely on us to provide that information here it's what we are known for we continue to deliver in this regard. Detailed and easy-to-use information is what we offer at the very core of our structure.`;
             const head = {
                 themeColor: "#ffffff",
-                title: "Global Finance",
-                keywords: "Global Finance, " + (data === null || data === void 0 ? void 0 : data.keywords),
+                title: "One Finance Blog",
+                keywords: "One Finance Blog, " + (data === null || data === void 0 ? void 0 : data.keywords),
                 ogImageType: (_a = data === null || data === void 0 ? void 0 : data.mainImage) === null || _a === void 0 ? void 0 : _a.mimetype,
                 ogUrl: siteUrl + "blogs/" + (data === null || data === void 0 ? void 0 : data.slug),
-                ogTitle: "Global Finance",
+                ogTitle: "One Finance Blog",
                 ogImage: siteUrl + ((_c = (_b = data === null || data === void 0 ? void 0 : data.mainImage) === null || _b === void 0 ? void 0 : _b.path) === null || _c === void 0 ? void 0 : _c.replace("uploads\\", "uploads/thumbnail/")),
                 description,
                 siteUrl,
-                siteName: "Global Finance"
+                siteName: "One Finance Blog"
             };
             res.render("client/index", {
                 bird: messageBird_1.default.fly,

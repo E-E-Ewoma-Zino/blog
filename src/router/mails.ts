@@ -19,7 +19,7 @@ router.post("/send", auth, adminAuth, async (req: Request, res: Response) => {
 	// testTransactionalMailchimp();
 
 	// const message = {
-	// 	from_email: "info@global-finance-news.com",
+	// 	from_email: "info@onefinanceblog.com",
 	// 	subject: req.body.subject,
 	// 	text: req.body.message,
 	// 	to: [{
@@ -35,7 +35,7 @@ router.post("/send", auth, adminAuth, async (req: Request, res: Response) => {
 
 
 	var mailMessage = {
-		from: "info@global-finance-news.com",
+		from: "info@onefinanceblog.com",
 		to: req.body.to,
 		subject: req.body.subject,
 		text: req.body.message

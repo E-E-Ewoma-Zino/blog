@@ -6,8 +6,8 @@ const transporter = nodeMailer.createTransport({
 	secure: true,
 	requireTLS: true,
 	auth: {
-		user: "info@global-finance-news.com",
-		pass: "Admin1@global-finance-news.com"
+		user: "info@onefinanceblog.com",
+		pass: "Admin1@onefinanceblog.com"
 	}
 });
 

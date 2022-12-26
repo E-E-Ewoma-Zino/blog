@@ -31,7 +31,7 @@ function clientBlog(req, res) {
                 messageBird_1.default.message(alerts_1.default.WARNING, "Page does not or no longer exist");
                 res.redirect("/");
             }
-            const siteUrl = "https://www.global-finance-news.com/";
+            const siteUrl = "https://www.onefinanceblog.com/";
             const head = {
                 themeColor: "#ffffff",
                 title: data === null || data === void 0 ? void 0 : data.title,
@@ -42,7 +42,7 @@ function clientBlog(req, res) {
                 description: data === null || data === void 0 ? void 0 : data.description,
                 ogImage: siteUrl + ((_c = (_b = data === null || data === void 0 ? void 0 : data.mainImage) === null || _b === void 0 ? void 0 : _b.path) === null || _c === void 0 ? void 0 : _c.replace("uploads\\", "uploads/thumbnail/")),
                 siteUrl,
-                siteName: "Global Finance"
+                siteName: "One Finance Blog"
             };
             const user = req.user;
             res.render("client/blog", {

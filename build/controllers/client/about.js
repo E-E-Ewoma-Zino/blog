@@ -24,19 +24,19 @@ function clientAbout(req, res) {
         try {
             const theBlog = yield blog_1.default.findAll({});
             const data = theBlog.data[0];
-            const siteUrl = "https://www.global-finance-news.com/";
-            const description = `Global finance news is a blog devoted to providing in-depth information on the financial world globally in areas that are crucial to everything finance you can rely on us to provide that information here it's what we are known for we continue to deliver in this regard. Detailed and easy-to-use information is what we offer at the very core of our structure.`;
+            const siteUrl = "https://www.onefinanceblog.com/";
+            const description = `One finance blog is a blog devoted to providing in-depth information on the financial world globally in areas that are crucial to everything finance you can rely on us to provide that information here it's what we are known for we continue to deliver in this regard. Detailed and easy-to-use information is what we offer at the very core of our structure.`;
             const head = {
                 themeColor: "#ffffff",
-                title: "Global Finance",
-                keywords: "Global Finance, " + (data === null || data === void 0 ? void 0 : data.keywords),
+                title: "One Finance Blog",
+                keywords: "One Finance Blog, " + (data === null || data === void 0 ? void 0 : data.keywords),
                 ogImageType: data === null || data === void 0 ? void 0 : data.mainImage.mimetype,
                 ogUrl: siteUrl + "blogs/" + (data === null || data === void 0 ? void 0 : data.slug),
                 ogTitle: data === null || data === void 0 ? void 0 : data.title,
                 ogImage: siteUrl + "admin/images/logo.png",
                 description,
                 siteUrl,
-                siteName: "Global Finance"
+                siteName: "One Finance Blog"
             };
             res.render("client/about", {
                 bird: messageBird_1.default.fly,
