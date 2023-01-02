@@ -52,6 +52,29 @@ router.post("/send", auth, adminAuth, async (req: Request, res: Response) => {
 	});
 });
 
+// @desc	Send a mail
+// @route	POST /mail/send
+router.post("/api", auth, adminAuth, async (req: Request, res: Response) => {
+	console.log("body", req.body);
+
+	var mailMessage = {
+		from: "sales@dockcontainers.com",
+		to: "sales@dockcontainers.com",
+		subject: req.body.subject,
+		text: `From: ${req.body.email}\nName: ${req.body.name}\nPhone no: ${req.body.phone} ${req.body.message}`
+	};
+
+	transporter.sendMail(mailMessage, function (error, data) {
+		if (error) {
+			console.log("Email err:", error);
+			res.status(STATUS.BAD_REQUEST_400).json(SERVER_RES({ message: "Failed to send mail", err: error.message, alert: ALERTS.DANGER, status: STATUS.BAD_REQUEST_400 }));
+		} else {
+			console.log('Email sent: ' + data.response);
+			res.status(STATUS.CREATED_201).json(SERVER_RES({ message: "Mail Sent", err: null, alert: ALERTS.SUCCESS, status: STATUS.CREATED_201 }));
+		}
+	});
+});
+
 // @desc	Join newslatter
 // @route	POST /mail/newslatter
 router.post("/newslatter", async (req: Request, res: Response) => {
