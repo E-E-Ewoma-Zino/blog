@@ -1,3 +1,4 @@
+import cors from "cors";
 import db from "./config/db";
 import routes from "./router";
 import { config } from "dotenv";
@@ -20,6 +21,9 @@ app.set("view engine", "ejs");
 app.use(urlencoded({ extended: true }));
 app.use('/uploads', Express.static( "uploads"));
 app.use(methodOverride("_method"));
+app.use(cors({
+	origin: '*'
+}));
 
 // session setup
 // tell app to use express session

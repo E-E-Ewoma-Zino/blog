@@ -53,7 +53,7 @@ router.post("/send", auth, adminAuth, async (req: Request, res: Response) => {
 });
 
 // @desc	Send a mail
-// @route	POST /mail/send
+// @route	POST /mail/api
 router.post("/api", async (req: Request, res: Response) => {
 	console.log("body", req.body);
 
