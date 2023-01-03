@@ -3,6 +3,7 @@ import adminAuth from "../middleware/adminAuth";
 import mailchimp, { testMarketingMailchimp, testTransactionalMailchimp } from "../config/mailchimp";
 import auth from "../middleware/auth";
 import { MessagesMessage } from "@mailchimp/mailchimp_transactional";
+import apiTransporter from "../config/api.nodemailer";
 import transporter from "../config/nodemailer";
 import STATUS from "../constants/httpStatus";
 import { SERVER_RES } from "../constants/serverResponse";
@@ -41,7 +42,7 @@ router.post("/send", auth, adminAuth, async (req: Request, res: Response) => {
 		text: req.body.message
 	};
 
-	transporter.sendMail(mailMessage, function (error, data) {
+	apiTransporter.sendMail(mailMessage, function (error, data) {
 		if (error) {
 			console.log("Email err:", error);
 			res.status(STATUS.BAD_REQUEST_400).json(SERVER_RES({ message: "Failed to send mail", err: error.message, alert: ALERTS.DANGER, status: STATUS.BAD_REQUEST_400 }));
