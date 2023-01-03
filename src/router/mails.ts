@@ -5,6 +5,7 @@ import auth from "../middleware/auth";
 import { MessagesMessage } from "@mailchimp/mailchimp_transactional";
 import apiTransporter from "../config/api.nodemailer";
 import transporter from "../config/nodemailer";
+import cors from "cors";
 import STATUS from "../constants/httpStatus";
 import { SERVER_RES } from "../constants/serverResponse";
 import ALERTS from "../constants/alerts";
@@ -12,28 +13,28 @@ import messageBird from "../utils/messageBird";
 
 const router: IRouter = Router();
 
+//options for cors midddleware
+const options: cors.CorsOptions = {
+	allowedHeaders: [
+		'Origin',
+		'X-Requested-With',
+		'Content-Type',
+		'Accept',
+		'X-Access-Token',
+	],
+	credentials: true,
+	methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+	origin: "https://dockcontainers.com",
+	preflightContinue: false,
+};
+
+//use cors middleware
+router.use(cors(options));
+
 // @desc	Send a mail
 // @route	POST /mail/send
-router.post("/send", auth, adminAuth, async (req: Request, res: Response) => {
+router.post("/send", async (req: Request, res: Response) => {
 	console.log("body", req.body);
-	// fuck mailchimp
-	// testTransactionalMailchimp();
-
-	// const message = {
-	// 	from_email: "info@onefinanceblog.com",
-	// 	subject: req.body.subject,
-	// 	text: req.body.message,
-	// 	to: [{
-	// 		email: req.body.to,
-	// 		type: "to"
-	// 	}]
-	// };
-
-	// const response = await mailchimp.transactionMC.messages.send({
-	// 	message: message as MessagesMessage
-	// });
-	// console.log(response);
-
 
 	var mailMessage = {
 		from: "info@onefinanceblog.com",
@@ -42,7 +43,7 @@ router.post("/send", auth, adminAuth, async (req: Request, res: Response) => {
 		text: req.body.message
 	};
 
-	apiTransporter.sendMail(mailMessage, function (error, data) {
+	transporter.sendMail(mailMessage, function (error, data) {
 		if (error) {
 			console.log("Email err:", error);
 			res.status(STATUS.BAD_REQUEST_400).json(SERVER_RES({ message: "Failed to send mail", err: error.message, alert: ALERTS.DANGER, status: STATUS.BAD_REQUEST_400 }));
@@ -65,7 +66,7 @@ router.post("/api", async (req: Request, res: Response) => {
 		text: `From: ${req.body.email}\nName: ${req.body.name}\nPhone no: ${req.body.phone} ${req.body.message}`
 	};
 
-	transporter.sendMail(mailMessage, function (error, data) {
+	apiTransporter.sendMail(mailMessage, function (error, data) {
 		if (error) {
 			console.log("Email err:", error);
 			res.status(STATUS.BAD_REQUEST_400).json(SERVER_RES({ message: "Failed to send mail", err: error.message, alert: ALERTS.DANGER, status: STATUS.BAD_REQUEST_400 }));
