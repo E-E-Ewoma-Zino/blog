@@ -24,7 +24,7 @@ const options: cors.CorsOptions = {
 	],
 	credentials: true,
 	methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-	origin: ["https://dockcontainers.com", "https://wwww.dockcontainers.com", "http://dockcontainers.com", "http://www.dockcontainers.com"],
+	origin: "*",
 	preflightContinue: false,
 };
 
