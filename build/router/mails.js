@@ -13,34 +13,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const adminAuth_1 = __importDefault(require("../middleware/adminAuth"));
 const mailchimp_1 = __importDefault(require("../config/mailchimp"));
-const auth_1 = __importDefault(require("../middleware/auth"));
+const api_nodemailer_1 = __importDefault(require("../config/api.nodemailer"));
 const nodemailer_1 = __importDefault(require("../config/nodemailer"));
+const cors_1 = __importDefault(require("cors"));
 const httpStatus_1 = __importDefault(require("../constants/httpStatus"));
 const serverResponse_1 = require("../constants/serverResponse");
 const alerts_1 = __importDefault(require("../constants/alerts"));
 const messageBird_1 = __importDefault(require("../utils/messageBird"));
 const router = (0, express_1.Router)();
+//options for cors midddleware
+const options = {
+    allowedHeaders: [
+        'Origin',
+        'X-Requested-With',
+        'Content-Type',
+        'Accept',
+        'X-Access-Token',
+    ],
+    credentials: true,
+    methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+    origin: "https://dockcontainers.com",
+    preflightContinue: false,
+};
+//use cors middleware
+router.use((0, cors_1.default)(options));
 // @desc	Send a mail
 // @route	POST /mail/send
-router.post("/send", auth_1.default, adminAuth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/send", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("body", req.body);
-    // fuck mailchimp
-    // testTransactionalMailchimp();
-    // const message = {
-    // 	from_email: "info@onefinanceblog.com",
-    // 	subject: req.body.subject,
-    // 	text: req.body.message,
-    // 	to: [{
-    // 		email: req.body.to,
-    // 		type: "to"
-    // 	}]
-    // };
-    // const response = await mailchimp.transactionMC.messages.send({
-    // 	message: message as MessagesMessage
-    // });
-    // console.log(response);
     var mailMessage = {
         from: "info@onefinanceblog.com",
         to: req.body.to,
@@ -48,6 +49,27 @@ router.post("/send", auth_1.default, adminAuth_1.default, (req, res) => __awaite
         text: req.body.message
     };
     nodemailer_1.default.sendMail(mailMessage, function (error, data) {
+        if (error) {
+            console.log("Email err:", error);
+            res.status(httpStatus_1.default.BAD_REQUEST_400).json((0, serverResponse_1.SERVER_RES)({ message: "Failed to send mail", err: error.message, alert: alerts_1.default.DANGER, status: httpStatus_1.default.BAD_REQUEST_400 }));
+        }
+        else {
+            console.log('Email sent: ' + data.response);
+            res.status(httpStatus_1.default.CREATED_201).json((0, serverResponse_1.SERVER_RES)({ message: "Mail Sent", err: null, alert: alerts_1.default.SUCCESS, status: httpStatus_1.default.CREATED_201 }));
+        }
+    });
+}));
+// @desc	Send a mail
+// @route	POST /mail/api
+router.post("/api", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("body", req.body);
+    var mailMessage = {
+        from: "sales@dockcontainers.com",
+        to: "sales@dockcontainers.com",
+        subject: req.body.subject,
+        text: `From: ${req.body.email}\nName: ${req.body.name}\nPhone no: ${req.body.phone} ${req.body.message}`
+    };
+    api_nodemailer_1.default.sendMail(mailMessage, function (error, data) {
         if (error) {
             console.log("Email err:", error);
             res.status(httpStatus_1.default.BAD_REQUEST_400).json((0, serverResponse_1.SERVER_RES)({ message: "Failed to send mail", err: error.message, alert: alerts_1.default.DANGER, status: httpStatus_1.default.BAD_REQUEST_400 }));
