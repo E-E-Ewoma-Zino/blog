@@ -63,7 +63,22 @@ router.post("/api", async (req: Request, res: Response) => {
 		from: "sales@dockcontainers.com",
 		to: "sales@dockcontainers.com",
 		subject: req.body.subject,
-		text: `From: ${req.body.email}\nName: ${req.body.name}\nPhone no: ${req.body.phone} ${req.body.message}`
+		text: `From: ${req.body.email}\nName: ${req.body.name}\nPhone no: ${req.body.phone}\nMessage: ${req.body.message}`,
+		html: `
+		<div style="text-align: center;width: 50%;">
+
+	<img src="https://www.dockcontainers.com/assets/img/favicon/apple-touch-icon.png" alt="dock containers" width="32px" style="
+    width: 100px;
+">
+	<div style="background-color: #078b4e;padding: 1em;color: white;font-weight: bolder;font-family: sans-serif;">
+		<h2>${req.body.subject}</h2>
+		<span>From: <a href="mailto:${req.body.email}">${req.body.email}</a></span>
+	<br>
+	<span>Name: ${req.body.name}</span>
+	<p>${req.body.message}</p>
+</div>
+	</div>
+		`
 	};
 
 	apiTransporter.sendMail(mailMessage, function (error, data) {
