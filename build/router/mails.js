@@ -71,17 +71,22 @@ router.post("/api", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         html: `
 		<div style="text-align: center;width: 50%;">
 
-	<img src="https://www.dockcontainers.com/assets/img/favicon/apple-touch-icon.png" alt="dock containers" width="32px" style="
-    width: 100px;
-">
-	<div style="background-color: #078b4e;padding: 1em;color: white;font-weight: bolder;font-family: sans-serif;">
-		<h2>${req.body.subject}</h2>
-		<span>From: <a href="mailto:${req.body.email}">${req.body.email}</a></span>
-	<br>
-	<span>Name: ${req.body.name}</span>
-	<p>${req.body.message}</p>
-</div>
+		<img src="https://www.dockcontainers.com/assets/img/favicon/apple-touch-icon.png" alt="dock containers" width="32px" style="
+		width: 100px;
+	">
+		<div style="background-color: #078b4e;padding: 1em;color: white;font-weight: bolder;font-family: sans-serif;">
+			<h2>${req.body.subject}</h2>
+			<span>From: <a href="mailto:${req.body.email}">${req.body.email}</a></span>
+			<br>
+			<span>Name: ${req.body.name}</span>
+			<br>
+			<span>From: <a href="tel:${req.body.phone}">${req.body.phone}</a></span>
+	
+			<br>
+			<span>Message:</span>
+		<p style="margin-top: 1em;">${req.body.message}</p>
 	</div>
+		</div>
 		`
     };
     api_nodemailer_1.default.sendMail(mailMessage, function (error, data) {
