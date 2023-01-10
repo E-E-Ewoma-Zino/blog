@@ -29,7 +29,7 @@ function clientAbout(req, res) {
             const head = {
                 themeColor: "#ffffff",
                 title: "One Finance Blog",
-                keywords: "One Finance Blog, " + (data === null || data === void 0 ? void 0 : data.keywords),
+                keywords: "One Finance Blog, Xpress Coaching, " + (data === null || data === void 0 ? void 0 : data.keywords),
                 ogImageType: data === null || data === void 0 ? void 0 : data.mainImage.mimetype,
                 ogUrl: siteUrl + "blogs/" + (data === null || data === void 0 ? void 0 : data.slug),
                 ogTitle: data === null || data === void 0 ? void 0 : data.title,

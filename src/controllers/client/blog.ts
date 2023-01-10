@@ -26,7 +26,7 @@ export async function clientBlog(req: Request, res: Response): Promise<void> {
 		const head = {
 			themeColor: "#ffffff",
 			title: data?.title,
-			keywords: data?.keywords,
+			keywords: "Xpress Coaching, " + data?.keywords,
 			ogImageType: data?.mainImage?.mimetype,
 			ogUrl: siteUrl + "blogs/" + data?.slug,
 			ogTitle: data?.title,

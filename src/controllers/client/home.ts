@@ -19,7 +19,7 @@ export async function clientHome(req: Request, res: Response): Promise<void> {
 		const head = {
 			themeColor: "#ffffff",
 			title: "One Finance Blog",
-			keywords: "One Finance Blog, " + data?.keywords,
+			keywords: "One Finance Blog, Xpress Coaching, " + data?.keywords,
 			ogImageType: data?.mainImage?.mimetype,
 			ogUrl: siteUrl + "blogs/" + data?.slug,
 			ogTitle: "One Finance Blog",
