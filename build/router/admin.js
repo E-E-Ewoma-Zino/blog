@@ -18,6 +18,9 @@ router.get("/blog", auth_1.default, adminAuth_1.default, (req, res) => admin_1.d
 // @desc	Admin users page
 // @route	GET /users
 router.get("/users", auth_1.default, adminAuth_1.default, (req, res) => admin_1.default.allUsers(req, res));
+// @desc	Admin remove user
+// @route	DELETE /users/remove
+router.delete("/users/remove", auth_1.default, adminAuth_1.default, (req, res) => admin_1.default.removeUser(req, res));
 // @desc	Admin create blog page
 // @route	GET /blog/create
 router.get("/blog/create", auth_1.default, adminAuth_1.default, (req, res) => admin_1.default.createBlog(req, res));

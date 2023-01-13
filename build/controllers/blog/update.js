@@ -28,7 +28,7 @@ function editBolg(req, res) {
         const { title, subTitle, markdown, author, dummyDate, keywords, caption, description } = req.body;
         try {
             const updatedBlog = yield Blogs_1.default.findOneAndUpdate({ _id: req.query.id }, { $set: { title, subTitle, markdown, author, dummyDate, keywords, caption, description, mainImage: req.file } });
-            if (req.file && updatedBlog)
+            if (req.file && (updatedBlog === null || updatedBlog === void 0 ? void 0 : updatedBlog.mainImage))
                 fs_1.default.stat(__dirname + "../../../../" + updatedBlog.mainImage.path, (fsStats_err, stats) => {
                     if (fsStats_err) {
                         console.error("fsStats_err:", fsStats_err);

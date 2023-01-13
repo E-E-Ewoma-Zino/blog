@@ -10,6 +10,7 @@ const storage_1 = require("./storage");
 const admin = {
     storage: storage_1.storage,
     allUsers: users_1.allUsers,
+    removeUser: users_1.removeUser,
     verifyComment: comments_1.verifyComment,
     deleteComment: comments_1.deleteComment,
     storageDelete: storage_1.storageDelete,

@@ -18,6 +18,10 @@ router.get("/blog", auth, adminAuth, (req: Request, res: Response): Promise<void
 // @route	GET /users
 router.get("/users", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.allUsers(req, res));
 
+// @desc	Admin remove user
+// @route	DELETE /users/remove
+router.delete("/users/remove", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.removeUser(req, res));
+
 // @desc	Admin create blog page
 // @route	GET /blog/create
 router.get("/blog/create", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.createBlog(req, res));

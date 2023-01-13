@@ -16,9 +16,8 @@ export default async function editBolg(req: Request, res: Response): Promise<voi
 
 	try {
 		const updatedBlog = await Blogs.findOneAndUpdate({ _id: req.query.id }, { $set: { title, subTitle, markdown, author, dummyDate, keywords, caption, description, mainImage: req.file } });
-
-		if (req.file && updatedBlog) fs.stat(__dirname + "../../../../" + updatedBlog.mainImage.path, (fsStats_err, stats) => {
-			if (fsStats_err) {
+		if (req.file && updatedBlog?.mainImage) fs.stat(__dirname + "../../../../" + updatedBlog.mainImage.path, (fsStats_err, stats) => {
+		if (fsStats_err) {
 				console.error("fsStats_err:", fsStats_err);
 				try {
 					throw { message: "Check to see if the file stil exist", err: "Could not delete this media!", status: 400, alert: "danger" };
@@ -29,7 +28,6 @@ export default async function editBolg(req: Request, res: Response): Promise<voi
 
 			// Using fs to also delete the book file
 			fs.unlink(__dirname + "../../../../" + updatedBlog.mainImage.path, (unlink_err) => {
-
 				if (unlink_err) {
 					console.error("unlink_err:", unlink_err);
 					try {
@@ -39,7 +37,7 @@ export default async function editBolg(req: Request, res: Response): Promise<voi
 					}
 				}
 				else {
-					console.log("=================SAVE===============");
+		console.log("=================SAVE===============");
 					console.log("file deleted successfully");
 				}
 			});
@@ -52,6 +50,7 @@ export default async function editBolg(req: Request, res: Response): Promise<voi
 		if(req.file) generateTinifyImg(req.file?.path as string, req.file?.filename as string);
 
 		messageBird.message(ALERTS.SUCCESS, "Updated Blog");
+
 		return res.redirect("back");
 	} catch (err) {
 		const _err = err as Error;

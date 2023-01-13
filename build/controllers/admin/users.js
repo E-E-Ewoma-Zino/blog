@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.allUsers = void 0;
+exports.removeUser = exports.allUsers = void 0;
 const alerts_1 = __importDefault(require("../../constants/alerts"));
 const httpStatus_1 = __importDefault(require("../../constants/httpStatus"));
 const serverResponse_1 = require("../../constants/serverResponse");
@@ -37,3 +37,18 @@ function allUsers(req, res) {
     });
 }
 exports.allUsers = allUsers;
+function removeUser(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            console.log("body", req.body);
+            const removedUser = yield user_1.default.remove(req.body.itemId);
+            res.status(httpStatus_1.default.OK_200).json((0, serverResponse_1.SERVER_RES)({ message: "User removed", err: null, alert: alerts_1.default.SUCCESS, status: httpStatus_1.default.OK_200 }));
+        }
+        catch (err) {
+            const _err = err;
+            console.log("Error:", _err);
+            res.status(httpStatus_1.default.SERVER_ERR_500).json((0, serverResponse_1.SERVER_RES)({ message: "Failed to remove user", err: _err.message, status: httpStatus_1.default.SERVER_ERR_500, alert: alerts_1.default.DANGER }));
+        }
+    });
+}
+exports.removeUser = removeUser;
