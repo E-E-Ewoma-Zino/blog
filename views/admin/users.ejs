@@ -55,7 +55,7 @@
 														</tr>
 													</thead>
 													<tbody>
-														<% allUsers.forEach(user => { %>
+														<% allUsers.forEach(user=> { %>
 															<tr>
 																<td class="py-1">
 																	<span
@@ -64,15 +64,17 @@
 																	</span>
 																</td>
 																<td>
-																	<%= user?.username %>
+																	<% if(user.authLevel> 0) { %>
+																		<i class="ti-medall menu-icon text-warning"></i>
+																		<% } %>
+																		<%= user?.username %>
 																</td>
 																<td>
 																	<%= user?.email %>
 																</td>
 																<td>
 																	<button title="Send Mail"
-																		data-mail="<%= user.email %>"
-																		type="button"
+																		data-mail="<%= user.email %>" type="button"
 																		class="btn btn-primary btn-rounded btn-icon">
 																		<i class="ti-pencil-alt"></i>
 																	</button>
@@ -87,7 +89,7 @@
 																		data-delete="<%= user._id %>" type="button"
 																		class="btn btn-danger btn-rounded btn-icon">
 																		<i class="ti-trash"></i>
-																	</button> 	
+																	</button>
 																</td>
 															</tr>
 															<% }); %>
