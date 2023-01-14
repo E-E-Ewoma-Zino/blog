@@ -64,7 +64,7 @@
 																	</span>
 																</td>
 																<td>
-																	<% if(user.authLevel> 0) { %>
+																	<% if(user.authLevel > 0) { %>
 																		<i class="ti-medall menu-icon text-warning"></i>
 																		<% } %>
 																		<%= user?.username %>
@@ -84,12 +84,14 @@
 																		class="btn btn-primary btn-rounded btn-icon">
 																		<i class="ti-check"></i>
 																	</button>-->
-																	<button title="Delete" data-title="Delete Comment"
-																		data-delete-path="/admin/users/remove"
-																		data-delete="<%= user._id %>" type="button"
-																		class="btn btn-danger btn-rounded btn-icon">
-																		<i class="ti-trash"></i>
-																	</button>
+																	<% if(user.authLevel < 1) { %>
+																		<button title="Delete" data-title="Delete Comment"
+																			data-delete-path="/admin/users/remove"
+																			data-delete="<%= user._id %>" type="button"
+																			class="btn btn-danger btn-rounded btn-icon">
+																			<i class="ti-trash"></i>
+																		</button>
+																	<% } %>
 																</td>
 															</tr>
 															<% }); %>
