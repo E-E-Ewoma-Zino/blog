@@ -13,6 +13,7 @@ const admin = {
     removeUser: users_1.removeUser,
     verifyComment: comments_1.verifyComment,
     deleteComment: comments_1.deleteComment,
+    updateComment: comments_1.updateComment,
     storageDelete: storage_1.storageDelete,
     storageUpload: storage_1.storageUpload,
     blogs: blogs_1.adminBlogs,

@@ -32,6 +32,9 @@ router.get("/blog/edit/:slug", auth_1.default, adminAuth_1.default, (req, res) =
 router.patch("/blog/edit/:slug/comment", auth_1.default, adminAuth_1.default, (req, res) => admin_1.default.verifyComment(req, res));
 // @desc	Admin edit blog page
 // @route	GET /blog/edit/:slug
+router.patch("/blog/edit/:slug/commentdate", auth_1.default, adminAuth_1.default, (req, res) => admin_1.default.updateComment(req, res));
+// @desc	Admin edit blog page
+// @route	GET /blog/edit/:slug
 router.delete("/blog/edit/:slug/comment", auth_1.default, adminAuth_1.default, (req, res) => admin_1.default.deleteComment(req, res));
 // @desc	Admin storage
 // @route	GET /storage
