@@ -21,7 +21,7 @@
 										</div>
 										<div>
 											<button type="button" class="btn btn-primary btn-icon-text btn-rounded"
-											onclick="location.pathname = '/admin/blog'">
+												onclick="location.pathname = '/admin/blog'">
 												<i class="ti-arrow-left btn-icon-prepend"></i>Back
 											</button>
 										</div>
@@ -45,12 +45,13 @@
 													<label for="title">Title</label>
 													<input type="text" class="form-control" id="title" name="title"
 														placeholder="<%= blog.title %>" value="<%= blog.title %>"
-													required>
+														required>
 												</div>
 												<div class="form-group">
 													<label for="subTitle">Sub Title</label>
-													<input type="text" class="form-control" id="subTitle" name="subTitle"
-														placeholder="<%= blog.subTitle %>" value="<%= blog.subTitle %>">
+													<input type="text" class="form-control" id="subTitle"
+														name="subTitle" placeholder="<%= blog.subTitle %>"
+														value="<%= blog.subTitle %>">
 												</div>
 												<div class="form-group">
 													<label for="author">Author</label>
@@ -59,8 +60,8 @@
 												</div>
 												<div class="form-group">
 													<label for="dummyDate">Date Created</label>
-													<input type="date" class="form-control" id="dummyDate" name="dummyDate"
-														placeholder="<%= blog.dummyDate %>" value="<%= blog.dummyDate %>">
+													<input type="date" class="form-control" id="dummyDate"
+														name="dummyDate" placeholder="" value="">
 												</div>
 												<div class="form-group">
 													<label for="description">Description</label>
@@ -89,8 +90,7 @@
 												</div>
 												<div class="form-group">
 													<label for="caption">Caption</label>
-													<input type="text" class="form-control" id="caption"
-														name="caption"
+													<input type="text" class="form-control" id="caption" name="caption"
 														placeholder="<%= blog.caption %>" value="<%= blog.caption %>">
 												</div>
 												<div class="form-group">
@@ -170,16 +170,14 @@
 															<div class="card-description">
 																<ul data-md="* item 1
 * item 2
-* item 3"
-																	class="md-copy hover-darken cursor-hover">
+* item 3" class="md-copy hover-darken cursor-hover">
 																	<li>item 1</li>
 																	<li>item 2</li>
 																	<li>item 3</li>
 																</ul>
 																<ol data-md="1 item 1
 1 item 2
-1 item 3" 
-																	class="md-copy hover-darken cursor-hover">
+1 item 3" class="md-copy hover-darken cursor-hover">
 																	<li>item 1</li>
 																	<li>item 2</li>
 																	<li>item 3</li>
@@ -202,30 +200,47 @@
 											<div class="card-description">
 												<% blog.comments.forEach((c, index)=> { %>
 													<div id="comment<%= index %>" class="d-flex flex-row p-3">
-														<span src="https://i.imgur.com/zQZSWrt.jpg" width="40" height="40"
-															class="circle-profile rounded-circle mr-3">
+														<span src="https://i.imgur.com/zQZSWrt.jpg" width="40"
+															height="40" class="circle-profile rounded-circle mr-3">
 															<%= c.user.username.substring(0, 1) %>
 														</span>
 														<div class="w-100">
-															<div class="d-flex justify-content-between align-items-center">
+															<div
+																class="d-flex justify-content-between align-items-center">
 																<div class="d-flex flex-row align-items-center">
 																	<span class="mr-2">
 																		<%= c.user?.username %>
 																	</span>
-																	<small class="c-badge"><%= c.isVerified? "Approved": "Not Approved" %></small>
+																	<small class="c-badge">
+																		<%= c.isVerified? "Approved" : "Not Approved" %>
+																	</small>
 																</div>
-																<small data-date="<%= new Date(c.createdAt) %>">
-																</small>
+																<div>
+																	<small
+																		class="editCommentDate text-primary cursor-hover">Edit</small>
+																	<small data-date="<%= new Date(c.createdAt) %>"></small>
+																	<div class="form-group">
+																		<input type="date" class="form-control" name="commentDate" />
+																		<button type="button" class="commentDateBtn btn btn-primary" data-id="<%= blog.id %>" data-slug="<%= blog.slug %>">Change</button>
+																	</div>
+
+																</div>
 															</div>
-					
+
 															<p class="text-justify comment-text mb-0">
 																<%= c.comment %>
-																<span href="#x" data-title="Delete Comment" data-delete-path="/admin/blog/edit/<%= blog.slug %>/comment?id=<%= blog._id %>" data-delete="<%= c._id %>" class="text-danger cursor-hover">Delete</span>
-																<% if(!c.isVerified){ %>
-																<span class="wish" title="Approve"><i class="ti-check mr-2 cursor-hover p-1 bg-behance rounded-circle text-white" data-verify="<%= index %>" data-verify-path="/admin/blog/edit/<%= blog.slug %>/comment?id=<%= blog._id %>"></i></span>
-																<% } %>
+																	<span href="#x" data-title="Delete Comment"
+																		data-delete-path="/admin/blog/edit/<%= blog.slug %>/comment?id=<%= blog._id %>"
+																		data-delete="<%= c._id %>"
+																		class="text-danger cursor-hover">Delete</span>
+																	<% if(!c.isVerified){ %>
+																		<span class="wish" title="Approve"><i
+																				class="ti-check mr-2 cursor-hover p-1 bg-behance rounded-circle text-white"
+																				data-verify="<%= index %>"
+																				data-verify-path="/admin/blog/edit/<%= blog.slug %>/comment?id=<%= blog._id %>"></i></span>
+																		<% } %>
 															</p>
-					
+
 															<div class="d-flex flex-row user-feed">
 																<!-- <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span> -->
 															</div>
@@ -238,7 +253,7 @@
 
 								</div>
 							</div>
-							
+
 							<div class="row">
 								<div class="col-12 grid-margin stretch-card">
 									<div class="card">
@@ -299,12 +314,28 @@
 			<%- include("partials/_scripts") %>
 				<!-- partial -->
 
+				<!-- show the comment date in moment from now time -->
 				<script>
 					const dateT = document.querySelectorAll("[data-date]");
 					dateT.forEach(dT => {
 						dT.innerHTML = moment(dT.dataset.date).startOf('seconds').fromNow();
 					});
 				</script>
+
+				<!-- This script is for Dummy date display and very important -->
+				<script>
+					const dummyDate = document.querySelector("#dummyDate");
+
+					dummyDate.value = moment("<%= blog.dummyDate %>").format("yyyy-MM-DD");
+					dummyDate.placeholder = moment("<%= blog.dummyDate %>").format("yyyy-MM-DD");
+
+					if ("<%= blog.dummyDate %>" == '') {
+						console.log("date is null", "<%= blog.dummyDate %>", typeof "<%= blog.dummyDate %>");
+						dummyDate.value = moment("<%= blog.createdAt %>").format("yyyy-MM-DD");
+						dummyDate.placeholder = moment("<%= blog.createdAt %>").format("yyyy-MM-DD");
+					}
+				</script>
+
 				</body>
 
 				</html>

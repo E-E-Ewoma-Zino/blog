@@ -1,5 +1,5 @@
 import { adminBlogs } from "./blogs";
-import { deleteComment, verifyComment } from "./comments";
+import { deleteComment, verifyComment, updateComment } from "./comments";
 import { adminCreateBlog } from "./createBlog";
 import { adminDashboard } from "./dashboard";
 import { allUsers, removeUser } from "./users";
@@ -12,6 +12,7 @@ const admin = {
 	removeUser,
 	verifyComment,
 	deleteComment,
+	updateComment,
 	storageDelete,
 	storageUpload,
 	blogs: adminBlogs,

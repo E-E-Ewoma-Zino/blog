@@ -164,5 +164,33 @@ const swalWithBootstrapButtons = Swal.mixin({
 				});
 			});
 		});
+		
+		$(".editCommentDate").each(function () {
+			$(this).next().next().hide();
+
+			$(this).click(function () {
+				$(this).next().hide();
+				$(this).next().next().show();
+			});
+		});
+
+		$(".commentDateBtn").each(function (index) {
+			$(this).click(function () {
+				const data = {
+					date: $(this).prev().val(),
+					itemId: index,
+					id: $(this).data().id
+				}
+				
+				axios.patch(`/admin/blog/edit/${$(this).data().slug}/commentdate`, data).then(res => {
+					console.log("res", res.data);
+					Swal.fire(res.data.message, "", res.data.alert == "danger"? "error": "success").then(()=> location.reload());
+
+				}).catch(err => {
+					Swal.fire("Failed!", "", "error");
+					console.log("Failed to send mail", err);
+				});
+			});
+		});
 	});
 })(jQuery);

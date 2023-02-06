@@ -32,11 +32,15 @@ router.get("/blog/edit/:slug", auth, adminAuth, (req: Request, res: Response): P
 
 // @desc	Admin edit blog page
 // @route	GET /blog/edit/:slug
-router.patch("/blog/edit/:slug/comment", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.verifyComment(req, res));
+router.patch("/blog/edit/:slug/comment", auth, adminAuth, (req: Request, res: Response): Promise<Response<any, Record<string, any>> | undefined> => admin.verifyComment(req, res));
 
 // @desc	Admin edit blog page
 // @route	GET /blog/edit/:slug
-router.delete("/blog/edit/:slug/comment", auth, adminAuth, (req: Request, res: Response): Promise<void> => admin.deleteComment(req, res));
+router.patch("/blog/edit/:slug/commentdate", auth, adminAuth, (req: Request, res: Response): Promise<Response<any, Record<string, any>> | undefined> => admin.updateComment(req, res));
+
+// @desc	Admin edit blog page
+// @route	GET /blog/edit/:slug
+router.delete("/blog/edit/:slug/comment", auth, adminAuth, (req: Request, res: Response): Promise<Response<any, Record<string, any>> | undefined> => admin.deleteComment(req, res));
 
 // @desc	Admin storage
 // @route	GET /storage
