@@ -7,7 +7,7 @@ const transporter = nodeMailer.createTransport({
 	requireTLS: true,
 	auth: {
 		user: "sales@dockcontainers.com",
-		pass: "1-Very-strong-password"
+		pass: "1-very-strong-Password"
 	}
 });
 
